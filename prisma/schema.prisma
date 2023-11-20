@@ -6,12 +6,13 @@ generator client {
 }
 
 datasource db {
-    provider = "sqlite"
+    provider = "postgres"
     // NOTE: When using mysql or sqlserver, uncomment the @db.Text annotations in model Account below
     // Further reading:
     // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
     // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
-    url      = env("DATABASE_URL")
+     url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
+    directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
 model Post {
@@ -54,14 +55,24 @@ model Session {
 }
 
 model User {
-    id            String    @id @default(cuid())
-    name          String?
-    email         String?   @unique
-    emailVerified DateTime?
-    image         String?
-    accounts      Account[]
-    sessions      Session[]
-    posts         Post[]
+    id               String       @id @default(cuid())
+    name             String?
+    email            String?      @unique
+    emailVerified    DateTime?
+    image            String?
+    accounts         Account[]
+    sessions         Session[]
+    posts            Post[]
+    role             Roles        @default(USER)
+    likedCollections Collection[] @relation("user_collection_likes")
+    likedItems       Item[]       @relation("user_item_likes")
+    preferredTags    Tag[]
+    savedCollection  Collection[] @relation("user_collection_saves")
+}
+
+enum Roles {
+    ADMIN
+    USER
 }
 
 model VerificationToken {
@@ -70,4 +81,40 @@ model VerificationToken {
     expires    DateTime
 
     @@unique([identifier, token])
+}
+
+model Tag {
+    id               Int          @id @default(autoincrement())
+    name             String       @unique
+    items            Item[]
+    collections      Collection[]
+    preferredByUsers User[]
+}
+
+model Collection {
+    id          Int      @id @default(autoincrement())
+    title       String
+    description String?
+    thumbnail   String?
+    tags        Tag[]
+    items       Item[]
+    likes       User[]   @relation("user_collection_likes")
+    saves       User[]   @relation("user_collection_saves")
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt()
+}
+
+model Item {
+    id           Int        @id @default(autoincrement())
+    title        String
+    description  String?
+    thumbnail    String?
+    content      Json
+    type         String
+    tags         Tag[]
+    likes        User[]     @relation("user_item_likes")
+    Collection   Collection @relation(fields: [collectionId], references: [id])
+    collectionId Int
+    createdAt    DateTime   @default(now())
+    updatedAt    DateTime   @updatedAt()
 }

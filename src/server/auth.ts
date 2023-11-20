@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/require-await */
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import {
   getServerSession,
@@ -37,13 +38,28 @@ declare module "next-auth" {
  */
 export const authOptions: NextAuthOptions = {
   callbacks: {
-    session: ({ session, user }) => ({
-      ...session,
-      user: {
-        ...session.user,
-        id: user.id,
-      },
-    }),
+    session: ({ session,token, user }) => {
+      // console.log({user})
+      return{
+        ...session,
+        user: {
+          ...session.user,
+          id: token.id,
+        },
+      }
+    },
+    async jwt({ token, account, user }) {
+      // Persist the OAuth access_token and or the user id to the token right after signin
+      if (account) {
+        token.accessToken = account.access_token
+        token.id = user.id
+      }
+      return token
+    }
+  },
+  session: {
+    strategy: 'jwt',
+    maxAge: 30000
   },
   adapter: PrismaAdapter(db),
   providers: [

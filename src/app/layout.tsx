@@ -1,14 +1,19 @@
 import "@/styles/globals.css";
 
-import { Inter } from "next/font/google";
+import { GeistSans, GeistMono } from 'geist/font'
 import { headers } from "next/headers";
+import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
+import { extractRouterConfig } from "uploadthing/server";
+import { ourFileRouter } from "@/app/api/uploadthing/core";
 
 import { TRPCReactProvider } from "@/trpc/react";
+import { Toaster } from "@/components/ui/toaster";
 
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-sans",
-});
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
+
+
 
 export const metadata = {
   title: "Create T3 App",
@@ -23,8 +28,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`font-sans ${inter.variable}`}>
-        <TRPCReactProvider headers={headers()}>{children}</TRPCReactProvider>
+      <body className={`font-sans ${GeistSans.className} overflow-x-hidden`}>
+          <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
+          <TRPCReactProvider headers={headers()}>{children}</TRPCReactProvider>
+          <Toaster/>
       </body>
     </html>
   );
