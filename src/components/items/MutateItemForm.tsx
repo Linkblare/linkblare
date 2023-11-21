@@ -46,6 +46,7 @@ const MutateItemForm = ({
     const { toast } = useToast()
 
     const save = async (values: CreateItemInput | UpdateItemInput) => {
+        console.log({values, type})
         try {
             if (data) {
                 await updateMutation.mutateAsync(convertNullToUndefined(values));

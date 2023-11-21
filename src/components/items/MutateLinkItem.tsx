@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from 'react'
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '../ui/form'
 import { UseFormReturn, useWatch } from 'react-hook-form'
@@ -10,17 +11,17 @@ const MutateLinkItem = ({
     form: UseFormReturn<any>
 }) => {
 
-    const watch = useWatch({control: form.control, name: ['content.url']})
-    const [autoUpdate, setAutoUpdate] = useState<{favicon: boolean, origin: boolean}>({favicon: true, origin: true})
+    // const watch = useWatch({control: form.control, name: ['content.url']})
+    // const [autoUpdate, setAutoUpdate] = useState<{favicon: boolean, origin: boolean}>({favicon: true, origin: true})
 
-    const handleFaviconInputChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
-        const value = ev.target.value;
-        if(!value || !isValidUrl){
+    // const handleFaviconInputChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
+    //     const value = ev.target.value;
+    //     if(!value || !isValidUrl){
             
-        }
-    }
+    //     }
+    // }
 
-    console.log({watch});
+    // console.log({watch});
 
     return (
         <>
@@ -46,7 +47,7 @@ const MutateLinkItem = ({
                             <Input placeholder='Enter link origin url' {...field} />
                         </FormControl>
                         <FormDescription>
-                            Suppose this your link url "https://abc.com/page1/page2" then te origin url is "https://abc.com"
+                            {`Suppose this your link url "https://abc.com/page1/page2" then te origin url is "https://abc.com"`}
                         </FormDescription>
                         <FormMessage />
                     </FormItem>

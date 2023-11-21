@@ -13,10 +13,16 @@ await import("./src/env.mjs");
 /** @type {import("next").NextConfig} */
 const config = {
   images: {
+    dangerouslyAllowSVG: true,
     remotePatterns: [
       {
         protocol: "https",
         hostname: "zowjeqhvecoeptlofhuo.supabase.co",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "placehold.co",
         pathname: "/**",
       },
     ],

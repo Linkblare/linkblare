@@ -53,9 +53,7 @@ export const CreateItemSchema = z.object({
     description: z.string().optional(),
     thumbnail: z.string().optional(),
     type: ItemTypesEnumSchema,
-    content: LinkContentSchema
-        .or(PdfContentSchema)
-        .or(ImageSlideContentSchema),
+    content: z.any(),
     tags: z.array(z.string()).default([]),
     collectionId: z.number()
 })

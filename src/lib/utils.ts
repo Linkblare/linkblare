@@ -1,3 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
 import { createPaginator } from 'prisma-pagination'
@@ -183,3 +188,47 @@ export async function fetchPdfFile(url: string, options: { fileName?: string } =
     return null;
   }
 }
+
+
+
+export enum SocialMedia {
+  Facebook = 'facebook',
+  Instagram = 'instagram',
+  LinkedIn = 'linkedin',
+  TikTok = 'tiktok',
+  Twitter = 'twitter',
+  YouTube = 'youtube',
+}
+
+export function getSocialMediaFromUrl(url: string): SocialMedia | undefined {
+  const socialMediaPatterns: { [key in SocialMedia]: RegExp } = {
+    [SocialMedia.Facebook]: /^https?:\/\/(www\.)?facebook\.com\/.*/,
+    [SocialMedia.Instagram]: /^https?:\/\/(www\.)?instagram\.com\/.*/,
+    [SocialMedia.LinkedIn]: /^https?:\/\/(www\.)?linkedin\.com\/.*/,
+    [SocialMedia.TikTok]: /^https?:\/\/(www\.)?tiktok\.com\/.*/,
+    [SocialMedia.Twitter]: /^https?:\/\/(www\.)?x\.com\/.*/,
+    [SocialMedia.YouTube]: /^https?:\/\/(www\.)?(youtube\.com\/|youtu\.be\/).*/,
+  };
+
+  for (const [site, pattern] of Object.entries(socialMediaPatterns)) {
+    if (pattern.test(url)) {
+      return site as SocialMedia;
+    }
+  }
+
+  return undefined;
+}
+
+export function getPlaceholderImage({
+  config
+}:{
+  config?: {
+    width?: number,
+    height?: number,
+    text?: string
+  }
+}){
+  config = {...{width: 800}, ...config}
+  return `https://placehold.co/${config?.width}${config?.height ? `x${config?.height}` : ''}?${config?.text ? `font=${config?.text.replaceAll(' ', '+')}` : ''}`
+}
+

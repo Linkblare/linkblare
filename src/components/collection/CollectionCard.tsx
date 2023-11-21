@@ -21,8 +21,8 @@ const CollectionCard = ({
 
   return (
     <div className='rounded-xl overflow-hidden bg-card max-w-sm border '>
-      <div className='rounded-xl overflow-hidden '>
-        <Image width={500} height={500} src={collection.thumbnail??''} alt='' />
+      <div className='rounded-xl overflow-hidden aspect-[4/2.5]'>
+        <Image width={400} height={300} src={collection.thumbnail??''} alt='' />
       </div>
 
       <div className='p-3 h-16'>
