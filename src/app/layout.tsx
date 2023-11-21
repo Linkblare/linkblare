@@ -11,14 +11,17 @@ import { Toaster } from "@/components/ui/toaster";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { Metadata } from "next";
 
 
 
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "LinkBlare - Unleashing the Power of Web Resources",
   description: "Discover LinkBlare, your go-to source for curated web resources. From free illustrations to essential development tools, find what you need for seamless online experiences. Elevate your projects with LinkBlare's handpicked collections.",
-  icons: [{ rel: "icon", url: "/favicon.ico" }],
+  icons: [
+    { rel: "icon", url: "/favicon.ico" },
+  ],
 };
 
 export default function RootLayout({
