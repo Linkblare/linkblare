@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
 import { FileUploadResponse, imageRemove, imageUpload } from '@/lib/fileUpload'
@@ -71,12 +74,12 @@ const FileUpload = ({
   const onChangeHandler = (ev: React.ChangeEvent<HTMLInputElement>) => {
     const files = ev.target.files;
     if (files === null || files.length <= 0 || loading) return;
-    upload(files[0]!)
+    void upload(files[0]!)
   }
 
   const handleRemove = () => {
     if (!value || loading) return;
-    remove(value)
+    void remove(value)
   }
 
 
@@ -112,7 +115,7 @@ const FileUpload = ({
             :
             <div className="flex flex-col items-center justify-center pt-5 pb-6">
               <svg className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
+                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
               </svg>
               <p className="mb-2 text-sm text-gray-500 dark:text-gray-400"><span className="font-semibold">Click to upload</span> or drag and drop</p>
               <p className="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG </p>

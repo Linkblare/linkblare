@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -73,6 +75,7 @@ const ItemRouter = createTRPCRouter({
                 Collection: {
                     connect: { id: collectionId }
                 },
+                content: rest.content!,
                 ...rest,
                 tags: {
                     connectOrCreate: tags.map(name => ({
@@ -106,7 +109,9 @@ const ItemRouter = createTRPCRouter({
                 tags: {
                     connectOrCreate: tagsForConnnect.map(tag => ({where: {name: tag}, create: {name: tag}})),
                     disconnect: tagsForDisconnect.map(tag => ({name: tag.name}))
-                }
+                },
+                content: rest.content!,
+                ...rest,
             },
 
             include: getItemIncludes(userId, 'single')
