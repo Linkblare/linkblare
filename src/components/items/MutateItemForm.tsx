@@ -47,25 +47,25 @@ const MutateItemForm = ({
     const { toast } = useToast()
 
     const save = async (values: CreateItemInput | UpdateItemInput) => {
-        console.log({values, type})
-        // try {
-        //     if (data) {
-        //         await updateMutation.mutateAsync(convertNullToUndefined(values));
+        // console.log({values, type})
+        try {
+            if (data) {
+                await updateMutation.mutateAsync(convertNullToUndefined(values));
 
-        //     } else {
-        //         await createMutation.mutateAsync(values as CreateItemInput);
-        //     }
+            } else {
+                await createMutation.mutateAsync(values as CreateItemInput);
+            }
 
-        //     toast({ title: 'Item mutation success!!' });
-        //     form.reset();
-        //     onDone?.();
-        // } catch (error: any) {
-        //     toast({
-        //         title: 'Item mutation failed!!',
-        //         description: error.message,
-        //         variant: 'destructive'
-        //     });
-        // }
+            toast({ title: 'Item mutation success!!' });
+            form.reset();
+            onDone?.();
+        } catch (error: any) {
+            toast({
+                title: 'Item mutation failed!!',
+                description: error.message,
+                variant: 'destructive'
+            });
+        }
     }
 
     const handleSubmit = (values: CreateItemInput | UpdateItemInput) => {
