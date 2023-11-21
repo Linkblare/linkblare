@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/require-await */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
@@ -47,24 +48,24 @@ const MutateItemForm = ({
 
     const save = async (values: CreateItemInput | UpdateItemInput) => {
         console.log({values, type})
-        try {
-            if (data) {
-                await updateMutation.mutateAsync(convertNullToUndefined(values));
+        // try {
+        //     if (data) {
+        //         await updateMutation.mutateAsync(convertNullToUndefined(values));
 
-            } else {
-                await createMutation.mutateAsync(values as CreateItemInput);
-            }
+        //     } else {
+        //         await createMutation.mutateAsync(values as CreateItemInput);
+        //     }
 
-            toast({ title: 'Item mutation success!!' });
-            form.reset();
-            onDone?.();
-        } catch (error: any) {
-            toast({
-                title: 'Item mutation failed!!',
-                description: error.message,
-                variant: 'destructive'
-            });
-        }
+        //     toast({ title: 'Item mutation success!!' });
+        //     form.reset();
+        //     onDone?.();
+        // } catch (error: any) {
+        //     toast({
+        //         title: 'Item mutation failed!!',
+        //         description: error.message,
+        //         variant: 'destructive'
+        //     });
+        // }
     }
 
     const handleSubmit = (values: CreateItemInput | UpdateItemInput) => {

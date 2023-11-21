@@ -124,9 +124,11 @@ export function extractOrigin(urlString: string): string | null {
 }
 
 export async function getFaviconUrl(url: string): Promise<string | null> {
+
   try {
-    const encodedUrl = encodeURIComponent(url);
-    const response = await fetch(`https://www.google.com/s2/favicons?domain=${encodedUrl}`);
+    // const encodedUrl = encodeURIComponent(url);
+    if(!isValidUrl(url)) return null;
+    const response = await fetch(`https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=${url}&size=16`);
 
     if (response.ok) {
       return response.url;
