@@ -6,10 +6,9 @@ import { nanoid } from 'nanoid'
 import Image from 'next/image'
 import React, {useRef} from 'react'
 import Slider, { type Settings } from 'react-slick'
-import { ChevronLeft, ChevronRightIcon, EyeIcon, Fullscreen } from 'lucide-react'
+import { ChevronLeft, ChevronRightIcon, Fullscreen } from 'lucide-react'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { type ImageSlideContent } from '@/schema/item-schema'
-import { Dialog, DialogContent } from '@/components/ui/dialog'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 
@@ -34,7 +33,7 @@ const ImageSlideItemRender = ({
     <div className='bg-muted h-full relative overflow-hidden'>
 
       
-        <Slider {...settings} className='flex items-center' ref={sliderRef}>
+        <Slider {...settings} className='' ref={sliderRef}>
           {
             content.slides.map((image, index) => {
               return (

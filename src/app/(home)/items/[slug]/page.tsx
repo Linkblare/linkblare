@@ -55,12 +55,12 @@ const SingleItemViewPage = async ({
     if(!validate.success) return <ErrorView/>
     const item = await api.items.getBySlug.query({slug: params?.slug!});
 
-    if(!item) return notFound()
+    if(!item) return notFound();
 
   return (
-    <div className='max-w-4xl mx-auto py-10' >
+    <div className='max-w-4xl mx-auto py-10'>
         <SingleItemViewer item={item} />
-        <div></div>
+        <div ></div>
     </div>
   )
 }

@@ -55,7 +55,7 @@ const CollectionCard = ({
 
 CollectionCard.Skeleton = () => {
   return (
-    <div className='max-w-xs'>
+    <div className='max-w-full md:max-w-xs'>
       <Skeleton className='aspect-[1.4/.8] '></Skeleton>
       <div className='py-2 space-y-1'>
         <Skeleton className='w-full h-[20px]' />
