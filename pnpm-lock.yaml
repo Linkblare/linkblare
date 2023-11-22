@@ -80,6 +80,9 @@ dependencies:
   '@uploadthing/react':
     specifier: ^5.7.0
     version: 5.7.0(next@13.5.6)(react@18.2.0)(uploadthing@5.7.4)
+  '@vercel/analytics':
+    specifier: ^1.1.1
+    version: 1.1.1
   class-variance-authority:
     specifier: ^0.7.0
     version: 0.7.0
@@ -2008,6 +2011,12 @@ packages:
         optional: true
     dependencies:
       '@uploadthing/mime-types': 0.2.2
+    dev: false
+
+  /@vercel/analytics@1.1.1:
+    resolution: {integrity: sha512-+NqgNmSabg3IFfxYhrWCfB/H+RCUOCR5ExRudNG2+pcRehq628DJB5e1u1xqwpLtn4pAYii4D98w7kofORAGQA==}
+    dependencies:
+      server-only: 0.0.1
     dev: false
 
   /abbrev@1.1.1:
@@ -4723,6 +4732,10 @@ packages:
     hasBin: true
     dependencies:
       lru-cache: 6.0.0
+
+  /server-only@0.0.1:
+    resolution: {integrity: sha512-qepMx2JxAa5jjfzxG79yPPq+8BuFToHd1hm7kI+Z4zAq1ftQiP7HcxMhDDItrbtwVeLg/cY2JnKnrcFkmiswNA==}
+    dev: false
 
   /set-blocking@2.0.0:
     resolution: {integrity: sha512-KiKBS8AnWGEyLzofFfmvKwpdPzqiy16LvQfK3yv/fVH7Bj13/wl3JSR1J+rfgRE9q7xUJK4qvgS8raSOeLUehw==}
