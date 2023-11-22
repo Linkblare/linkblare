@@ -33,8 +33,8 @@ type CollectionSingleResponse = Collection & {
 
 export const getCollectionIncludes = (userId?: string, type: 'List'|'Single' = 'Single') => {
     const includes: Prisma.CollectionInclude = {
-        likes: {select: {id: true}},
-        saves: {select: {id: true}},
+        likes: userId ? {where: {id: userId}} : undefined,
+        saves: userId ? {where: {id: userId}} : undefined,
         tags: true,
         _count: {
             select: {
@@ -56,8 +56,8 @@ export const collectionListResolver = (response: CollectionListResponse) => {
     const {likes, saves, ...rest} = response;
     const result: CollectionOut = {
         ...rest,
-        liked: likes.length > 0,
-        saved: saves.length > 0,
+        liked: likes && likes.length > 0,
+        saved: saves && saves.length > 0,
     }
     return result;
 }
@@ -65,8 +65,8 @@ export const collectionSingleResolver = (response: CollectionSingleResponse) => 
     const {likes, saves, ...rest} = response;
     const result: SingleCollectionOut = {
         ...rest,
-        liked: likes.length > 0,
-        saved: saves.length > 0,
+        liked: likes && likes.length > 0,
+        saved: saves && saves.length > 0,
     }
     return result;
 }
