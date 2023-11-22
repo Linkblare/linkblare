@@ -1,6 +1,6 @@
 import "@/styles/globals.css";
 
-import { GeistSans, GeistMono } from 'geist/font'
+import { GeistSans} from 'geist/font/sans'
 import { headers } from "next/headers";
 import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 import { extractRouterConfig } from "uploadthing/server";
@@ -12,6 +12,8 @@ import { Toaster } from "@/components/ui/toaster";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Metadata } from "next";
+import { Suspense } from "react";
+import Analytics from "@/components/utils/GoogleTagmanager";
 
 
 
@@ -32,6 +34,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`font-sans ${GeistSans.className} overflow-x-hidden`}>
+        <Suspense><Analytics/></Suspense>
           <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
           <TRPCReactProvider headers={headers()}>{children}</TRPCReactProvider>
           <Toaster/>
