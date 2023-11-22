@@ -24,9 +24,9 @@ const CollectionCard = ({
 }: CollectionCardProps) => {
 
   return (
-    <div className='rounded-xl overflow-hidden bg-card max-w-sm border '>
+    <div className='rounded-xl overflow-hidden bg-card max-w-full md:max-w-sm border '>
       <div className='rounded-xl overflow-hidden aspect-[4/2.5]'>
-        <Image width={400} height={300} src={collection.thumbnail??''} alt='' />
+        <Image className='w-full h-auto' width={400} height={300} src={collection.thumbnail??''} alt='' />
       </div>
 
       <div className='p-3 h-16'>
@@ -36,7 +36,7 @@ const CollectionCard = ({
         </span>
       </div>
 
-      <div className='flex items-center justify-between py-1'>
+      <div className='flex items-center justify-between py-1 px-2'>
         <ActionButton action={'collection_like_toggle'} entityId={collection.id} defaultState={collection.liked}/>
         <ActionButton action={'collection_save_toggle'} entityId={collection.id} defaultState={collection.saved}/>
         <InfoDialog>
