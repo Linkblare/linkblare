@@ -1,11 +1,11 @@
 import MainWrapper from '@/components/MainWrapper'
-import ExploreCollectionLoader from '@/components/collection/ExploreCollectionLoader'
+import FeedCollection from '@/components/collection/FeedCollection'
 import React from 'react'
 
 const ExplorePage = () => {
   return (
     <MainWrapper className="py-5 ">
-      <ExploreCollectionLoader/>
+      <FeedCollection/>
     </MainWrapper>
   )
 }

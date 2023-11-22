@@ -7,19 +7,19 @@ import Logo from './Logo'
 import UserAvatarDropdown from './UserAvatarDropdown'
 import LoginButton from './LoginButton'
 import { useSession } from 'next-auth/react'
-import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, navigationMenuTriggerStyle } from './ui/navigation-menu'
+import { NavigationMenu, NavigationMenuItem, NavigationMenuList, navigationMenuTriggerStyle } from './ui/navigation-menu'
 import { cn } from '@/lib/utils'
 import { nanoid } from 'nanoid'
 
 const menus = [
     {
-        lable: 'For You',
+        lable: 'Explore',
         href: '/'
     },
 
     {
-        lable: 'Explore',
-        href: '/explore'
+        lable: 'For You',
+        href: '/for-you'
     },
 
     {
