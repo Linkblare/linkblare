@@ -94,6 +94,8 @@ model Tag {
 model Collection {
     id          Int      @id @default(autoincrement())
     title       String
+    slug        String?
+    hash        String?
     description String?
     thumbnail   String?
     tags        Tag[]
@@ -107,6 +109,8 @@ model Collection {
 model Item {
     id           Int        @id @default(autoincrement())
     title        String
+    slug         String?
+    hash         String?
     description  String?
     thumbnail    String?
     content      Json

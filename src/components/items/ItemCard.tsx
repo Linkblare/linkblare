@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 'use client'
 
 /* eslint-disable react/display-name */
@@ -65,7 +66,7 @@ const ItemCard = ({
                 </div>
             </div>
 
-            <div className='aspect-square relative ' onClick={() => router.push(`/items/${item.id}`)}>
+            <Link href={`/items/${item.slug}`}  className='aspect-square relative block' >
                 {
                     item.type === 'image_slide' ?
                         <ImageSlideItemRender thumbnail={item.thumbnail} content={item.content as ImageSlideContent} />
@@ -75,7 +76,7 @@ const ItemCard = ({
                                 <PdfItemRenderer thumbnail={item.thumbnail} content={item.content as PdfContent} />
                                 : <Image src={item.thumbnail ?? ''} fill={true} objectFit="cover" alt={item.title} />
                 }
-            </div>
+            </Link>
 
             <div>
                 <div className='flex items-center justify-between text-muted-foreground text-xs p-2'>

@@ -1,8 +1,13 @@
+/* eslint-disable @typescript-eslint/no-redundant-type-constituents */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { type Collection, type Prisma, type Tag } from '@prisma/client';
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
-import { type CollectionOut, CreateCollectionSchema, DeleteCollectonSchema, GetCollectionByIdSchema, type SingleCollectionOut, UpdateCollectionSchema, PaginatedCollectionListSchema, InfinitCollectionListSchema } from '@/schema/collection-schema';
+import { type CollectionOut, CreateCollectionSchema, DeleteCollectonSchema, GetCollectionByIdSchema, type SingleCollectionOut, UpdateCollectionSchema, PaginatedCollectionListSchema, InfinitCollectionListSchema, GetCollectionBySlugSchema } from '@/schema/collection-schema';
 import { TRPCError } from '@trpc/server';
-import { paginate } from '@/lib/utils';
+import { md5Hash, paginate } from '@/lib/utils';
 import config from '@/server/config';
 
 type CollectionListResponse = Collection & {
@@ -74,6 +79,7 @@ export const CollectionRouter = createTRPCRouter({
         const res = await ctx.db.collection.create({
             data: {
                 ...input,
+                hash: md5Hash(input.title),
                 tags: {
                     connectOrCreate: tags.map(name => ({
                         where: { name },
@@ -105,6 +111,7 @@ export const CollectionRouter = createTRPCRouter({
             where: {id},
             data: {
                 ...input,
+                hash: md5Hash(input.title),
                 tags: {
                     connectOrCreate: tagsForConnnect.map(tag => ({where: {name: tag}, create: {name: tag}})),
                     disconnect: tagsForDisconnect.map(tag => ({name: tag.name}))
@@ -125,6 +132,15 @@ export const CollectionRouter = createTRPCRouter({
         const userId = ctx.session?.user.id;
         const res = await ctx.db.collection.findFirst({
             where: {id: input.id},
+            include: getCollectionIncludes(userId)
+        });
+        if(!res) throw new TRPCError({code: 'NOT_FOUND', message: 'Collection not found!'});
+        return collectionSingleResolver(res)
+    }),
+    getBySlug: publicProcedure.input(GetCollectionBySlugSchema).query(async ({ctx, input}) => {
+        const userId = ctx.session?.user.id;
+        const res = await ctx.db.collection.findFirst({
+            where: {slug: input.slug},
             include: getCollectionIncludes(userId)
         });
         if(!res) throw new TRPCError({code: 'NOT_FOUND', message: 'Collection not found!'});

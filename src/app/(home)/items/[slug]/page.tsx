@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import ErrorView from '@/components/ErrorView';
 import SingleItemViewer from '@/components/items/SingleItemViewer';
@@ -10,7 +12,7 @@ import { SingleItemOut } from '@/schema/item-schema';
 
 
 type Props = {
-  params: { id: string }
+  params: { slug: string }
   searchParams: Record<string, string | string[] | undefined>
 }
  
@@ -19,10 +21,11 @@ export async function generateMetadata(
   parent: ResolvingMetadata
 ): Promise<Metadata> {
   
-  const id = params.id
+  const slug = params.slug
  
   // fetch data
-  const item:SingleItemOut<any> = await api.items.getById.query({id: parseInt(id)})
+  const item:SingleItemOut<any> = await api.items.getBySlug.query({slug: slug})
+  
  
   // optionally access and extend (rather than replace) parent metadata
   const previousImages = (await parent).openGraph?.images ?? [];
@@ -46,11 +49,11 @@ export async function generateMetadata(
 const SingleItemViewPage = async ({
     params
 }: {
-    params?: {id: string|string[]}
+    params?: {slug: string}
 }) => {
-    const validate = z.object({id: z.string()}).safeParse(params);
+    const validate = z.object({slug: z.string()}).safeParse(params);
     if(!validate.success) return <ErrorView/>
-    const item = await api.items.getById.query({id: parseInt(params?.id as string)});
+    const item = await api.items.getBySlug.query({slug: params?.slug!});
 
     if(!item) return notFound()
 

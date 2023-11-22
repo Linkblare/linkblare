@@ -1,16 +1,22 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 'use client'
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import FileUpload from '../FileUpload'
-import { useForm } from 'react-hook-form'
+import { useForm, useWatch } from 'react-hook-form'
 import {
-  CollectionOut,
-  CreateCollectionInput,
+  type CollectionOut,
+  type CreateCollectionInput,
   CreateCollectionSchema,
-  UpdateCollectionInput,
+  type UpdateCollectionInput,
   UpdateCollectionSchema
 } from '@/schema/collection-schema'
-import { convertNullToUndefined } from '@/lib/utils'
+import { convertNullToUndefined, getSlug, md5Hash } from '@/lib/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { 
   Form, 
@@ -46,9 +52,9 @@ const MutateCollectionForm = ({
     defaultValues: data ? {...convertNullToUndefined({...data, tags: data.tags.map(tag => tag.name)})} :  {},
     resolver: zodResolver(data ? UpdateCollectionSchema : CreateCollectionSchema)
   });
+  const titleWatch = useWatch({control: form.control, name: 'title'})
   const ctx = api.useUtils().collection;
 
-  console.log({data: convertNullToUndefined(data)})
 
   const onSubmit = async (values: CreateCollectionInput | UpdateCollectionInput) => {
     try {
@@ -63,7 +69,7 @@ const MutateCollectionForm = ({
           title: 'Collection Created successfully!!!'
         });
       }
-      ctx.invalidate();
+      void ctx.invalidate();
       form.reset({});
       onDone?.();
     } catch (error: any) {
@@ -74,6 +80,11 @@ const MutateCollectionForm = ({
       });
     }
   }
+  useEffect(() => {
+    if(titleWatch){
+      form.setValue('slug', getSlug(titleWatch))
+    }
+  }, [titleWatch])
 
   return (
     <>
@@ -98,6 +109,17 @@ const MutateCollectionForm = ({
                 <FormLabel>Title</FormLabel>
                 <FormControl>
                   <Input placeholder='Collection title' {...field} />
+                </FormControl>
+              </FormItem>
+            }}
+          />
+          <FormField
+            name='slug'
+            render={({ field }) => {
+              return <FormItem>
+                <FormLabel>Slug</FormLabel>
+                <FormControl>
+                  <Input placeholder='Collection slug' {...field} />
                 </FormControl>
               </FormItem>
             }}

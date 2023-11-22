@@ -50,6 +50,8 @@ export interface ImageSlideContent extends z.TypeOf<typeof ImageSlideContentSche
 
 export const CreateItemSchema = z.object({
     title: z.string(),
+    slug: z.string(),
+    hash: z.string().optional(),
     description: z.string().optional(),
     thumbnail: z.string().optional(),
     type: ItemTypesEnumSchema,
@@ -72,6 +74,9 @@ export type UpdateItemInput = z.TypeOf<typeof UpdateItemSchema>;
 
 export const GetItemByIdSchema = z.object({
     id: z.number()
+})
+export const GetItemBySlugSchema = z.object({
+    slug: z.string()
 })
 
 export const PaginatedItemListSchema = z.object({

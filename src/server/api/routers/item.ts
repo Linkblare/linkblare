@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
@@ -5,11 +6,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-import { CreateItemSchema, type SingleItemOut, type ItemOut, UpdateItemSchema, DeleteItemSchema, GetItemByIdSchema, PaginatedItemListSchema, InfinitItemListSchema, type ItemTypes } from "@/schema/item-schema";
+import { CreateItemSchema, type SingleItemOut, type ItemOut, UpdateItemSchema, DeleteItemSchema, GetItemByIdSchema, PaginatedItemListSchema, InfinitItemListSchema, type ItemTypes, GetItemBySlugSchema } from "@/schema/item-schema";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 import { type Prisma, type Collection, type Item, type Tag } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
-import { paginate } from "@/lib/utils";
+import { md5Hash, paginate } from "@/lib/utils";
 import config from "@/server/config";
 
 type ListItemResponse = Omit<Item, 'type'> & {
@@ -77,6 +78,7 @@ const ItemRouter = createTRPCRouter({
                 },
                 content: rest.content!,
                 ...rest,
+                hash: md5Hash(input.title),
                 tags: {
                     connectOrCreate: tags.map(name => ({
                         where: { name },
@@ -112,6 +114,7 @@ const ItemRouter = createTRPCRouter({
                 },
                 content: rest.content!,
                 ...rest,
+                hash: md5Hash(input.title),
             },
 
             include: getItemIncludes(userId, 'single')
@@ -128,6 +131,15 @@ const ItemRouter = createTRPCRouter({
         const userId = ctx.session?.user.id;
         const res = await ctx.db.item.findFirst({
             where: {id: input.id},
+            include: getItemIncludes(userId, 'single')
+        });
+        if(!res) throw new TRPCError({code: 'NOT_FOUND', message: 'Collection not found!'});
+        return singleItemResolver(res as any)
+    }),
+    getBySlug: publicProcedure.input(GetItemBySlugSchema).query(async ({ctx, input}) => {
+        const userId = ctx.session?.user.id;
+        const res = await ctx.db.item.findFirst({
+            where: {slug: input.slug},
             include: getItemIncludes(userId, 'single')
         });
         if(!res) throw new TRPCError({code: 'NOT_FOUND', message: 'Collection not found!'});

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import ErrorView from '@/components/ErrorView'
 import MainWrapper from '@/components/MainWrapper'
 import ItemLoader from '@/components/items/ItemLoader'
@@ -9,12 +11,12 @@ import { type Metadata, type ResolvingMetadata } from 'next';
 import { type SingleCollectionOut } from '@/schema/collection-schema'
 
 const ParamsSchema = z.object({
-    id: z.string()
+    slug: z.string()
 })
 
  
 type Props = {
-  params: { id: string }
+  params: { slug: string }
   searchParams: Record<string, string | string[] | undefined>
 }
  
@@ -23,10 +25,9 @@ export async function generateMetadata(
   parent: ResolvingMetadata
 ): Promise<Metadata> {
   
-  const id = params.id
  
   // fetch data
-  const collection:SingleCollectionOut = await api.collection.getById.query({id: parseInt(id)})
+  const collection:SingleCollectionOut = await api.collection.getBySlug.query({slug: params.slug})
  
   // optionally access and extend (rather than replace) parent metadata
   const previousImages = (await parent).openGraph?.images ?? [];
@@ -50,14 +51,14 @@ export async function generateMetadata(
 const ViewSingleCollectionPage = async ({
     params
 }: {
-    params: { id: string | string[] }
+    params: { slug: string }
 }) => {
     const validateParams = ParamsSchema.safeParse(params);
     if(!validateParams.success){
         return <ErrorView title='Something went wrong!!' />
     }
 
-    const collection = await api.collection.getById.query({id: parseInt(params.id as string)})
+    const collection = await api.collection.getBySlug.query({slug: params.slug})
 
     if(!collection){
         return notFound();
@@ -65,7 +66,7 @@ const ViewSingleCollectionPage = async ({
 
     return (
         <MainWrapper className='py-5'>
-            <ItemLoader collectionId={parseInt(params.id as string)} />
+            <ItemLoader collectionId={collection.id} />
         </MainWrapper>
     )
 }

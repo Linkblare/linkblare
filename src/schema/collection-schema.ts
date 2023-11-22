@@ -9,6 +9,8 @@ import { type Tag, type Collection } from "@prisma/client";
 
 export const CreateCollectionSchema = z.object({
     title: z.string(),
+    slug: z.string(),
+    hash: z.string().optional(),
     description: z.string().optional(),
     thumbnail: z.string().optional(),
     tags: z.array(z.string()).default([])
@@ -29,6 +31,9 @@ export type UpdateCollectionInput = z.TypeOf<typeof UpdateCollectionSchema>;
 
 export const GetCollectionByIdSchema = z.object({
     id: z.number()
+})
+export const GetCollectionBySlugSchema = z.object({
+    slug: z.string()
 })
 
 export const PaginatedCollectionListSchema = z.object({

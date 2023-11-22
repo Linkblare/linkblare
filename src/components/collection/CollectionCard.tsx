@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable react/display-name */
 import { CollectionOut } from '@/schema/collection-schema'
 import React from 'react'
@@ -26,7 +30,7 @@ const CollectionCard = ({
       </div>
 
       <div className='p-3 h-16'>
-        <Link href={`/${collection.id}`}><CardTitle className='line-clamp-2'>{collection.title}</CardTitle></Link>
+        <Link href={`/${collection.slug}`}><CardTitle className='line-clamp-2'>{collection.title}</CardTitle></Link>
         <span className='text-muted-foreground text-xs'>
           {dateFromNow(collection.createdAt)}
         </span>

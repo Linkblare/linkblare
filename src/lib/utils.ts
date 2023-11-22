@@ -10,6 +10,8 @@ import { ZodError, z } from "zod"
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime'
 import { nanoid } from "nanoid";
+import slugify from "slugify";
+import {Md5} from 'ts-md5'
 
 dayjs.extend(relativeTime);
 
@@ -232,5 +234,13 @@ export function getPlaceholderImage({
 }){
   config = {...{width: 800}, ...config}
   return `https://placehold.co/${config?.width}${config?.height ? `x${config?.height}` : ''}?${config?.text ? `font=${config?.text.replaceAll(' ', '+')}` : ''}`
+}
+
+export function getSlug(text: string){
+  return slugify(text.toLowerCase());
+}
+
+export function md5Hash(text: string){
+  return Md5.hashStr(text)
 }
 

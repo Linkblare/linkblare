@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/require-await */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
@@ -5,12 +7,12 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 'use client'
 
-import { convertNullToUndefined } from '@/lib/utils'
+import { convertNullToUndefined, getSlug, md5Hash } from '@/lib/utils'
 import { type CreateItemInput, CreateItemSchema, type ItemTypes, type SingleItemOut, type UpdateItemInput, UpdateItemSchema } from '@/schema/item-schema'
 import { api } from '@/trpc/react'
 import { zodResolver } from '@hookform/resolvers/zod'
-import React from 'react'
-import { useForm } from 'react-hook-form'
+import React, { useEffect } from 'react'
+import { useForm, useWatch } from 'react-hook-form'
 import { useToast } from '../ui/use-toast'
 import { nanoid } from 'nanoid'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form'
@@ -41,9 +43,10 @@ const MutateItemForm = ({
     const createMutation = api.items.create.useMutation();
     const updateMutation = api.items.update.useMutation();
     const form = useForm<CreateItemInput | UpdateItemInput>({
-        defaultValues: data ? convertNullToUndefined({ ...data, tags: data.tags.map(tg => tg.name) }) : { type, collectionId},
+        defaultValues: data ? convertNullToUndefined({ ...data, tags: data.tags.map(tg => tg.name) }) : { type, collectionId },
         resolver: zodResolver(data ? UpdateItemSchema : CreateItemSchema)
     });
+    const titleWatch = useWatch({ control: form.control, name: 'title' });
     const { toast } = useToast()
 
     const save = async (values: CreateItemInput | UpdateItemInput) => {
@@ -51,7 +54,6 @@ const MutateItemForm = ({
         try {
             if (data) {
                 await updateMutation.mutateAsync(convertNullToUndefined(values));
-
             } else {
                 await createMutation.mutateAsync(values as CreateItemInput);
             }
@@ -72,6 +74,14 @@ const MutateItemForm = ({
         if (createMutation.isLoading || updateMutation.isLoading) return;
         void save(values);
     }
+
+    useEffect(() => {
+        if (titleWatch) {
+            form.setValue('slug', getSlug(titleWatch))
+        }
+    }, [titleWatch])
+
+
 
 
     return (
@@ -101,6 +111,18 @@ const MutateItemForm = ({
                     )}
                 />
                 <FormField
+                    name="slug"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Slug</FormLabel>
+                            <FormControl>
+                                <Input placeholder='Item slug' {...field} />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+                <FormField
                     name="description"
                     render={({ field }) => (
                         <FormItem>
@@ -114,11 +136,11 @@ const MutateItemForm = ({
                 />
 
                 {
-                    type === 'image_slide' ? 
+                    type === 'image_slide' ?
                         <ImageSlideForm form={form} />
-                    : type === 'link' ?
-                        <MutateLinkItem form={form} />
-                    : <PdfItemForm form={form} />
+                        : type === 'link' ?
+                            <MutateLinkItem form={form} />
+                            : <PdfItemForm form={form} />
                 }
 
                 <FormField
