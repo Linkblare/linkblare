@@ -98,6 +98,7 @@ model Collection {
     hash        String?
     description String?
     thumbnail   String?
+    itemsImages Json[] @default([])
     tags        Tag[]
     items       Item[]
     likes       User[]   @relation("user_collection_likes")

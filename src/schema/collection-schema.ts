@@ -4,7 +4,7 @@ import { WithPagination } from "./_helpers/WithPagination";
 import { WithSearch } from "./_helpers/WithSearch";
 import { WithSorting } from "./_helpers/WithSorting";
 import { WithInfinitListSchema } from "./_helpers/WithInfinitList";
-import { type Tag, type Collection } from "@prisma/client";
+import { type Tag, type Collection, Item } from "@prisma/client";
 
 
 export const CreateCollectionSchema = z.object({
@@ -57,7 +57,10 @@ export const InfinitCollectionListSchema = z.object({
     .merge(WithSorting)
 
 
-export type CollectionOut = Collection & {
+export type CollectionItemImage = {itemId: number, thumbnail: string};
+
+export type CollectionOut = Omit<Collection, 'itemsImages'> & {
+    itemsImages: CollectionItemImage[],
     liked: boolean
     saved: boolean,
     tags: Tag[],
@@ -68,9 +71,10 @@ export type CollectionOut = Collection & {
     }
 }
 
-export type SingleCollectionOut = Collection & {
+export type SingleCollectionOut = Omit<Collection, 'itemsImages'> & {
+    itemsImages: CollectionItemImage[],
     liked: boolean
-    saved: boolean
+    saved: boolean,
     tags: Tag[]
     _count: {
         likes: number,

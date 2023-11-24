@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable react/display-name */
-import { CollectionOut } from '@/schema/collection-schema'
+import { CollectionItemImage, CollectionOut } from '@/schema/collection-schema'
 import React from 'react'
 import { Skeleton } from '../ui/skeleton'
 import Image from 'next/image'
@@ -19,6 +19,64 @@ type CollectionCardProps = {
   collection: CollectionOut
 }
 
+const CollectionThumbnailGrid = ({ itemImages }: { itemImages: CollectionItemImage[] }) => {
+
+  const CollectionThumbnailGridImage = ({ src }: { src: string }) => {
+    return <Image className='w-full h-auto' fill objectFit='cover' sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw' src={src} alt='' />
+  }
+
+  if (itemImages.length === 2 || itemImages.length === 4) {
+    return (
+      <div className='grid grid-cols-2 gap-1 h-full'>
+        {
+          itemImages.map(item => (
+            <div className='w-full h-full relative' key={nanoid()}>
+              <CollectionThumbnailGridImage src={item?.thumbnail ?? ''} />
+            </div>
+          ))
+        }
+      </div>
+    )
+  }
+  if (itemImages.length === 3) {
+    return (
+      <div className='grid grid-cols-2 grid-rows-2 gap-1 h-full relative'>
+        <div className='relative' >
+          <CollectionThumbnailGridImage src={itemImages[0]?.thumbnail ?? ''} />
+        </div >
+        <div className="col-span-2 col-start-1 row-start-2 relative">
+          <CollectionThumbnailGridImage src={itemImages[1]?.thumbnail ?? ''} />
+        </div>
+        <div className="col-start-2 row-start-1 relative">
+          <CollectionThumbnailGridImage src={itemImages[2]?.thumbnail ?? ''} />
+        </div>
+
+      </div>
+    )
+  }
+
+  if (itemImages.length === 5) {
+    return (
+      <div className="grid grid-cols-5 grid-rows-3 gap-1 h-full relative">
+        <div className="col-span-5 row-span-2 relative"><CollectionThumbnailGridImage src={itemImages[0]?.thumbnail ?? ''} /></div>
+        <div className="row-start-3 relative"><CollectionThumbnailGridImage src={itemImages[1]?.thumbnail ?? ''} /></div>
+        <div className="row-start-3 relative"><CollectionThumbnailGridImage src={itemImages[2]?.thumbnail ?? ''} /></div>
+        <div className="row-start-3 relative"><CollectionThumbnailGridImage src={itemImages[3]?.thumbnail ?? ''} /></div>
+        <div className="row-start-3 relative"><CollectionThumbnailGridImage src={itemImages[4]?.thumbnail ?? ''} /></div>
+        <div className="row-start-3 relative"><CollectionThumbnailGridImage src={itemImages[5]?.thumbnail ?? ''} /></div>
+      </div>
+    )
+  }
+
+
+
+  return (
+    <div className='w-full h-full'>
+      <Image className='w-full h-auto' width={400} height={300} src={itemImages[0]?.thumbnail ?? ''} alt='' />
+    </div>
+  )
+}
+
 const CollectionCard = ({
   collection
 }: CollectionCardProps) => {
@@ -26,7 +84,13 @@ const CollectionCard = ({
   return (
     <div className='rounded-xl overflow-hidden bg-card max-w-full md:max-w-sm border '>
       <div className='rounded-xl overflow-hidden aspect-[4/2.5]'>
-        <Image className='w-full h-auto' width={400} height={300} src={collection.thumbnail??''} alt='' />
+        {
+          collection.itemsImages.length > 0 ?
+            <CollectionThumbnailGrid itemImages={collection.itemsImages} />
+            : <div className='w-full h-full'>
+              <Image className='w-full h-auto' width={400} height={300} src={collection?.thumbnail ?? ''} alt='' />
+            </div>
+        }
       </div>
 
       <div className='p-3 h-16'>
@@ -37,11 +101,11 @@ const CollectionCard = ({
       </div>
 
       <div className='flex items-center justify-between py-1 px-2'>
-        <ActionButton action={'collection_like_toggle'} entityId={collection.id} defaultState={collection.liked}/>
-        <ActionButton action={'collection_save_toggle'} entityId={collection.id} defaultState={collection.saved}/>
+        <ActionButton action={'collection_like_toggle'} entityId={collection.id} defaultState={collection.liked} />
+        <ActionButton action={'collection_save_toggle'} entityId={collection.id} defaultState={collection.saved} />
         <InfoDialog>
           <p>{collection.description}</p>
-          <Separator  />
+          <Separator />
           <div className='flex gap-3 flex-wrap'>
             {
               collection.tags.map(tag => <span key={nanoid()}>#{tag.name}</span>)

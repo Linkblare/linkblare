@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import { type Collection, type Prisma, type Tag } from '@prisma/client';
+import { Item, type Collection, type Prisma, type Tag } from '@prisma/client';
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 import { type CollectionOut, CreateCollectionSchema, DeleteCollectonSchema, GetCollectionByIdSchema, type SingleCollectionOut, UpdateCollectionSchema, PaginatedCollectionListSchema, InfinitCollectionListSchema, GetCollectionBySlugSchema } from '@/schema/collection-schema';
 import { TRPCError } from '@trpc/server';
@@ -14,6 +14,7 @@ type CollectionListResponse = Collection & {
     likes: {id: string}[],
     saves: {id: string}[],
     tags: Tag[],
+    items: Item[],
     _count: {
         likes: number,
         saves: number,
@@ -24,6 +25,7 @@ type CollectionSingleResponse = Collection & {
     likes: {id: string}[],
     saves: {id: string}[],
     tags: Tag[],
+    items: Item[],
     _count: {
         likes: number,
         saves: number,
@@ -42,29 +44,37 @@ export const getCollectionIncludes = (userId?: string, type: 'List'|'Single' = '
                 saves: true,
                 items: true
             }
+        },
+        items: {
+            where: {
+                thumbnail: {not: null}
+            },
+            take: config.collectionFillItemImagesLimit,
         }
     };
 
     if(type === 'Single'){
         includes.tags = true;
-        includes.items = true
+        // includes.items = true
     }
     return includes;
 }
 
 export const collectionListResolver = (response: CollectionListResponse) => {
-    const {likes, saves, ...rest} = response;
+    const {likes, saves, items, ...rest} = response;
     const result: CollectionOut = {
         ...rest,
+        itemsImages: items.map(item => ({itemId: item.id, thumbnail: item.thumbnail as string})),
         liked: likes && likes.length > 0,
         saved: saves && saves.length > 0,
     }
     return result;
 }
 export const collectionSingleResolver = (response: CollectionSingleResponse) => {
-    const {likes, saves, ...rest} = response;
+    const {likes, saves, items, ...rest} = response;
     const result: SingleCollectionOut = {
         ...rest,
+        itemsImages: items.map(item => ({itemId: item.id, thumbnail: item.thumbnail as string})),
         liked: likes && likes.length > 0,
         saved: saves && saves.length > 0,
     }
