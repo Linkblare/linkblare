@@ -71,8 +71,8 @@ const CollectionThumbnailGrid = ({ itemImages }: { itemImages: CollectionItemIma
 
 
   return (
-    <div className='w-full h-full'>
-      <Image className='w-full h-auto' width={400} height={300} src={itemImages[0]?.thumbnail ?? ''} alt='' />
+    <div className='w-full h-full relative'>
+      <CollectionThumbnailGridImage src={itemImages[0]?.thumbnail ?? ''} />
     </div>
   )
 }
@@ -87,8 +87,8 @@ const CollectionCard = ({
         {
           collection.itemsImages.length > 0 ?
             <CollectionThumbnailGrid itemImages={collection.itemsImages} />
-            : <div className='w-full h-full'>
-              <Image className='w-full h-auto' width={400} height={300} src={collection?.thumbnail ?? ''} alt='' />
+            : <div className='w-full h-full relative'>
+              <Image className='w-full h-auto' fill objectFit='cover' sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw' src={collection.thumbnail ?? ''} alt='' />
             </div>
         }
       </div>
