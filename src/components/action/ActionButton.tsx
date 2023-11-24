@@ -30,12 +30,17 @@ const ActionButton = ({
     defaultState
 }: ActionButtonProps) => {
     const actionMutation = api.user.action.useMutation();
+    const savedCtx = api.useUtils().user.savedCollection;
     const { toast } = useToast();
     
     const toggle = async () => {
         try {
             const res = await actionMutation.mutateAsync({ action, entityId })
             onAction?.(res)
+
+            if(action === 'collection_save_toggle'){
+                await savedCtx.invalidate();
+            }
             
         } catch (error) {
             console.error(error)
