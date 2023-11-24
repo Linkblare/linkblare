@@ -1,4 +1,5 @@
 import "@/styles/globals.css";
+import '@/styles/react-tag-autocomplete.css'
 
 import { GeistSans } from 'geist/font/sans'
 import { headers } from "next/headers";
@@ -11,7 +12,7 @@ import { Toaster } from "@/components/ui/toaster";
 import {Analytics as VercelAnalytics} from '@vercel/analytics/react'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { Metadata } from "next";
+import { type Metadata } from "next";
 import { Suspense } from "react";
 import Analytics from "@/components/utils/GoogleTagmanager";
 

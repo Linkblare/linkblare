@@ -54,7 +54,7 @@ const ItemCard = ({
 
                             : item.type === 'link' ?
                                 <div className='flex items-center gap-2'>
-                                    <Link rel={'no-follow'} href={item.content.originUrl}>{new URL(item.content.originUrl as string).hostname}</Link>
+                                    <Link target='_blank' rel={'no-follow'} href={item.content.originUrl}>{new URL(item.content.originUrl as string).hostname}</Link>
                                     <ExternalLinkIcon className='w-3 h-3 text-muted-foreground' />
                                 </div>
 

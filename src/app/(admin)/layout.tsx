@@ -7,7 +7,7 @@ import React, { PropsWithChildren } from 'react'
 const Layout = async ({ children }: PropsWithChildren) => {
     const session = await getServerAuthSession();
 
-    if (!session) {
+    if (!session || session.user.role !== 'ADMIN') {
         redirect('/')
     }
 

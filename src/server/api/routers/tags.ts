@@ -1,3 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
+/* eslint-disable @typescript-eslint/no-redundant-type-constituents */
+/* eslint-disable @typescript-eslint/require-await */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { CreateTagSchema, DeleteTagSchema, InfinitTagListSchema, PaginatedTagListSchema, UpdateTagSchema } from '@/schema/tag-schema';
@@ -15,21 +22,21 @@ const tagResolver = (res: TagResponse, currentUserId?: string) => {
     return {
         id: res.id,
         name: res.name,
-        isPreferred: currentUserId ? Boolean(res.preferredByUsers.find(user => user.id === currentUserId)) : false
+        isPreferred: currentUserId ? Boolean(res.preferredByUsers?.find(user => user.id === currentUserId)) : false
     }
 }
 
 
 const TagRouter = createTRPCRouter({
     create: protectedProcedure.input(CreateTagSchema).mutation(async ({ ctx, input }) => {
-        const res = ctx.db.tag.create({
+        const res = await ctx.db.tag.create({
             data: input
         });
         return res;
     }),
 
     update: protectedProcedure.input(UpdateTagSchema).mutation(async ({ ctx, input }) => {
-        const res = ctx.db.tag.update({
+        const res = await ctx.db.tag.update({
             where: {
                 id: input.id
             },
@@ -39,7 +46,7 @@ const TagRouter = createTRPCRouter({
     }),
 
     delete: protectedProcedure.input(DeleteTagSchema).mutation(async ({ ctx, input }) => {
-        const res = ctx.db.tag.delete({ where: { id: input.id } });
+        const res = await ctx.db.tag.delete({ where: { id: input.id } });
         return res;
     }),
 

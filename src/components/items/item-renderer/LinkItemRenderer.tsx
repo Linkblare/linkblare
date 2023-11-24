@@ -45,7 +45,7 @@ const LinkItemRenderer = ({
 
   return (
     <div className='w-full h-full relative'>
-      <Image src={thumbnail ?? getPlaceholderImage({})} alt="" fill objectFit='cover' objectPosition='center' />
+      <Image src={thumbnail ?? getPlaceholderImage({})} alt="" fill objectFit='cover' objectPosition='left' />
     </div>
   )
 }
