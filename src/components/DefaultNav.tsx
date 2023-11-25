@@ -62,12 +62,12 @@ const DefaultNav = () => {
             </div>
             <div className='flex items-center gap-3'>
                 <Link href={config.appGihubLink} className={cn([
-                    buttonVariants({size: 'icon'})
+                    buttonVariants({size: 'icon', variant: 'outline'})
                 ])}>
-                    <GithubIcon/>
+                    <GithubIcon />
                 </Link>
                 {
-                    session ? <UserAvatarDropdown /> : <LoginButton />
+                    session ? <UserAvatarDropdown /> : <LoginButton/>
                 }
             </div>
         </nav>

@@ -34,7 +34,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={` ${GeistSans.className} overflow-x-hidden`}>
+      <body className={` ${GeistSans.className} overflow-x-hidden max-w-[1920px] mx-auto`}>
         <Suspense><Analytics /></Suspense>
         <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
         <TRPCReactProvider headers={headers()}>{children}</TRPCReactProvider>

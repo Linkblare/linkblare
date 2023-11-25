@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
 import { CollectionOut } from '@/schema/collection-schema'
@@ -57,7 +59,7 @@ const columns: ColumnDef<CollectionOut>[] = [
         cell({ row }) {
             return <div className='flex items-center justify-between'>
                 <span>{row.original._count.items}</span>
-                <Link href={{pathname: `./items/`, }}><Button variant={'outline'} size={'sm'}>Items</Button></Link>
+                <Link href={{pathname: `./items/?collectionId=${row.original.id}`, }}><Button variant={'outline'} size={'sm'}>Items</Button></Link>
             </div>
         }
     },

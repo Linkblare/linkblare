@@ -1,22 +1,22 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 'use client'
 
-import { CollectionOut } from '@/schema/collection-schema'
-import { ColumnDef } from '@tanstack/react-table'
+
+import { type ColumnDef } from '@tanstack/react-table'
 import React, { useState } from 'react'
 import { Checkbox } from '../ui/checkbox'
 import Link from 'next/link'
 import DataTable from '../DataTable'
 import { api } from '@/trpc/react'
-import { PaginationMeta } from '@/types/PaginationMeta'
-import { PaginateOptions } from 'prisma-pagination'
+import { type PaginateOptions } from 'prisma-pagination'
 import { Button } from '../ui/button'
-import { Edit, Edit3Icon } from 'lucide-react'
-import { DeleteItemSchema, ItemOut, SingleItemOut } from '@/schema/item-schema'
+import { Edit } from 'lucide-react'
+import { type SingleItemOut } from '@/schema/item-schema'
 import CollectionViewerSheet from '../collection/CollectionViewerSheet'
 import DeleteItemButton from './DeleteItemButton'
-// import MutateCollectionDialog from './MutateCollectionDialog'
-// import DeleteCollection from './DeleteCollection'
-// import CollectionViewerSheet from './CollectionViewerSheet'
+
 
 
 const columns: ColumnDef<SingleItemOut>[] = [

@@ -39,7 +39,7 @@ const ItemCard = ({
     const router = useRouter();
 
     return (
-        <div className='max-w-md rounded-xl border'>
+        <div className='max-w-full md:max-w-md mrounded-xl border'>
             <div className='min-h-[80px] p-3 space-y-1'>
                 <CardTitle className='line-clamp-2'>{item.title}</CardTitle>
                 <div className='flex items-center text-muted-foreground text-xs space-x-1'>
@@ -96,7 +96,7 @@ const ItemCard = ({
 
 ItemCard.Skeleton = () => {
     return (
-        <div className='max-w-xs'>
+        <div className='max-w-xl'>
             <div className='py-2 space-y-1'>
                 <Skeleton className='w-full h-[20px]' />
                 <Skeleton className='w-1/2 h-[20px]' />
