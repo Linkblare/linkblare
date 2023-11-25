@@ -25,7 +25,7 @@ const FileUpload = ({
   value,
   onChange,
   onUploadError,
-  onRemoveSuccess
+  onRemoveSuccess,
 }: FileUploadProps) => {
 
   const [previewImage, setPreviewImage] = useState<any>(value);

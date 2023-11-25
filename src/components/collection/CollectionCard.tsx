@@ -63,7 +63,6 @@ const CollectionThumbnailGrid = ({ itemImages }: { itemImages: CollectionItemIma
         <div className="row-start-3 relative"><CollectionThumbnailGridImage src={itemImages[2]?.thumbnail ?? ''} /></div>
         <div className="row-start-3 relative"><CollectionThumbnailGridImage src={itemImages[3]?.thumbnail ?? ''} /></div>
         <div className="row-start-3 relative"><CollectionThumbnailGridImage src={itemImages[4]?.thumbnail ?? ''} /></div>
-        <div className="row-start-3 relative"><CollectionThumbnailGridImage src={itemImages[5]?.thumbnail ?? ''} /></div>
       </div>
     )
   }

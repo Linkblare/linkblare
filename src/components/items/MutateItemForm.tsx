@@ -86,7 +86,7 @@ const MutateItemForm = ({
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(handleSubmit)} className='space-y-4'>
+            <form key={id} onSubmit={form.handleSubmit(handleSubmit)} className='space-y-4'>
                 <FormField
                     name='thumbnail'
                     render={({ field }) => {
