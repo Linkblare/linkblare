@@ -3,8 +3,11 @@ import ErrorView from '@/components/ErrorView'
 import DashboardPageHeader from '@/components/dashboard/DashboardPageHeader'
 import MutateItemForm from '@/components/items/MutateItemForm'
 import SelectItemeType from '@/components/items/SelectItemType'
+import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { ItemTypesArray } from '@/schema/item-schema'
+import { ListIcon } from 'lucide-react'
+import Link from 'next/link'
 import React from 'react'
 import { type ZodError, z } from 'zod'
 
@@ -45,25 +48,31 @@ const MuatateItemPage = ({
         </>
     }
 
-    
+
 
     return (
         <>
-        <DashboardPageHeader title={
-            validatedParams.data.itemType === 'image_slide' ?
-                'Create Image Slide'
-            : validatedParams.data.itemType === 'link' ? 
-                'Create Link Item'
-            : validatedParams.data.itemType === 'pdf' ?
-                'Create Pdf Item' 
-            : 'Create Unknown type item'
-        }></DashboardPageHeader>
+            <DashboardPageHeader title={
+                validatedParams.data.itemType === 'image_slide' ?
+                    'Create Image Slide'
+                    : validatedParams.data.itemType === 'link' ?
+                        'Create Link Item'
+                        : validatedParams.data.itemType === 'pdf' ?
+                            'Create Pdf Item'
+                            : 'Create Unknown type item'
+            }>
+
+                <div className='flex justify-end items-center w-full'>
+                    <Link href={`/admin/items?collectionId=${validatedParams.data?.collectionId}`} className={cn([buttonVariants(), 'space-x-2'])}><ListIcon /> <span>View List</span></Link>
+                </div>
+
+            </DashboardPageHeader>
             <div className={cn([
-            'max-w-2xl mx-auto',
-            {'max-w-4xl': (validatedParams.data.itemType === 'image_slide')}
-        ])}>
-            <MutateItemForm type={validatedParams.data.itemType} collectionId={parseInt(validatedParams.data.collectionId)} />
-        </div>
+                'max-w-2xl mx-auto',
+                { 'max-w-4xl': (validatedParams.data.itemType === 'image_slide') }
+            ])}>
+                <MutateItemForm type={validatedParams.data.itemType} collectionId={parseInt(validatedParams.data.collectionId)} />
+            </div>
         </>
     )
 }
