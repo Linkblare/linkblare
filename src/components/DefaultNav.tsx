@@ -10,6 +10,9 @@ import { useSession } from 'next-auth/react'
 import { NavigationMenu, NavigationMenuItem, NavigationMenuList, navigationMenuTriggerStyle } from './ui/navigation-menu'
 import { cn } from '@/lib/utils'
 import { nanoid } from 'nanoid'
+import config from '@/server/config'
+import { buttonVariants } from './ui/button'
+import { GithubIcon } from 'lucide-react'
 
 const menus = [
     {
@@ -57,7 +60,12 @@ const DefaultNav = () => {
                     </NavigationMenu>
                 </div>
             </div>
-            <div>
+            <div className='flex items-center gap-3'>
+                <Link href={config.appGihubLink} className={cn([
+                    buttonVariants({size: 'icon'})
+                ])}>
+                    <GithubIcon/>
+                </Link>
                 {
                     session ? <UserAvatarDropdown /> : <LoginButton />
                 }
