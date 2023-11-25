@@ -57,7 +57,7 @@ const CollectionThumbnailGrid = ({ itemImages }: { itemImages: CollectionItemIma
 
   if (itemImages.length === 5) {
     return (
-      <div className="grid grid-cols-5 grid-rows-3 gap-1 h-full relative">
+      <div className="grid grid-cols-4 grid-rows-3 gap-1 h-full relative">
         <div className="col-span-5 row-span-2 relative"><CollectionThumbnailGridImage src={itemImages[0]?.thumbnail ?? ''} /></div>
         <div className="row-start-3 relative"><CollectionThumbnailGridImage src={itemImages[1]?.thumbnail ?? ''} /></div>
         <div className="row-start-3 relative"><CollectionThumbnailGridImage src={itemImages[2]?.thumbnail ?? ''} /></div>
