@@ -244,3 +244,5 @@ export function md5Hash(text: string){
   return Md5.hashStr(text)
 }
 
+
+
