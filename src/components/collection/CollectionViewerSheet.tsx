@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 'ue client'
 
 import { CollectionOut } from '@/schema/collection-schema'

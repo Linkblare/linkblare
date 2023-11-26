@@ -1,7 +1,8 @@
 
 import DashboardPageHeader from '@/components/dashboard/DashboardPageHeader';
 import ItemTable from '@/components/items/ItemTable';
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 import { Plus } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react'
@@ -19,11 +20,12 @@ const ItemsPage = ({
         <>
             <DashboardPageHeader title='Items'>
                 <div className="w-full flex justify-end">
-                    {/* <Link href="./items/mutate">
-                        <Button className='space-x-2'>
-                            <Plus /> <span>New</span>
-                        </Button>
-                    </Link> */}
+                    <Link href={{ pathname: `/admin/items/mutate`, query: { collectionId } }} className={cn([
+                        buttonVariants(),
+                        {'hidden': !collectionId}
+                    ])}>
+                        <Plus /> <span>New</span>
+                    </Link>
                 </div>
             </DashboardPageHeader>
             <div>

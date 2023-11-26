@@ -59,7 +59,7 @@ const columns: ColumnDef<CollectionOut>[] = [
         cell({ row }) {
             return <div className='flex items-center justify-between'>
                 <span>{row.original._count.items}</span>
-                <Link href={{pathname: `./items/?collectionId=${row.original.id}`, }}><Button variant={'outline'} size={'sm'}>Items</Button></Link>
+                <Link href={{pathname: `./items`, query: {collectionId: row.original.id}}}><Button variant={'outline'} size={'sm'}>Items</Button></Link>
             </div>
         }
     },
