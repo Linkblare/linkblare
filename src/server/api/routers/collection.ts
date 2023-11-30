@@ -225,7 +225,7 @@ export const CollectionRouter = createTRPCRouter({
         const res = await ctx.db.collection.findMany({
             where: {
                 title: (input.search) ? {contains: input.search, mode: 'insensitive'} : undefined,
-                tags: tags.length > 0 ? {some: {name: {in: tags}}} : undefined,
+                tags:  {some: {name: {in: tags}}},
             },
             include: getCollectionIncludes(userId),
             take: currenctTake,

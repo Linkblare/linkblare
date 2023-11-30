@@ -60,7 +60,7 @@ const SingleItemViewPage = async ({
   return (
     <div className='max-w-4xl mx-auto py-10'>
         <SingleItemViewer item={item} />
-        <div ></div>
+        <div></div>
     </div>
   )
 }
