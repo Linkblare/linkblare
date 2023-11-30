@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable react/display-name */
-import { CollectionItemImage, CollectionOut } from '@/schema/collection-schema'
+import { type CollectionItemImage, type CollectionOut } from '@/schema/collection-schema'
 import React from 'react'
 import { Skeleton } from '../ui/skeleton'
 import Image from 'next/image'
@@ -94,8 +94,10 @@ const CollectionCard = ({
 
       <div className='p-3 h-16'>
         <Link href={`/${collection.slug}`}><CardTitle className='line-clamp-2'>{collection.title}</CardTitle></Link>
-        <span className='text-muted-foreground text-xs'>
-          {dateFromNow(collection.createdAt)}
+        <span className='text-muted-foreground text-xs space-x-1'>
+          <span>{dateFromNow(collection.createdAt)}</span>
+          <span>|</span>
+          <span>{collection._count.items} items</span>
         </span>
       </div>
 

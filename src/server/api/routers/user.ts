@@ -60,7 +60,6 @@ const UserRouter = createTRPCRouter({
                     where: {
                         name: (input.search) ? { contains: input.search, mode: 'insensitive' } : undefined,
                     },
-                    include: getCollectionIncludes(userId),
                     take: currenctTake,
                     cursor: cursor,
                     orderBy: input.sort
@@ -77,7 +76,7 @@ const UserRouter = createTRPCRouter({
             }
         }
         return {
-            items: res,
+            items: res.preferredTags,
             nextCursor
         }
     }),

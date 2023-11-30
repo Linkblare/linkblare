@@ -136,6 +136,7 @@ const ItemRouter = createTRPCRouter({
         if(!res) throw new TRPCError({code: 'NOT_FOUND', message: 'Collection not found!'});
         return singleItemResolver(res as any)
     }),
+    
     getBySlug: publicProcedure.input(GetItemBySlugSchema).query(async ({ctx, input}) => {
         const userId = ctx.session?.user.id;
         const res = await ctx.db.item.findFirst({
@@ -196,3 +197,4 @@ const ItemRouter = createTRPCRouter({
 
 
 export default ItemRouter;
+

@@ -11,7 +11,7 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime'
 import { nanoid } from "nanoid";
 import slugify from "slugify";
-import {Md5} from 'ts-md5'
+import { Md5 } from 'ts-md5'
 
 dayjs.extend(relativeTime);
 
@@ -129,7 +129,7 @@ export async function getFaviconUrl(url: string): Promise<string | null> {
 
   try {
     // const encodedUrl = encodeURIComponent(url);
-    if(!isValidUrl(url)) return null;
+    if (!isValidUrl(url)) return null;
     const response = await fetch(`https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=${url}&size=16`);
 
     if (response.ok) {
@@ -168,7 +168,7 @@ export async function fetchPdfFile(url: string, options: { fileName?: string } =
 
   try {
     // check if url is valid
-    if(!isValidUrl(url)) throw new Error("Invalid url")
+    if (!isValidUrl(url)) throw new Error("Invalid url")
     // Fetch the URL content
     const response = await fetch(url);
 
@@ -225,24 +225,41 @@ export function getSocialMediaFromUrl(url: string): SocialMedia | undefined {
 
 export function getPlaceholderImage({
   config
-}:{
+}: {
   config?: {
     width?: number,
     height?: number,
     text?: string
   }
-}){
-  config = {...{width: 800}, ...config}
+}) {
+  config = { ...{ width: 800 }, ...config }
   return `https://placehold.co/${config?.width}${config?.height ? `x${config?.height}` : ''}?${config?.text ? `font=${config?.text.replaceAll(' ', '+')}` : ''}`
 }
 
-export function getSlug(text: string){
+export function getSlug(text: string) {
   return slugify(text.toLowerCase());
 }
 
-export function md5Hash(text: string){
+export function md5Hash(text: string) {
   return Md5.hashStr(text)
 }
+
+export function appendQueryInSearchParams(searchString: string, query: { key: string, value: string }, toggleMode = false) {
+  const params = new URLSearchParams(searchString);
+  if (params.has(query.key, query.value)) {
+    if (toggleMode) {
+      params.delete(query.key, query.value)
+    }
+  } else {
+    params.append(query.key, query.value);
+  }
+  return params.toString();
+}
+
+
+
+
+
 
 
 

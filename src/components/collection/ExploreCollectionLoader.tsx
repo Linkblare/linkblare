@@ -9,10 +9,24 @@ import React from 'react'
 import ItemGrid from '../grid/ItemGrid'
 import CollectionCard from './CollectionCard'
 import { nanoid } from 'nanoid'
+import { type CollectionOut } from '@/schema/collection-schema'
+import {  useSearchParams } from 'next/navigation'
 
-const ExploreCollectionLoader = () => {
-    const {data, isLoading, hasNextPage, fetchNextPage} = api.collection.inifintList.useInfiniteQuery({}, {
-        getNextPageParam: (page) => page.nextCursor
+
+const ExploreCollectionLoader = ({
+    initialData
+}: {
+    initialData?: {
+        items: CollectionOut[],
+        nextCursor: {id: number} | undefined
+    }
+}) => {
+
+    const searchParams = useSearchParams();
+    // console.log(searchParams.getAll('tag'))
+    const {data, isLoading, hasNextPage, fetchNextPage} = api.collection.inifintList.useInfiniteQuery({filter: {tags: searchParams.has('tag') ? searchParams.getAll('tag') : undefined}}, {
+        getNextPageParam: (page) => page.nextCursor,
+        initialData: initialData ? {pages: [initialData], pageParams: [undefined, initialData?.nextCursor]} : undefined,
     })
   return (
     <div>

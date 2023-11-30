@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-redundant-type-constituents */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 'use client'
 import { cn } from '@/lib/utils'
 import { type UserActionResult } from '@/schema/user-schema'
