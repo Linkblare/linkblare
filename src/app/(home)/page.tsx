@@ -1,10 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import MainWrapper from "@/components/MainWrapper";
-import SortSwitcheGroup from "@/components/SortSwitcheGroup";
 import TagRow from "@/components/TagRow";
 import ExploreCollectionLoader from "@/components/collection/ExploreCollectionLoader";
-import { Separator } from "@/components/ui/separator";
 import { api } from "@/trpc/server";
 
 export default async function Home({

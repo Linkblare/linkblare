@@ -7,7 +7,7 @@ import BmcButton from './BmcButton'
 
 const Footer = () => {
   return (
-    <footer className='fixed bottom-0 left-0 w-full px-5 py-2'>
+    <footer className='fixed bottom-0 left-0 w-full px-5 py-2 bg-card'>
        <div className='flex items-center justify-between'>
         <div className='flex items-center justify-center gap-2'>
             <Link 
