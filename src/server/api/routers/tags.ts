@@ -22,7 +22,9 @@ const tagResolver = (res: TagResponse, currentUserId?: string) => {
     return {
         id: res.id,
         name: res.name,
-        isPreferred: currentUserId ? Boolean(res.preferredByUsers?.find(user => user.id === currentUserId)) : false
+        isFlag: res.isFlag,
+        color: res.color,
+        isPreferred: currentUserId ? Boolean(res.preferredByUsers?.find(user => user.id === currentUserId)) : false,
     }
 }
 

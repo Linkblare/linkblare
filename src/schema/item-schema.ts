@@ -57,6 +57,7 @@ export const CreateItemSchema = z.object({
     type: ItemTypesEnumSchema,
     content: z.any(),
     tags: z.array(z.string()).default([]),
+    flags: z.array(z.string()).default([]).optional(),
     collectionId: z.number()
 })
 

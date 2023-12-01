@@ -14,6 +14,7 @@ import InfoDialog from '../InfoDialog'
 import Link from 'next/link'
 import { Separator } from '../ui/separator'
 import { nanoid } from 'nanoid'
+import Flag from '../ui/flag'
 
 type CollectionCardProps = {
   collection: CollectionOut
@@ -80,6 +81,8 @@ const CollectionCard = ({
   collection
 }: CollectionCardProps) => {
 
+  const flags = collection.tags.filter(tag => tag.isFlag);
+
   return (
     <div className='rounded-xl overflow-hidden bg-card max-w-full md:max-w-sm border '>
       <div className='rounded-xl overflow-hidden aspect-[4/2.5]'>
@@ -92,13 +95,20 @@ const CollectionCard = ({
         }
       </div>
 
-      <div className='p-3 h-16'>
+      <div className='p-3 h-16 '>
         <Link href={`/${collection.slug}`}><CardTitle className='line-clamp-2'>{collection.title}</CardTitle></Link>
-        <span className='text-muted-foreground text-xs space-x-1'>
+        <div className='text-muted-foreground text-xs flex items-center gap-2 flex-wrap pt-1'>
           <span>{dateFromNow(collection.createdAt)}</span>
           <span>|</span>
           <span>{collection._count.items} items</span>
-        </span>
+
+          {
+            flags.length > 0 && flags.map(flag => {
+              return <Flag key={nanoid()} >{flag.name}</Flag>
+            })
+          }
+        </div>
+
       </div>
 
       <div className='flex items-center justify-between py-1 px-2'>

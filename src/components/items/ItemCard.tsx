@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
 'use client'
-
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable react/display-name */
 /* eslint-disable react/jsx-no-undef */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
@@ -16,7 +15,8 @@ import { Skeleton } from '../ui/skeleton'
 import ActionButton from '../action/ActionButton'
 import InfoDialog from '../InfoDialog'
 import dynamic from 'next/dynamic'
-import { useRouter } from 'next/navigation'
+import { nanoid } from 'nanoid'
+import Flag from '../ui/flag'
 
 
 const LinkItemRenderer = dynamic(() => import('./item-renderer/LinkItemRenderer'), {
@@ -36,7 +36,7 @@ const ItemCard = ({
     item: SingleItemOut
 }) => {
 
-    const router = useRouter();
+    const flags = item.tags.filter(tag => tag.isFlag);
 
     return (
         <div className='max-w-full md:max-w-md rounded-xl border'>
@@ -63,10 +63,16 @@ const ItemCard = ({
                                     <File className='w-3 h-3 text-muted-foreground' />
                                 </div>
                     }
+
+                    {
+                        flags.length > 0 && flags.map(flag => {
+                            return <Flag key={nanoid()}>{flag.name}</Flag>
+                        })
+                    }
                 </div>
             </div>
 
-            <Link href={`/items/${item.slug}`}  className='aspect-square relative block' >
+            <Link href={`/items/${item.slug}`} className='aspect-square relative block' >
                 {
                     item.type === 'image_slide' ?
                         <ImageSlideItemRender thumbnail={item.thumbnail} content={item.content as ImageSlideContent} />

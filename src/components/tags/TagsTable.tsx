@@ -1,11 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
 import { api } from '@/trpc/react';
-import { ColumnDef } from '@tanstack/react-table';
-import { PaginateOptions } from 'prisma-pagination';
+import { type ColumnDef } from '@tanstack/react-table';
+import { type PaginateOptions } from 'prisma-pagination';
 import React, { useState } from 'react'
 import { Checkbox } from '../ui/checkbox';
-import { TagOut } from '@/schema/tag-schema';
+import { type TagOut } from '@/schema/tag-schema';
+import TagFlagUpdate from './TagFlagUpdate';
+import DataTable from '../DataTable';
 
 const columns: ColumnDef<TagOut>[] = [
     {
@@ -33,8 +36,15 @@ const columns: ColumnDef<TagOut>[] = [
         accessorKey: 'name',
         header: 'Tag Name',
     },
-   
-    
+
+    {
+        accessorKey: 'isFlag',
+        header: 'Use As Flag',
+        cell({ row }) {
+            return <TagFlagUpdate data={row.original} />
+        }
+    },
+
     {
         header: 'Action',
         // cell({ row }) {
@@ -54,13 +64,19 @@ const columns: ColumnDef<TagOut>[] = [
 
 const TagsTable = () => {
     const [pagination, setPagination] = useState<PaginateOptions>();
-    const [search, setSearch] = useState<string|undefined>()
-    const data = api.tags.list.useQuery({pagination, search})
+    const [search, setSearch] = useState<string | undefined>()
+    const {data, isLoading} = api.tags.list.useQuery({ pagination, search })
 
 
-  return (
-    <div>TagsTable</div>
-  )
+    return (
+        <DataTable
+            columns={columns}
+            dataLoading={isLoading}
+            data={data?.data ?? []}
+            paginationData={data?.meta}
+            onPaginationChange={data => setPagination(data)}
+        />
+    )
 }
 
 export default TagsTable

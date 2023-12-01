@@ -9,6 +9,8 @@ import { type Tag } from "@prisma/client";
 
 export const CreateTagSchema = z.object({
     name: z.string(),
+    isFlag: z.boolean(),
+    color: z.string().optional()
 })
 
 export const DeleteTagSchema = z.object({
@@ -29,7 +31,6 @@ export const PaginatedTagListSchema = z.object({
     .merge(WithPagination)
     .merge(WithSearch)
     .merge(WithSorting)
-
 
 
 export const InfinitTagListSchema = z.object({

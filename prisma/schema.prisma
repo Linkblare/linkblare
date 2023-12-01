@@ -86,6 +86,8 @@ model VerificationToken {
 model Tag {
     id               Int          @id @default(autoincrement())
     name             String       @unique
+    isFlag           Boolean @default(false)
+    color            String?
     items            Item[]
     collections      Collection[]
     preferredByUsers User[]
@@ -123,3 +125,4 @@ model Item {
     createdAt    DateTime   @default(now())
     updatedAt    DateTime   @updatedAt()
 }
+
