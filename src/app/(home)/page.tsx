@@ -16,9 +16,9 @@ export default async function Home({
   const publicCollection = await api.collection.inifintList.query({filter: {tags: searchParams?.tag ? [...searchParams.tag] : undefined}})
   return (
     <>
-    <MainWrapper className="space-y-2 relative">
+    <MainWrapper className=" relative">
       <TagRow/>
-
+      <div className="mt-5"></div>
       <ExploreCollectionLoader initialData={publicCollection} />
     </MainWrapper>
     </>
