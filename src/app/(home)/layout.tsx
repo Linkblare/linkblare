@@ -1,14 +1,15 @@
 import DefaultNav from '@/components/DefaultNav';
-import { getServerAuthSession } from '@/server/auth'
-import React, { PropsWithChildren } from 'react'
+import Footer from '@/components/Footer';
+import React, { type PropsWithChildren } from 'react'
 
-const Layout =  ({children}: PropsWithChildren) => {
+const Layout = ({children}: PropsWithChildren) => {
   return (
     <>
     <DefaultNav/>
-    <main>
+    <main className='mb-28'>
         {children}
     </main>
+    <Footer/>
     </>
   )
 }
