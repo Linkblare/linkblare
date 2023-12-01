@@ -21,7 +21,7 @@ const TagRowItem = (props: { name: string }) => {
     return <Link
         href={`${pathname}?${appendQueryInSearchParams(searchParams.toString(), { key: 'tag', value: props.name.toLowerCase() }, true)}`}
         replace={false}
-    > <Button className='capitalize' size={'sm'} variant={searchParams.has('tag', props.name) ? 'default' : 'outline'} >{props.name}</Button>
+    > <Button className='capitalize' size={'sm'} variant={searchParams.has('tag', props.name.toLowerCase()) ? 'default' : 'outline'} >{props.name}</Button>
     </Link>
 }
 
