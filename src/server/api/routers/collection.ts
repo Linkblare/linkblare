@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import { Item, type Collection, type Prisma, type Tag } from '@prisma/client';
+import { type Item, type Collection, type Prisma, type Tag } from '@prisma/client';
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 import { type CollectionOut, CreateCollectionSchema, DeleteCollectonSchema, GetCollectionByIdSchema, type SingleCollectionOut, UpdateCollectionSchema, PaginatedCollectionListSchema, InfinitCollectionListSchema, GetCollectionBySlugSchema } from '@/schema/collection-schema';
 import { TRPCError } from '@trpc/server';
@@ -64,7 +64,7 @@ export const collectionListResolver = (response: CollectionListResponse) => {
     const {likes, saves, items, ...rest} = response;
     const result: CollectionOut = {
         ...rest,
-        itemsImages: items.map(item => ({itemId: item.id, thumbnail: item.thumbnail as string})),
+        itemsImages: items.map(item => ({itemId: item.id, thumbnail: item.thumbnail!})),
         liked: likes && likes.length > 0,
         saved: saves && saves.length > 0,
     }
@@ -74,7 +74,7 @@ export const collectionSingleResolver = (response: CollectionSingleResponse) => 
     const {likes, saves, items, ...rest} = response;
     const result: SingleCollectionOut = {
         ...rest,
-        itemsImages: items.map(item => ({itemId: item.id, thumbnail: item.thumbnail as string})),
+        itemsImages: items.map(item => ({itemId: item.id, thumbnail: item.thumbnail!})),
         liked: likes && likes.length > 0,
         saved: saves && saves.length > 0,
     }

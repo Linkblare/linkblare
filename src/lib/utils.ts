@@ -77,7 +77,7 @@ export function isValidImageFile(
   file: File,
   options: {
     validImageFileExtensions?: string[]
-  } = { validImageFileExtensions: ["jpg", "jpeg", "png", "gif", "bmp"] }) {
+  } = { validImageFileExtensions: ["jpg", "jpeg", "png", "gif", "bmp", "webp"] }) {
 
   if (!file) {
     return false;
