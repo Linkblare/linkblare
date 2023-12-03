@@ -9,30 +9,31 @@ import React from 'react'
 import { z } from 'zod'
 import { type Metadata, type ResolvingMetadata } from 'next';
 import { type SingleCollectionOut } from '@/schema/collection-schema'
+import { Separator } from '@/components/ui/separator'
 
 const ParamsSchema = z.object({
-    slug: z.string()
+  slug: z.string()
 })
 
- 
+
 type Props = {
   params: { slug: string }
   searchParams: Record<string, string | string[] | undefined>
 }
- 
+
 export async function generateMetadata(
   { params, searchParams }: Props,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  
- 
+
+
   // fetch data
-  const collection:SingleCollectionOut = await api.collection.getBySlug.query({slug: params.slug})
- 
+  const collection: SingleCollectionOut = await api.collection.getBySlug.query({ slug: params.slug })
+
   // optionally access and extend (rather than replace) parent metadata
   const previousImages = (await parent).openGraph?.images ?? [];
- 
-  if(!collection){
+
+  if (!collection) {
     return {
       title: 'Not Found'
     }
@@ -41,34 +42,43 @@ export async function generateMetadata(
     title: collection.title,
     description: collection.description,
     openGraph: {
-      images: [(collection.thumbnail??''), ...previousImages],
+      images: [(collection.thumbnail ?? ''), ...previousImages],
       title: collection.title,
-      description: collection.description??''
+      description: collection.description ?? ''
     },
   }
 }
 
 const ViewSingleCollectionPage = async ({
-    params
+  params
 }: {
-    params: { slug: string }
+  params: { slug: string }
 }) => {
-    const validateParams = ParamsSchema.safeParse(params);
-    if(!validateParams.success){
-        return <ErrorView title='Something went wrong!!' />
-    }
+  const validateParams = ParamsSchema.safeParse(params);
+  if (!validateParams.success) {
+    return <ErrorView title='Something went wrong!!' />
+  }
 
-    const collection = await api.collection.getBySlug.query({slug: params.slug})
+  const collection = await api.collection.getBySlug.query({ slug: params.slug })
 
-    if(!collection){
-        return notFound();
-    }
+  if (!collection) {
+    return notFound();
+  }
 
-    return (
-        <MainWrapper className='py-5'>
-            <ItemLoader collectionId={collection.id} />
-        </MainWrapper>
-    )
+  return (
+    <MainWrapper className='py-5'>
+      <div className='my-10'>
+        <div className="space-y-0.5 ">
+          <h2 className="text-2xl font-bold tracking-tight capitalize">{collection.title}</h2>
+          <p className="text-muted-foreground max-w-3xl">
+            {collection.description}
+          </p>
+        </div>
+        <Separator />
+      </div>
+      <ItemLoader collectionId={collection.id} />
+    </MainWrapper>
+  )
 }
 
 export default ViewSingleCollectionPage
