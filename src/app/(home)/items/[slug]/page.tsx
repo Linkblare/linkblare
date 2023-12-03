@@ -8,7 +8,9 @@ import { notFound } from 'next/navigation';
 import React from 'react'
 import { z } from 'zod'
 import { type Metadata, type ResolvingMetadata } from 'next';
-import { SingleItemOut } from '@/schema/item-schema';
+import {  SingleItemOut } from '@/schema/item-schema';
+import RelatedCollection from '@/components/collection/RelatedCollection';
+import RelatedItems from '@/components/items/RelatedItems';
 
 
 type Props = {
@@ -58,10 +60,17 @@ const SingleItemViewPage = async ({
     if(!item) return notFound();
 
   return (
+   <>
     <div className='max-w-4xl mx-auto py-10'>
         <SingleItemViewer item={item} />
         <div></div>
     </div>
+
+    <div className='mt-10 space-y-10'>
+      <RelatedCollection collectionId={item.collectionId}/>
+      <RelatedItems itemId={item.id} />
+    </div>
+   </> 
   )
 }
 

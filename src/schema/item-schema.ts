@@ -102,6 +102,10 @@ export const InfinitItemListSchema = z.object({
     .merge(WithSearch)
     .merge(WithSorting)
 
+export const RelatedItems = z.object({
+    itemId: z.number(),
+    limit: z.number().max(50).optional()
+})
 
 export type ItemOut<T = any> = Omit<Item, 'content'> & {
     content: T

@@ -193,6 +193,36 @@ const ItemRouter = createTRPCRouter({
             nextCursor
         }
     }), 
+
+    relatedItems: publicProcedure.input(GetItemByIdSchema).query(async ({ctx, input}) => {
+        const userId = ctx.session?.user.id;
+        const targetItem = await ctx.db.item.findFirst({where: {id: input.id}, include: {tags: true}});
+        if(!targetItem) throw new TRPCError({code: 'NOT_FOUND', message: 'Item not found!'});
+        const res = await ctx.db.item.findMany({
+            where: {
+                id: {not: input.id},
+                OR: [
+                    {
+                        collectionId: targetItem.collectionId,
+                    },
+                    {
+                        tags: {some: {name: {in: targetItem.tags.map(tg => tg.name)}}}
+                    }
+                ]
+            },
+            include: getItemIncludes(userId, 'single'),
+            orderBy: {
+                likes: {
+                    _count: 'desc'
+                }
+            },
+            take: config.relatedDataLimit
+        });
+        return {
+            items: res.map(r => itemOutResolver(r as any)),
+        }
+    })
+    
 })
 
 

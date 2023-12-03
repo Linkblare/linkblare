@@ -62,6 +62,11 @@ export const InfinitCollectionSearchSchema = z.object({})
     .merge(WithSearch)
     .merge(WithSorting)
 
+export const RelatedCollectionSchema = z.object({
+    collectionId: z.number(),
+    limit: z.number().max(50).optional()
+})
+
 
 export type CollectionItemImage = {itemId: number, thumbnail: string};
 
@@ -97,3 +102,4 @@ export type CollectionSearchOutput = {
         items: number
     }
 }
+

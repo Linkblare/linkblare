@@ -15,7 +15,8 @@ import {
     PaginatedCollectionListSchema, 
     InfinitCollectionListSchema, 
     GetCollectionBySlugSchema ,
-    InfinitCollectionSearchSchema
+    InfinitCollectionSearchSchema,
+    RelatedCollectionSchema
 } from '@/schema/collection-schema';
 import { TRPCError } from '@trpc/server';
 import { md5Hash, paginate } from '@/lib/utils';
@@ -295,5 +296,25 @@ export const CollectionRouter = createTRPCRouter({
     }), 
 
 
+    relatedCollections: publicProcedure.input(RelatedCollectionSchema).query(async ({ctx, input}) => {
+        const {collectionId, ...rest} = input;
+        const userId = ctx.session?.user.id;
+        const targetCollection = await ctx.db.collection.findFirst({where: {id: input.collectionId}, include: {tags: true}});
+        if(!targetCollection) throw new TRPCError({code: 'NOT_FOUND', message: 'Collection not found!'});
+        const res = await ctx.db.collection.findMany({
+            where: {
+                id: {not: collectionId},
+                tags: {some: {name: {in: targetCollection.tags.map(tg => tg.name)}}}
+            },
+            include: getCollectionIncludes(userId),
+            orderBy: {
+                items: {_count: 'desc'}
+            },
+            take: input.limit ?? config.relatedDataLimit
+        });
+        return {
+            items: res.map(r => collectionListResolver(r)),
+        }
+    })
 
 })
