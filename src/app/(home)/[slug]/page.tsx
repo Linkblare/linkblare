@@ -69,10 +69,9 @@ const ViewSingleCollectionPage = async ({
 
   return (
     <MainWrapper className='py-5'>
-      <div className='my-10'>
+      <div className='mt-5 mb-10'>
         <div className="space-y-0.5 ">
           <h2 className="text-2xl font-bold tracking-tight capitalize">{collection.title}</h2>
-
           <div className="text-muted-foreground max-w-3xl">
             <ReadMore characterCount={100}>{collection.description! }</ReadMore>
           </div>

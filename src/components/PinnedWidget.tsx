@@ -7,7 +7,7 @@ import { Github } from 'lucide-react'
 
 const PinnedWidget = () => {
     return (
-        <div className='fixed top-1/2 left-0 border bg-card/20 backdrop-blur p-1 flex flex-col items-center gap-2'>
+        <div className='fixed top-1/2 left-0 border bg-card/20 backdrop-blur p-1 flex flex-col items-center gap-2 rounded'>
             <div><BmcButton /></div>
             <div><Link
                 className={cn([buttonVariants({ variant: 'outline' })])}
