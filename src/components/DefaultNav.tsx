@@ -64,7 +64,7 @@ const DefaultNav = () => {
             <div className='flex items-center gap-3'>
                 <SearchInput/>
                 {
-                    !session &&  <LoginButton/>
+                    !session ?  <LoginButton/> : <div className='hidden lg:block'><UserAvatarDropdown/></div>
                 }
             </div>
         </nav>
