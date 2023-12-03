@@ -39,7 +39,7 @@ const TablePagination = ({
             className
         ])}>
             <div>
-                <p className='text-gray-500 text-sm'>Total: {paginationData?.total || 0}</p>
+                <p className='text-gray-500 text-sm'>Total: {paginationData?.total ?? 0}</p>
             </div>
             <div className="flex gap-3">
                 <Button  onClick={() => handlePrev()} variant={'outline'} disabled={!Boolean(paginationData?.prev) || disable}>Prev</Button>

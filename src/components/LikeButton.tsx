@@ -16,11 +16,6 @@ const LikeButton = ({
     count?: number|string,
     className?: string
 }) => {
-
-  useEffect(() => {
-    console.log({state});
-    
-  }, [state])
   
   return (
     <Button variant={'ghost'} size={'icon'} className={className} onClick={() => onClick?.(state)}>

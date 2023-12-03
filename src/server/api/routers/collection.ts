@@ -5,7 +5,18 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { type Item, type Collection, type Prisma, type Tag } from '@prisma/client';
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
-import { type CollectionOut, CreateCollectionSchema, DeleteCollectonSchema, GetCollectionByIdSchema, type SingleCollectionOut, UpdateCollectionSchema, PaginatedCollectionListSchema, InfinitCollectionListSchema, GetCollectionBySlugSchema } from '@/schema/collection-schema';
+import { 
+    type CollectionOut, 
+    CreateCollectionSchema, 
+    DeleteCollectonSchema, 
+    GetCollectionByIdSchema, 
+    type SingleCollectionOut, 
+    UpdateCollectionSchema, 
+    PaginatedCollectionListSchema, 
+    InfinitCollectionListSchema, 
+    GetCollectionBySlugSchema ,
+    InfinitCollectionSearchSchema
+} from '@/schema/collection-schema';
 import { TRPCError } from '@trpc/server';
 import { md5Hash, paginate } from '@/lib/utils';
 import config from '@/server/config';
@@ -166,7 +177,7 @@ export const CollectionRouter = createTRPCRouter({
             },
             include: getCollectionIncludes(userId),
             orderBy: input.sort
-        })
+        }, input.pagination)
         if(!res) throw new TRPCError({code: 'NOT_FOUND', message: 'Collection not found!'});
         return {
             ...res,
@@ -244,5 +255,45 @@ export const CollectionRouter = createTRPCRouter({
             nextCursor
         }
     }), 
+
+
+    inifintSearch: publicProcedure.input(InfinitCollectionSearchSchema).query(async ({ctx, input}) => {
+        const {take, cursor, ...rest} = input
+        const userId = ctx.session?.user.id;
+        const currenctTake = input.take ? input.take + 1 : config.searchResultLimit + 1;
+        let nextCursor: {id: number} | undefined = undefined;
+        
+        const res = await ctx.db.collection.findMany({
+            where: {
+                title: (input.search) ? {contains: input.search, mode: 'insensitive'} : undefined,
+            },
+            select: {
+                id: true,
+                slug: true,
+                title: true,
+                _count: {
+                    select: {
+                        items: true
+                    }
+                }
+            },
+            take: currenctTake,
+            cursor: cursor,
+            orderBy: input.sort
+        });
+
+        if (res.length >= currenctTake) {
+            const lastResult = res.pop();
+            if (lastResult) {
+                nextCursor = {id: lastResult.id}
+            }
+        }
+        return {
+            items: res,
+            nextCursor
+        }
+    }), 
+
+
 
 })

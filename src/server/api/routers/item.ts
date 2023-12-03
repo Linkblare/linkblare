@@ -157,7 +157,7 @@ const ItemRouter = createTRPCRouter({
             },
             include: getItemIncludes(userId, 'single'),
             orderBy: input.sort
-        })
+        }, input.pagination)
         return {
             ...res,
             data: res.data.map(r => singleItemResolver(r)),

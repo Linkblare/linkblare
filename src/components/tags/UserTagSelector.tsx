@@ -26,7 +26,7 @@ const UserTagSelector = () => {
           }
         </div>
         <div className={cn([
-          'flex items-center justify-center',
+          'flex items-center justify-center mt-5',
           {'hidden': !hasNextPage}
         ])}>
           <Button variant={'outline'} disabled={isLoading} onClick={() => fetchNextPage()}>Load More</Button>

@@ -57,6 +57,12 @@ export const InfinitCollectionListSchema = z.object({
     .merge(WithSorting)
 
 
+export const InfinitCollectionSearchSchema = z.object({})
+    .merge(WithInfinitListSchema)
+    .merge(WithSearch)
+    .merge(WithSorting)
+
+
 export type CollectionItemImage = {itemId: number, thumbnail: string};
 
 export type CollectionOut = Omit<Collection, 'itemsImages'> & {
@@ -80,5 +86,14 @@ export type SingleCollectionOut = Omit<Collection, 'itemsImages'> & {
         likes: number,
         items: number,
         saves: number
+    }
+}
+
+export type CollectionSearchOutput = {
+    id: number,
+    slug: string,
+    title: string,
+    _count: {
+        items: number
     }
 }

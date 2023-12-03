@@ -76,7 +76,7 @@ const TagRouter = createTRPCRouter({
                     : undefined
             },
             orderBy: input.sort
-        })
+        }, input.pagination)
 
         return {
             meta: res.meta,

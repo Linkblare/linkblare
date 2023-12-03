@@ -13,6 +13,7 @@ import { nanoid } from 'nanoid'
 import config from '@/server/config'
 import { buttonVariants } from './ui/button'
 import { GithubIcon } from 'lucide-react'
+import SearchInput from './search/SearchInput'
 
 const menus = [
     {
@@ -61,8 +62,9 @@ const DefaultNav = () => {
                 </div>
             </div>
             <div className='flex items-center gap-3'>
+                <SearchInput/>
                 {
-                    session ? <UserAvatarDropdown /> : <LoginButton/>
+                    !session &&  <LoginButton/>
                 }
             </div>
         </nav>

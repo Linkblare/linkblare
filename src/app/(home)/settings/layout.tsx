@@ -1,35 +1,26 @@
 import SidebarNav from '@/components/SidebarNav'
 import { Separator } from '@/components/ui/separator'
-import React, { PropsWithChildren } from 'react'
+import React, { type PropsWithChildren } from 'react'
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
-
-
-
-  const sidebarNavItems = [
-    {
-      title: "Preference",
-      href: "/settings",
-    },
-  
-  ]
 
 const SettingLayout = (props: PropsWithChildren) => {
   return (
-    <div className="hidden space-y-6 p-10 pb-16 md:block">
-        <div className="space-y-0.5">
-          <h2 className="text-2xl font-bold tracking-tight">Settings</h2>
-          <p className="text-muted-foreground">
-            Manage your setting.
-          </p>
-        </div>
-        <Separator className="my-6" />
-        <div className="flex flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0 mx-auto container">
-          <aside className="-mx-4 lg:w-1/5">
-            <SidebarNav items={sidebarNavItems} />
-          </aside>
-          <div className="flex-1 lg:max-w-2xl">{props.children}</div>
-        </div>
+    <div className=" space-y-6 p-10 pb-16">
+      <div className="space-y-0.5">
+        <h2 className="text-2xl font-bold tracking-tight">Settings</h2>
+        <p className="text-muted-foreground">
+          Manage your setting.
+        </p>
       </div>
+      <Separator className="my-6" />
+      <Tabs defaultValue="preference" className=''>
+        <TabsList className="grid w-full grid-cols-2">
+          <TabsTrigger value="preference">Preference</TabsTrigger>
+        </TabsList>
+        {props.children}
+      </Tabs>
+    </div>
   )
 }
 

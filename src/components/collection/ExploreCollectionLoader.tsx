@@ -10,7 +10,8 @@ import ItemGrid from '../grid/ItemGrid'
 import CollectionCard from './CollectionCard'
 import { nanoid } from 'nanoid'
 import { type CollectionOut } from '@/schema/collection-schema'
-import {  useSearchParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 
 const ExploreCollectionLoader = ({
@@ -18,25 +19,35 @@ const ExploreCollectionLoader = ({
 }: {
     initialData?: {
         items: CollectionOut[],
-        nextCursor: {id: number} | undefined
+        nextCursor: { id: number } | undefined
     }
 }) => {
 
     const searchParams = useSearchParams();
     // console.log(searchParams.getAll('tag'))
-    const {data, isLoading, hasNextPage, fetchNextPage} = api.collection.inifintList.useInfiniteQuery({filter: {tags: searchParams.has('tag') ? searchParams.getAll('tag') : undefined}}, {
+    const { data, isLoading, hasNextPage, fetchNextPage, refetch } = api.collection.inifintList.useInfiniteQuery({ filter: { tags: searchParams.has('tag') ? searchParams.getAll('tag') : undefined } }, {
         getNextPageParam: (page) => page.nextCursor,
-        initialData: initialData ? {pages: [initialData], pageParams: [undefined, initialData?.nextCursor]} : undefined,
+        initialData: initialData ? { pages: [initialData], pageParams: [undefined, initialData?.nextCursor] } : undefined,
     })
-  return (
-    <div>
-        <ItemGrid className='items-center justify-center' bottomLoading loading={isLoading} loader={<CollectionCard.Skeleton/>}>
-            {
-                data?.pages.map(page => page.items.map(item => <CollectionCard collection={item} key={nanoid()} />))
-            }
-        </ItemGrid>
-    </div>
-  )
+    const items = data?.pages.reduce((acc, page) => acc.concat(page.items), [] as CollectionOut[])
+    return (
+        <div>
+            <ItemGrid
+                className='items-center justify-center'
+                loading={isLoading}
+                loader={<CollectionCard.Skeleton />}
+                dataLength={items?.length ?? 0}
+                fetchNextPage={fetchNextPage}
+                hasMore={hasNextPage}
+                refetch={refetch}
+                >
+                {
+                    data?.pages.map(page => page.items.map(item => <CollectionCard collection={item} key={nanoid()} />))
+                }
+            </ItemGrid>
+
+        </div>
+    )
 }
 
 export default ExploreCollectionLoader

@@ -15,6 +15,7 @@ import { Button } from '../ui/button'
 import { useRouter } from 'next/navigation'
 import { type InfiniteResult } from '@/schema/_helpers/WithInfinitList'
 import { Tag } from '@prisma/client'
+import { CollectionOut } from '@/schema/collection-schema'
 
 const FeedCollection = ({
     initialData,
@@ -23,7 +24,7 @@ const FeedCollection = ({
     initialData?: InfiniteResult,
     prefferedTags?: Tag[]
 }) => {
-    const {data, isLoading, hasNextPage, fetchNextPage} = api.collection.feed.useInfiniteQuery({}, {
+    const {data, isLoading, hasNextPage, fetchNextPage, refetch, } = api.collection.feed.useInfiniteQuery({}, {
         getNextPageParam: (page) => page.nextCursor,
         initialData: initialData ? {pages: [initialData], pageParams: [undefined, initialData?.nextCursor]} : undefined
     })
@@ -41,7 +42,14 @@ const FeedCollection = ({
     }
   return (
     <div>
-        <ItemGrid className='items-center justify-center' bottomLoading loading={isLoading} loader={<CollectionCard.Skeleton/>}>
+        <ItemGrid 
+        dataLength={data?.pages.reduce((acc, page) => acc.concat(page.items), [] as CollectionOut[])?.length ?? 0}
+        hasMore={hasNextPage}
+        fetchNextPage={fetchNextPage}
+        refetch={refetch} 
+        className='items-center justify-center' 
+        loading={isLoading} 
+        loader={<CollectionCard.Skeleton/>}>
             {
                 data?.pages.map(page => page.items.map(item => <CollectionCard collection={item} key={nanoid()} />))
             }
