@@ -70,13 +70,13 @@ const RelatedItems = ({
             >
                 {
                     !data && isLoading && Array(4).fill(0).map((_, i) =>
-                        <div key={i} className='w-full h-full'>
+                        <div key={i} className='w-full h-full '>
                             <ItemCard.Skeleton />
                         </div>
                     )
                 }
                 {data?.items.map((item) => (
-                    <div key={item.id} className=''>
+                    <div key={item.id} className='px-2'>
                         <ItemCard item={item as any} />
                     </div>
                 ))}

@@ -74,8 +74,8 @@ const RelatedCollection = ({
                     )
                 }
                 {data?.items.map((item) => (
-                    <div key={item.id} className='w-full h-full'>
-                        <CollectionCard collection={item} />
+                    <div key={item.id} className='px-2'>
+                       <div className='px-2'> <CollectionCard collection={item} /></div>
                     </div>
                 ))}
             </Slider>
