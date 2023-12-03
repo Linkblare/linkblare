@@ -10,6 +10,8 @@ import { z } from 'zod'
 import { type Metadata, type ResolvingMetadata } from 'next';
 import { type SingleCollectionOut } from '@/schema/collection-schema'
 import { Separator } from '@/components/ui/separator'
+import ReadMore from '@/components/ReadMore'
+
 
 const ParamsSchema = z.object({
   slug: z.string()
@@ -70,9 +72,10 @@ const ViewSingleCollectionPage = async ({
       <div className='my-10'>
         <div className="space-y-0.5 ">
           <h2 className="text-2xl font-bold tracking-tight capitalize">{collection.title}</h2>
-          <p className="text-muted-foreground max-w-3xl">
-            {collection.description}
-          </p>
+
+          <div className="text-muted-foreground max-w-3xl">
+            <ReadMore characterCount={100}>{collection.description! }</ReadMore>
+          </div>
         </div>
         <Separator />
       </div>
