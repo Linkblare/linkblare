@@ -60,7 +60,7 @@ const RelatedCollection = ({
     }
 
     return (
-        <section className='container mx-auto '> 
+        <section className='container mx-auto space-y-5'> 
             <h2 className='text-2xl font-bold'>Related Collections</h2>
             <Slider
                 {...sliderSetting}
