@@ -161,9 +161,6 @@ dependencies:
   react-tag-autocomplete:
     specifier: ^6.3.0
     version: 6.3.0(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0)
-  react-tag-input-component:
-    specifier: ^2.0.2
-    version: 2.0.2(react-dom@18.2.0)(react@18.2.0)
   slick-carousel:
     specifier: ^1.8.1
     version: 1.8.1(jquery@3.7.1)
@@ -6554,16 +6551,6 @@ packages:
       react-dom: ^16.5.0 || ^17.0.0
     dependencies:
       prop-types: 15.8.1
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-    dev: false
-
-  /react-tag-input-component@2.0.2(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-dydI9luVwwv9vrjE5u1TTnkcOVkOVL6mhFti8r6hLi78V2F2EKWQOLptURz79UYbDHLSk6tnbvGl8FE+sMpADg==}
-    peerDependencies:
-      react: ^16 || ^17 || ^18
-      react-dom: ^16 || ^17 || ^18
-    dependencies:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     dev: false
