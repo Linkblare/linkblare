@@ -13,7 +13,10 @@ export async function GET(
     try {
         const res = await db.tag.findMany({
             where: {
-                name: params.name[0]
+                name: {
+                    contains: params.name[0],
+                    mode: 'insensitive'
+                }
             }
         });
         return new Response(JSON.stringify({data: res??[]}), {status: 200})
