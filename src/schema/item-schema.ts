@@ -107,6 +107,12 @@ export const RelatedItems = z.object({
     limit: z.number().max(50).optional()
 })
 
+
+
+export const IsLinkItemExistsSchema = z.object({
+    url: z.string(),
+    collectionId: z.number().optional()
+})
 export type ItemOut<T = any> = Omit<Item, 'content'> & {
     content: T
     liked: boolean

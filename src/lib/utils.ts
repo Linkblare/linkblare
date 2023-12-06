@@ -257,6 +257,11 @@ export function appendQueryInSearchParams(searchString: string, query: { key: st
 }
 
 
+export function removeTrailingSlash(str: string) {
+  return str.replace(/\/+$/, '');
+}
+
+
 
 
 

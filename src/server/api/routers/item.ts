@@ -100,7 +100,7 @@ const ItemRouter = createTRPCRouter({
             include: {tags: true}
         });
 
-        if(!alreadyExists) throw new TRPCError({code: 'NOT_FOUND', message: 'Collection not found!'});
+        if(!alreadyExists) throw new TRPCError({code: 'NOT_FOUND', message: 'Item not found!'});
 
         const tagsForConnnect = tags.filter(tag => !alreadyExists.tags.find(tg => tg.name === tag));
         const tagsForDisconnect = alreadyExists.tags.filter(tag => !tags.find(tg => tg === tag.name));
