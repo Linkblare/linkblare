@@ -8,7 +8,7 @@ type ReadMoreProps = {
     children: string
 }
 
-const ReadMore = ({ characterCount, children }: ReadMoreProps) => {
+const ReadMore = ({ characterCount, children='No Description' }: ReadMoreProps) => {
   const [expanded, setExpanded] = useState(false);
 
   const toggleReadMore = () => {

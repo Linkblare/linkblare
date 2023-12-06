@@ -73,7 +73,7 @@ const ViewSingleCollectionPage = async ({
         <div className="space-y-0.5 ">
           <h2 className="text-2xl font-bold tracking-tight capitalize">{collection.title}</h2>
           <div className="text-muted-foreground max-w-3xl">
-            <ReadMore characterCount={100}>{collection.description! }</ReadMore>
+            <ReadMore characterCount={100}>{collection.description??'No Description available' }</ReadMore>
           </div>
         </div>
         <Separator />
