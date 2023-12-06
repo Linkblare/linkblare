@@ -35,7 +35,7 @@ export async function POST(req: Request){
         });
         const isExist = res.find((item) => {
             const content = item.content as LinkContent;
-            return content.url.split('?')[0] === searchUrl;
+            return removeTrailingSlash(content.url.split('?')[0]!) === searchUrl;
         });
         return new Response(JSON.stringify({data: isExist??null}), {status: 200});
     } catch (error) {
