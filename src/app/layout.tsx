@@ -15,11 +15,13 @@ import "slick-carousel/slick/slick-theme.css";
 import { type Metadata } from "next";
 import { Suspense } from "react";
 import Analytics from "@/components/utils/GoogleTagmanager";
+import { env } from "@/env.mjs";
 
 
 
 
 export const metadata: Metadata = {
+  metadataBase: new URL(env.SITE_URL),
   title: "LinkBlare - Unleashing the Power of Web Resources",
   description: "Discover LinkBlare, your go-to source for curated web resources. From free illustrations to essential development tools, find what you need for seamless online experiences. Elevate your projects with LinkBlare's handpicked collections.",
   icons: [
