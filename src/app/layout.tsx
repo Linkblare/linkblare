@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     siteName: "LinkBlare",
     images: [
       {
-        url: `${env.SITE_URL}?api/og/LinkBlare - Unleashing the Power of Web Resources`,
+        url: `${env.SITE_URL}/api/og/LinkBlare - Unleashing the Power of Web Resources`,
         width: 1200,
         height: 630,
         alt: "LinkBlare",
