@@ -32,7 +32,7 @@ export type ItemSort = Prisma.ItemWhereUniqueInput
 export const LinkContentSchema = z.object({
     url: z.string(),
     originUrl: z.string(),
-    favicon: z.string(),
+    favicon: z.string().optional(),
 });
 
 export interface LinkContent extends z.TypeOf<typeof LinkContentSchema>{}

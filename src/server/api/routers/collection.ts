@@ -76,6 +76,7 @@ export const collectionListResolver = (response: CollectionListResponse) => {
     const {likes, saves, items, ...rest} = response;
     const result: CollectionOut = {
         ...rest,
+        thumbnail: rest.thumbnail ?? `/api/og/${encodeURI(rest.title)}`,
         itemsImages: items.map(item => ({itemId: item.id, thumbnail: item.thumbnail!})),
         liked: likes && likes.length > 0,
         saved: saves && saves.length > 0,
@@ -86,6 +87,7 @@ export const collectionSingleResolver = (response: CollectionSingleResponse) => 
     const {likes, saves, items, ...rest} = response;
     const result: SingleCollectionOut = {
         ...rest,
+        thumbnail: rest.thumbnail ?? `/api/og/${encodeURI(rest.title)}`,
         itemsImages: items.map(item => ({itemId: item.id, thumbnail: item.thumbnail!})),
         liked: likes && likes.length > 0,
         saved: saves && saves.length > 0,
