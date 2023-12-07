@@ -21,6 +21,7 @@ import {
 import { TRPCError } from '@trpc/server';
 import { md5Hash, paginate } from '@/lib/utils';
 import config from '@/server/config';
+import { env } from '@/env.mjs';
 
 type CollectionListResponse = Collection & {
     likes: {id: string}[],
@@ -76,7 +77,7 @@ export const collectionListResolver = (response: CollectionListResponse) => {
     const {likes, saves, items, ...rest} = response;
     const result: CollectionOut = {
         ...rest,
-        thumbnail: rest.thumbnail ?? `/api/og/${encodeURI(rest.title)}`,
+        thumbnail: rest.thumbnail ?? `${env.SITE_URL}/api/og/${encodeURI(rest.title)}`,
         itemsImages: items.map(item => ({itemId: item.id, thumbnail: item.thumbnail!})),
         liked: likes && likes.length > 0,
         saved: saves && saves.length > 0,

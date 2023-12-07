@@ -27,7 +27,7 @@ const MutateCollectionDialog = ({
     const [open, setOpen] = useState(false);
     return (
         <Dialog open={open} onOpenChange={setOpen}> 
-            <DialogTrigger asChild>{trigger || <Button> <PlusIcon className='w-5 h-5' /> <span>New</span></Button>}</DialogTrigger>
+            <DialogTrigger asChild>{trigger ?? <Button> <PlusIcon className='w-5 h-5' /> <span>New</span></Button>}</DialogTrigger>
             <DialogContent>
                 <DialogHeader>
                     <DialogTitle>Mutate Collection</DialogTitle>
