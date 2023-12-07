@@ -35,6 +35,11 @@ const config = {
         hostname: "picsum.photos",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "linkblare.vercel.app/",
+        pathname: "/**",
+      },
     ],
   },
   pageExtensions: ['ts', 'tsx'],
