@@ -6,7 +6,6 @@ import { headers } from "next/headers";
 import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 import { extractRouterConfig } from "uploadthing/server";
 import { ourFileRouter } from "@/app/api/uploadthing/core";
-
 import { TRPCReactProvider } from "@/trpc/react";
 import { Toaster } from "@/components/ui/toaster";
 import {Analytics as VercelAnalytics} from '@vercel/analytics/react'
@@ -27,6 +26,21 @@ export const metadata: Metadata = {
   icons: [
     { rel: "icon", url: "/favicon.ico" },
   ],
+  openGraph:{
+    type: "website",
+    locale: "en_IN",
+    url: env.SITE_URL,
+    siteName: "LinkBlare",
+    images: [
+      {
+        url: `${env.SITE_URL}?api/og/LinkBlare - Unleashing the Power of Web Resources`,
+        width: 1200,
+        height: 630,
+        alt: "LinkBlare",
+        type: "image/png",
+      }
+    ]
+  }
 };
 
 export default function RootLayout({

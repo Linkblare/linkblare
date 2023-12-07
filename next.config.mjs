@@ -40,6 +40,11 @@ const config = {
         hostname: "linkblare.vercel.app",
         pathname: "/**",
       },
+      {
+        protocol: "http",
+        hostname: "localhost",
+        pathname: "/**",
+      },
     ],
   },
   pageExtensions: ['ts', 'tsx'],
