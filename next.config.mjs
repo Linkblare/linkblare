@@ -37,7 +37,7 @@ const config = {
       },
       {
         protocol: "https",
-        hostname: "linkblare.vercel.app/",
+        hostname: "linkblare.vercel.app",
         pathname: "/**",
       },
     ],
