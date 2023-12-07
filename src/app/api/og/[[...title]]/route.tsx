@@ -5,7 +5,7 @@ import { ImageResponse } from '@vercel/og';
 // App router includes @vercel/og.
 // No need to install it.
 
-export const runtime = 'edge';
+// export const runtime = 'edge';
 
 // const logoImageSrc = `${env.SITE_URL}/og-logo.png`
 
