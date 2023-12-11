@@ -1,28 +1,105 @@
-# Create T3 App
+## Linkblare README
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+**Linkblare** is a website that helps developers find the helpful websites by their need. It offers curated collections of websites categorized by specific developer needs, such as AI blogs, open-source LLM models, or free illustration websites. Users can explore collections and find relevant websites based on their interests and requirements.
 
-## What's next? How do I make an app with this?
+**Tech Stack:**
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+* Next.js: JavaScript framework for server-rendered and static web applications.
+* Prisma: GraphQL API client for interacting with databases.
+* TypeScript: Statically typed superset of JavaScript.
+* PostgreSQL: Open-source relational database management system.
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+**Features:**
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+* **Collections:** Curated groups of websites organized by specific developer needs.
+* **Tags:** Categorization system for collections and items.
+* **User Preferences:** Personalize the experience by selecting tags of interest.
+* **Search:** Find specific websites within collections using keywords.
+* **Mobile-friendly:** Optimized for easy access and use on mobile devices.
 
-## Learn More
+**Getting Started:**
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+1. Clone the repository: `git clone https://github.com/Linkblare/linkblare.git`.
+2. Install dependencies: `npm install`.
+3. Configure environment variables:
+    * Create a `.env` file in the root directory.
+    * Add the following variables:
+        * `NEXT_PUBLIC_DATABASE_URL`: Your PostgreSQL database URL.
+        * `NEXT_PUBLIC_PRISMA_SECRET`: Your Prisma secret (generated with `prisma secret`).
+4. Start the development server: `npm run dev`.
+5. Visit http://localhost:3000 to access the website.
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+**Contributing:**
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+We welcome contributions from the developer community! You can help by:
 
-## How do I deploy this?
+* Improve User Experience
+* Add different mechanism to generate feed for user
+* Improving existing content
+* Creating new content
+* Reporting bugs and suggesting improvements
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+Please refer to the `CONTRIBUTING.md` file for detailed contribution guidelines.
+
+**License:**
+
+This project is licensed under the MIT License. See the `LICENSE` file for details.
+
+**Contact:**
+
+* GitHub Discussions: [Discussion](https://github.com/orgs/community/discussions/10367)
+* Email: [Send Email](shivamsi687@gmail.com)
+
+**Thank you for using Linkblare!**## Linkblare README
+
+**Linkblare** is a website that helps developers find the helpful websites by their need. It offers curated collections of websites categorized by specific developer needs, such as AI blogs, open-source LLM models, or free illustration websites. Users can explore collections and find relevant websites based on their interests and requirements.
+
+**Tech Stack:**
+
+* Next.js: JavaScript framework for server-rendered and static web applications.
+* Prisma: GraphQL API client for interacting with databases.
+* TypeScript: Statically typed superset of JavaScript.
+* PostgreSQL: Open-source relational database management system.
+
+**Features:**
+
+* **Collections:** Curated groups of websites organized by specific developer needs.
+* **Tags:** Categorization system for collections and items.
+* **User Preferences:** Personalize the experience by selecting tags of interest.
+* **Search:** Find specific websites within collections using keywords.
+* **Mobile-friendly:** Optimized for easy access and use on mobile devices.
+
+**Getting Started:**
+
+1. Clone the repository: `git clone https://github.com/Linkblare/linkblare.git`.
+2. Install dependencies: `npm install`.
+3. Configure environment variables:
+    * Create a `.env` file in the root directory.
+    * Add the following variables:
+        * `NEXT_PUBLIC_DATABASE_URL`: Your PostgreSQL database URL.
+        * `NEXT_PUBLIC_PRISMA_SECRET`: Your Prisma secret (generated with `prisma secret`).
+4. Start the development server: `npm run dev`.
+5. Visit http://localhost:3000 to access the website.
+
+**Contributing:**
+
+We welcome contributions from the developer community! You can help by:
+
+* Improve User Experience
+* Add different mechanism to generate feed for user
+* Improving existing content
+* Creating new content
+* Reporting bugs and suggesting improvements
+
+Please refer to the `CONTRIBUTING.md` file for detailed contribution guidelines.
+
+**License:**
+
+This project is licensed under the MIT License. See the `LICENSE` file for details.
+
+**Contact:**
+
+* GitHub Discussions: [Discussion](https://github.com/orgs/community/discussions/10367)
+* Email: [Send Email](shivamsi687@gmail.com)
+
+**Thank you for using Linkblare!**
