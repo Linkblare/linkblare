@@ -146,6 +146,17 @@ const MutateCollectionForm = ({
               </FormItem>
             }}
           />
+          <FormField
+            name='include'
+            render={({ field }) => {
+              return <FormItem>
+                <FormLabel>Include Tags</FormLabel>
+                <FormControl>
+                  <TagInput value={field.value ?? []} onChange={field.onChange} />
+                </FormControl>
+              </FormItem>
+            }}
+          />
 
           <div className='mt-5'>
             <Button className='w-full'>

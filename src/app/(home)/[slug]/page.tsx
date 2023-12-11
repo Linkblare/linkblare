@@ -78,7 +78,7 @@ const ViewSingleCollectionPage = async ({
         </div>
         <Separator />
       </div>
-      <ItemLoader collectionId={collection.id} />
+      <ItemLoader collectionId={collection.id} include={collection.include}/>
     </MainWrapper>
   )
 }

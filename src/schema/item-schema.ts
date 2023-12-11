@@ -95,7 +95,8 @@ export const PaginatedItemListSchema = z.object({
 export const InfinitItemListSchema = z.object({
     filter: z.object({
         tags: z.array(z.string()).default([]).optional(),
-        collectionId: z.number().optional()
+        collectionId: z.number().optional(),
+        collectionInclude: z.boolean().default(false).optional(),
     }).optional()
 })
     .merge(WithInfinitListSchema)

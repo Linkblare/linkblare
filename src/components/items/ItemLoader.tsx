@@ -12,11 +12,13 @@ import { nanoid } from 'nanoid'
 import { ItemOut } from '@/schema/item-schema'
 
 const ItemLoader = ({
-    collectionId
+    collectionId,
+    include
 }: {
-    collectionId?: number
+    collectionId?: number,
+    include?: string[]  // This param is for including extra items that is has this tags
 }) => {
-    const { data, isLoading, hasNextPage, fetchNextPage, refetch } = api.items.inifintList.useInfiniteQuery({ filter: { collectionId } }, {
+    const { data, isLoading, hasNextPage, fetchNextPage, refetch } = api.items.inifintList.useInfiniteQuery({ filter: { collectionId, tags: include, collectionInclude: true } }, {
         getNextPageParam: (page) => page.nextCursor
     })
     return (

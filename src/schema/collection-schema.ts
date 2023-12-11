@@ -13,7 +13,8 @@ export const CreateCollectionSchema = z.object({
     hash: z.string().optional(),
     description: z.string().optional(),
     thumbnail: z.string().optional(),
-    tags: z.array(z.string()).default([])
+    tags: z.array(z.string()).default([]),
+    include: z.array(z.string()).default([])
 })
 
 export type CreateCollectionInput = z.TypeOf<typeof CreateCollectionSchema>;

@@ -1,5 +1,4 @@
 import "@/styles/globals.css";
-import '@/styles/react-tag-autocomplete.css'
 
 import { GeistSans } from 'geist/font/sans'
 import { headers } from "next/headers";

@@ -1,0 +1,7 @@
+-- AlterTable
+ALTER TABLE "Collection" ADD COLUMN     "include" TEXT[] DEFAULT ARRAY[]::TEXT[],
+ADD COLUMN     "isFeatured" BOOLEAN DEFAULT false,
+ADD COLUMN     "parentId" INTEGER;
+
+-- AddForeignKey
+ALTER TABLE "Collection" ADD CONSTRAINT "Collection_parentId_fkey" FOREIGN KEY ("parentId") REFERENCES "Collection"("id") ON DELETE SET NULL ON UPDATE CASCADE;

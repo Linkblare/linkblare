@@ -169,13 +169,28 @@ const ItemRouter = createTRPCRouter({
         const userId = ctx.session?.user.id;
         const currenctTake = input.take ? input.take + 1 : config.limit + 1;
         let nextCursor: {id: number} | undefined = undefined;
+        const whereCond: Prisma.ItemWhereInput = {
+            title: (input.search) ? {contains: input.search, mode: 'insensitive'} : undefined,
+            tags: (input.filter?.tags && input.filter.tags.length > 0) ? {some: {name: {in: input.filter.tags}}} : undefined
+        }
+        if(input.filter?.collectionId){
+            whereCond.collectionId = input.filter.collectionId;
+            if(input.filter.collectionInclude){
+                whereCond.tags = undefined;
+                whereCond.collectionId = undefined;
+                whereCond.OR = [
+                    {
+                        collectionId: input.filter.collectionId,
+                    },
+                    {
+                        tags: (input.filter?.tags && input.filter.tags.length > 0) ? {some: {name: {in: input.filter.tags}}} : undefined
+                    }
+                ]
+            }
+        }
         
         const res = await ctx.db.item.findMany({
-            where: {
-                collectionId: input.filter?.collectionId,
-                title: (input.search) ? {contains: input.search, mode: 'insensitive'} : undefined,
-                tags: (input.filter?.tags && input.filter.tags.length > 0) ? {some: {name: {in: input.filter.tags}}} : undefined,
-            },
+            where: whereCond,
             include: getItemIncludes(userId, 'single'),
             take: currenctTake,
             cursor: cursor,

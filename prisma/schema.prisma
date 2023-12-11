@@ -1,16 +1,9 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
     provider = "prisma-client-js"
 }
 
 datasource db {
     provider  = "postgres"
-    // NOTE: When using mysql or sqlserver, uncomment the @db.Text annotations in model Account below
-    // Further reading:
-    // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
-    // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
     url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
     directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
@@ -86,7 +79,7 @@ model VerificationToken {
 model Tag {
     id               Int          @id @default(autoincrement())
     name             String       @unique
-    isFlag           Boolean @default(false)
+    isFlag           Boolean      @default(false)
     color            String?
     items            Item[]
     collections      Collection[]
@@ -94,19 +87,24 @@ model Tag {
 }
 
 model Collection {
-    id          Int      @id @default(autoincrement())
+    id          Int          @id @default(autoincrement())
     title       String
     slug        String?
     hash        String?
     description String?
     thumbnail   String?
-    itemsImages Json[] @default([])
     tags        Tag[]
     items       Item[]
-    likes       User[]   @relation("user_collection_likes")
-    saves       User[]   @relation("user_collection_saves")
-    createdAt   DateTime @default(now())
-    updatedAt   DateTime @updatedAt()
+    parentId    Int?
+    parent      Collection?  @relation("parent_children", fields: [parentId], references: [id])
+    isFeatured  Boolean?     @default(false)
+    itemsImages Json[]       @default([])
+    include     String[]     @default([])
+    likes       User[]       @relation("user_collection_likes")
+    saves       User[]       @relation("user_collection_saves")
+    childrens   Collection[] @relation("parent_children")
+    createdAt   DateTime     @default(now())
+    updatedAt   DateTime     @updatedAt()
 }
 
 model Item {
@@ -125,4 +123,3 @@ model Item {
     createdAt    DateTime   @default(now())
     updatedAt    DateTime   @updatedAt()
 }
-
