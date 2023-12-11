@@ -89,10 +89,32 @@ const TagRouter = createTRPCRouter({
         const currenctTake = input.take ? input.take + 1 : config.limit + 1;
         let nextCursor: { id: number } | undefined = undefined;
 
+        const whereCond: Prisma.TagWhereInput = {
+            name: (input.search) ? { contains: input.search, mode: 'insensitive' } : undefined,
+        }
+
+        if(input.targetCollection){
+            whereCond.OR = [
+                {
+                    items: {
+                        some: {
+                            collectionId: input.targetCollection,
+                        }
+                    }
+                },
+                {
+                    collections: {
+                        some: {
+                            id: input.targetCollection,
+                        }
+                    }
+                }
+            ]
+        }
+
+
         const res = await ctx.db.tag.findMany({
-            where: {
-                name: (input.search) ? { contains: input.search, mode: 'insensitive' } : undefined,
-            },
+            where: whereCond,
             include: {
                 preferredByUsers: (userId && input.includePreferredBy) ? {
                     where: { id: userId },

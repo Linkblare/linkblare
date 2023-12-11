@@ -34,7 +34,8 @@ export const PaginatedTagListSchema = z.object({
 
 
 export const InfinitTagListSchema = z.object({
-    includePreferredBy: z.boolean().default(false)
+    includePreferredBy: z.boolean().default(false),
+    targetCollection: z.number().optional(),
 })
     .merge(WithInfinitListSchema)
     .merge(WithSearch)
