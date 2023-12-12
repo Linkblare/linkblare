@@ -1,18 +1,21 @@
+'use client'
+
 import React from 'react'
 import { CardDescription, CardTitle } from '../ui/card'
 import { type CollectionOut } from '@/schema/collection-schema'
 import ThumbnailGrid from './ThumbnialGrid'
 import Image from 'next/image'
-import { redirect } from 'next/navigation'
+import { redirect, useRouter } from 'next/navigation'
 
 const FeaturedCollectionCard = ({
     collection
 }: {
     collection: CollectionOut
 }) => {
+    const router = useRouter();
 
     return (
-        <div className='rounded-2xl border bg-card' >
+        <div className='rounded-2xl border bg-card cursor-pointer' onClick={() => router.push(`/${collection.slug}`)}>
             <div className='grid grid-cols-1 sm:grid-cols-2 gap-5'>
                 <div className='rounded-xl overflow-hidden aspect-[4/2.5]'>
                     {
