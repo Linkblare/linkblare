@@ -1,13 +1,11 @@
 'use client'
-import React, { ReactNode } from 'react'
-import { Button } from '../ui/button'
+import React, { type ReactNode } from 'react'
 import { api } from '@/trpc/react'
-import { ThumbsUpIcon } from 'lucide-react'
-import { cn } from '@/lib/utils'
-import { UserActionResult, UserActions } from '@/schema/user-schema'
+import { type UserActionResult, type UserActions } from '@/schema/user-schema'
 import { useToast } from '../ui/use-toast'
 import LikeButton from '../LikeButton'
 import SaveButton from '../SaveButton'
+import { signIn, useSession } from 'next-auth/react'
 
 
 type ActionButtonProps = {
@@ -32,8 +30,12 @@ const ActionButton = ({
     const actionMutation = api.user.action.useMutation();
     const savedCtx = api.useUtils().user.savedCollection;
     const { toast } = useToast();
+    const {data:Session, status} = useSession()
     
     const toggle = async () => {
+        if(!Session && status === 'unauthenticated'){
+            void signIn();
+        }
         try {
             const res = await actionMutation.mutateAsync({ action, entityId })
             onAction?.(res)
@@ -49,11 +51,11 @@ const ActionButton = ({
     }
 
     if (action === 'collection_like_toggle' || action === 'item_like_toggle') {
-        return <LikeButton onClick={() => toggle()} state={actionMutation.data?.state ?? defaultState} />
+        return <LikeButton  onClick={() => toggle()} state={actionMutation.data?.state ?? defaultState} />
     }
 
     if (action === 'collection_save_toggle') {
-        return <SaveButton onClick={() => toggle()} state={actionMutation.data?.state ?? defaultState} />
+        return <SaveButton  onClick={() => toggle()} state={actionMutation.data?.state ?? defaultState} />
     }
     return (
         <>

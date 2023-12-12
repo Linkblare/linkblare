@@ -9,15 +9,17 @@ const SaveButton = ({
     onClick,
     state = false,
     count,
-    className
+    className,
+    disabled = false
 }: {
     onClick?: (isLiked: boolean) => void,
     state?: boolean,
     count?: number|string,
-    className?: string
+    className?: string,
+    disabled?: boolean
 }) => {
   return (
-    <Button variant={'ghost'} size={'icon'} className={className} onClick={() => onClick?.(state)}>
+    <Button disabled={disabled} variant={'ghost'} size={'icon'} className={className} onClick={() => onClick?.(state)}>
        {
         state ?
         <BookmarkCheckIcon className={cn([

@@ -12,6 +12,7 @@ import { type SingleCollectionOut } from '@/schema/collection-schema'
 import { Separator } from '@/components/ui/separator'
 import ReadMore from '@/components/ReadMore'
 import RelatedCollection from '@/components/collection/RelatedCollection'
+import ActionButton from '@/components/action/ActionButton'
 
 
 const ParamsSchema = z.object({
@@ -71,16 +72,23 @@ const ViewSingleCollectionPage = async ({
   return (
     <MainWrapper className='py-5'>
       <div className='mt-5 mb-10'>
-        <div className="space-y-0.5 ">
-          <h2 className="text-2xl font-bold tracking-tight capitalize">{collection.title}</h2>
-          <div className="text-muted-foreground max-w-3xl">
-            <ReadMore characterCount={100}>{collection.description ?? 'No Description available'}</ReadMore>
+        <div className='flex items-end'>
+          <div className="space-y-0.5 flex-1">
+            <h2 className="text-2xl font-bold tracking-tight capitalize">{collection.title}</h2>
+            <div className="text-muted-foreground max-w-3xl">
+              <ReadMore characterCount={100}>{collection.description ?? 'No Description available'}</ReadMore>
+            </div>
+          </div>
+
+          <div className='flex flex-col md:flex-row items-center gap-2'>
+            <ActionButton action={'collection_like_toggle'} entityId={collection.id} defaultState={collection.liked} />
+            <ActionButton action={'collection_save_toggle'} entityId={collection.id} defaultState={collection.saved} />
           </div>
         </div>
         <Separator />
       </div>
       <RelatedCollection collectionId={collection.id} />
-      <Separator className='my-10'/>
+      <Separator className='my-10' />
       <ItemLoader collectionId={collection.id} include={collection.include} />
     </MainWrapper>
   )

@@ -9,16 +9,18 @@ const LikeButton = ({
     onClick,
     state = false,
     count,
-    className
+    className,
+    disabled=false
 }: {
     onClick?: (isLiked: boolean) => void,
     state?: boolean,
     count?: number|string,
-    className?: string
+    className?: string,
+    disabled?: boolean
 }) => {
   
   return (
-    <Button variant={'ghost'} size={'icon'} className={className} onClick={() => onClick?.(state)}>
+    <Button disabled={disabled} variant={'ghost'} size={'icon'} className={className} onClick={() => onClick?.(state)}>
         <Heart className={cn([
             'w-5 h-5 ',
             {'text-red-700 fill-red-700': state}

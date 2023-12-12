@@ -18,7 +18,7 @@ const RelatedCollection = ({
     const { data, isLoading } = api.collection.relatedCollections.useQuery({ collectionId });;
     const router = useRouter();
     const sliderSetting: Settings = {
-        dots: false,
+        dots: true,
         infinite: false,
         speed: 500,
         initialSlide: 0,
