@@ -20,8 +20,8 @@ import { env } from "@/env.mjs";
 
 export const metadata: Metadata = {
   metadataBase: new URL(env.SITE_URL),
-  title: "LinkBlare - Unleashing the Power of Web Resources",
-  description: "Discover LinkBlare, your go-to source for curated web resources. From free illustrations to essential development tools, find what you need for seamless online experiences. Elevate your projects with LinkBlare's handpicked collections.",
+  title: "Linkblare: The Ultimate Resource Hub for Developers | Discover the Tools You Need",
+  description: "Struggling to find the best developer resources? Linkblare is your one-stop solution! Explore curated collections of websites, tools, and tutorials tailored to your specific needs. Dive into AI, machine learning, web development, and more. Set your preferences and discover relevant information quickly and efficiently. Empower your development journey with Linkblare.",
   icons: [
     { rel: "icon", url: "/favicon.ico" },
   ],
@@ -30,9 +30,10 @@ export const metadata: Metadata = {
     locale: "en_IN",
     url: env.SITE_URL,
     siteName: "LinkBlare",
+    description: "Struggling to find the best developer resources? Linkblare is your one-stop solution! Explore curated collections of websites, tools, and tutorials tailored to your specific needs. Dive into AI, machine learning, web development, and more. Set your preferences and discover relevant information quickly and efficiently. Empower your development journey with Linkblare.",
     images: [
       {
-        url: `${env.SITE_URL}/api/og/LinkBlare - Unleashing the Power of Web Resources`,
+        url: `${env.SITE_URL}/api/og/Linkblare: The Ultimate Resource Hub for Developers | Discover the Tools You Need`,
         width: 1200,
         height: 630,
         alt: "LinkBlare",
