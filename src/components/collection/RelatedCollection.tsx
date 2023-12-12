@@ -5,6 +5,7 @@ import { api } from '@/trpc/react'
 import React from 'react'
 import Slider, { type Settings } from 'react-slick'
 import CollectionCard from './CollectionCard'
+import { useRouter } from 'next/navigation'
 
 type RelatedCollectionProps = {
     collectionId: number,
@@ -14,9 +15,9 @@ type RelatedCollectionProps = {
 const RelatedCollection = ({
     collectionId
 }: RelatedCollectionProps) => {
-    const { data, isLoading } = api.collection.relatedCollections.useQuery({ collectionId })
+    const { data, isLoading } = api.collection.relatedCollections.useQuery({ collectionId });;
+    const router = useRouter();
     const sliderSetting: Settings = {
-
         dots: false,
         infinite: false,
         speed: 500,
@@ -68,7 +69,7 @@ const RelatedCollection = ({
                 }
                 {data?.items.map((item) => (
                     <div key={item.id} className='px-2 '>
-                        <div className='px-2'> <CollectionCard collection={item} /></div>
+                        <div className='px-2 cursor-pointer' onClick={() => router.push(`/${item.slug}`)}> <CollectionCard collection={item} mode="sort" /></div>
                     </div>
                 ))}
             </Slider>

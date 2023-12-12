@@ -8,7 +8,7 @@ import React from 'react'
 import { Skeleton } from '../ui/skeleton'
 import Image from 'next/image'
 import { CardTitle } from '../ui/card'
-import { dateFromNow } from '@/lib/utils'
+import { cn, dateFromNow } from '@/lib/utils'
 import ActionButton from '../action/ActionButton'
 import InfoDialog from '../InfoDialog'
 import Link from 'next/link'
@@ -18,13 +18,15 @@ import Flag from '../ui/flag'
 import ThumbnailGrid from './ThumbnialGrid'
 
 type CollectionCardProps = {
-  collection: CollectionOut
+  collection: CollectionOut,
+  mode?: 'sort' | 'full'
 }
 
 
 
 const CollectionCard = ({
-  collection
+  collection,
+  mode = 'full'
 }: CollectionCardProps) => {
 
   const flags = collection.tags.filter(tag => tag.isFlag);
@@ -43,7 +45,12 @@ const CollectionCard = ({
 
       <div className='p-3 h-16 '>
         <Link href={`/${collection.slug}`}><CardTitle className='line-clamp-2'>{collection.title}</CardTitle></Link>
-        <div className='text-muted-foreground text-xs flex items-center gap-2 flex-wrap pt-1'>
+        <div
+          className={cn([
+            'text-muted-foreground text-xs flex items-center gap-2 flex-wrap pt-1',
+            {'hidden': mode === 'sort'}
+          ])}
+        >
           <span>{dateFromNow(collection.createdAt)}</span>
           <span>|</span>
           <span>{collection._count.items} items</span>
@@ -57,7 +64,12 @@ const CollectionCard = ({
 
       </div>
 
-      <div className='flex items-center justify-between py-1 px-2'>
+      <div 
+      className={cn([
+        'flex items-center justify-between py-1 px-2',
+        {'hidden': mode === 'sort'}
+      ])}
+      >
         <ActionButton action={'collection_like_toggle'} entityId={collection.id} defaultState={collection.liked} />
         <ActionButton action={'collection_save_toggle'} entityId={collection.id} defaultState={collection.saved} />
         <InfoDialog>
