@@ -17,6 +17,7 @@ import InfoDialog from '../InfoDialog'
 import dynamic from 'next/dynamic'
 import { nanoid } from 'nanoid'
 import Flag from '../ui/flag'
+import { Button } from '../ui/button'
 
 
 const LinkItemRenderer = dynamic(() => import('./item-renderer/LinkItemRenderer'), {
@@ -63,12 +64,6 @@ const ItemCard = ({
                                     <File className='w-3 h-3 text-muted-foreground' />
                                 </div>
                     }
-
-                    {
-                        flags.length > 0 && flags.map(flag => {
-                            return <Flag key={nanoid()}>{flag.name}</Flag>
-                        })
-                    }
                 </div>
             </div>
 
@@ -87,9 +82,21 @@ const ItemCard = ({
             <div>
                 <div className='flex items-center justify-between text-muted-foreground text-xs p-2'>
                     <span>{item._count.likes}</span>
+                    <div>
+                        {
+                            flags.length > 0 && flags.map(flag => {
+                                return <Flag key={nanoid()}>{flag.name}</Flag>
+                            })
+                        }
+                    </div>
                 </div>
                 <div className='flex items-center justify-between border-t '>
                     <ActionButton entityId={item.id} action='item_like_toggle' defaultState={item.liked} />
+
+                    {
+                        item.type === 'link' && <Button variant={'ghost'} size={'icon'}><ExternalLinkIcon className='w-5 h-5' /></Button>
+                    }
+
                     <InfoDialog>
                         {item.description}
                     </InfoDialog>
