@@ -35,6 +35,8 @@ const ActionButton = ({
     const toggle = async () => {
         if(!Session && status === 'unauthenticated'){
             void signIn();
+            return;
+            
         }
         try {
             const res = await actionMutation.mutateAsync({ action, entityId })
