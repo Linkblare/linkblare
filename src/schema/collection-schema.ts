@@ -14,7 +14,8 @@ export const CreateCollectionSchema = z.object({
     description: z.string().optional(),
     thumbnail: z.string().optional(),
     tags: z.array(z.string()).default([]),
-    include: z.array(z.string()).default([])
+    include: z.array(z.string()).default([]),
+    isFeatured: z.boolean().default(false),
 })
 
 export type CreateCollectionInput = z.TypeOf<typeof CreateCollectionSchema>;
@@ -50,7 +51,8 @@ export const PaginatedCollectionListSchema = z.object({
 
 export const InfinitCollectionListSchema = z.object({
     filter: z.object({
-        tags: z.array(z.string()).optional()
+        tags: z.array(z.string()).optional(),
+        featured: z.boolean().optional()
     }).optional()
 })
     .merge(WithInfinitListSchema)

@@ -33,6 +33,7 @@ import { api } from '@/trpc/react'
 import { toast } from '../ui/use-toast'
 import Loading from '../Loading'
 import { nanoid } from 'nanoid'
+import { Switch } from '../ui/switch'
 
 
 type MutateCollectionFormProps = {
@@ -153,6 +154,17 @@ const MutateCollectionForm = ({
                 <FormLabel>Include Tags</FormLabel>
                 <FormControl>
                   <TagInput value={field.value ?? []} onChange={field.onChange} />
+                </FormControl>
+              </FormItem>
+            }}
+          />
+          <FormField
+            name='isFeatured'
+            render={({ field }) => {
+              return <FormItem>
+                <FormLabel>Featured</FormLabel>
+                <FormControl>
+                  <Switch checked={field.value} onCheckedChange={field.onChange} />
                 </FormControl>
               </FormItem>
             }}

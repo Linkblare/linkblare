@@ -16,6 +16,7 @@ import { Edit3Icon } from 'lucide-react'
 import MutateCollectionDialog from './MutateCollectionDialog'
 import DeleteCollection from './DeleteCollection'
 import CollectionViewerSheet from './CollectionViewerSheet'
+import ToggleFeatured from './ToggleFeatured'
 
 
 const columns: ColumnDef<CollectionOut>[] = [
@@ -75,6 +76,13 @@ const columns: ColumnDef<CollectionOut>[] = [
         header: 'Total Saves',
         cell({ row }) {
             return row.original._count.saves
+        }
+    },
+    {
+        accessorKey: 'isFeatured',
+        header: 'Featured',
+        cell({ row }) {
+            return <ToggleFeatured collection={row.original} />
         }
     },
     {

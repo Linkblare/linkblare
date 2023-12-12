@@ -199,6 +199,7 @@ export const CollectionRouter = createTRPCRouter({
             where: {
                 title: (input.search) ? {contains: input.search, mode: 'insensitive'} : undefined,
                 tags: (input.filter?.tags && input.filter.tags.length > 0) ? {some: {name: {in: input.filter.tags}}} : undefined,
+                isFeatured: input.filter?.featured,
             },
             include: getCollectionIncludes(userId),
             take: currenctTake,

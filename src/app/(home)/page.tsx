@@ -3,6 +3,7 @@
 import MainWrapper from "@/components/MainWrapper";
 import TagRow from "@/components/TagRow";
 import ExploreCollectionLoader from "@/components/collection/ExploreCollectionLoader";
+import FeaturedCollections from "@/components/collection/FeaturedCollections";
 import { api } from "@/trpc/server";
 
 export default async function Home({
@@ -17,6 +18,9 @@ export default async function Home({
     <MainWrapper className=" relative">
       <TagRow/>
       <div className="mt-5"></div>
+      <div className="mt-5">
+        <FeaturedCollections/>
+      </div>
       <ExploreCollectionLoader initialData={publicCollection} />
     </MainWrapper>
     </>
