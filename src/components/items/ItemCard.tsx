@@ -17,7 +17,7 @@ import InfoDialog from '../InfoDialog'
 import dynamic from 'next/dynamic'
 import { nanoid } from 'nanoid'
 import Flag from '../ui/flag'
-import { Button } from '../ui/button'
+import { Button, buttonVariants } from '../ui/button'
 
 
 const LinkItemRenderer = dynamic(() => import('./item-renderer/LinkItemRenderer'), {
@@ -94,7 +94,7 @@ const ItemCard = ({
                     <ActionButton entityId={item.id} action='item_like_toggle' defaultState={item.liked} />
 
                     {
-                        item.type === 'link' && <Button variant={'ghost'} size={'icon'}><ExternalLinkIcon className='w-5 h-5' /></Button>
+                        item.type === 'link' && <Link href={item.content.url} className={buttonVariants({variant: 'outline', size: 'icon'})} ><ExternalLinkIcon className='w-5 h-5' /></Link>
                     }
 
                     <InfoDialog>
