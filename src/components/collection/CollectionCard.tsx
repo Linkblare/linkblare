@@ -51,8 +51,8 @@ const CollectionCard = ({
             {'hidden': mode === 'sort'}
           ])}
         >
-          <span>{dateFromNow(collection.createdAt)}</span>
-          <span>|</span>
+          {/* <span>{dateFromNow(collection.createdAt)}</span>
+          <span>|</span> */}
           <span>{collection._count.items} items</span>
 
           {
