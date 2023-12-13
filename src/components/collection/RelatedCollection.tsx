@@ -6,6 +6,8 @@ import React from 'react'
 import Slider, { type Settings } from 'react-slick'
 import CollectionCard from './CollectionCard'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
+import { buttonVariants } from '../ui/button'
 
 type RelatedCollectionProps = {
     collectionId: number,
@@ -15,15 +17,16 @@ type RelatedCollectionProps = {
 const RelatedCollection = ({
     collectionId
 }: RelatedCollectionProps) => {
-    const { data, isLoading } = api.collection.relatedCollections.useQuery({ collectionId });;
+    const { data, isLoading } = api.collection.relatedCollections.useQuery({ collectionId });
+    const {data:collection} = api.collection.getById.useQuery({ id:collectionId });
     const router = useRouter();
     const sliderSetting: Settings = {
         dots: true,
         infinite: false,
         speed: 500,
         initialSlide: 0,
-        slidesToShow:(data && data.items.length < 2) ? 1  : 4,
-        slidesToScroll:(data && data.items.length < 2) ? 1  : 4,
+        slidesToShow: (data && data.items.length < 2) ? 1 : 4,
+        slidesToScroll: (data && data.items.length < 2) ? 1 : 4,
         responsive: [
             {
                 breakpoint: 1024,
@@ -56,7 +59,12 @@ const RelatedCollection = ({
 
     return (
         <section className=' space-y-5'>
-            <h2 className='text-2xl font-bold'>Related Collections</h2>
+            <div className='flex items-center justify-between'>
+                <h2 className='text-2xl font-bold max-w-[60%]'>Related Collections</h2>
+                {
+                    collection && <Link className={buttonVariants({variant: 'outline'})} href={{pathname: '/', query: {tag: collection.tags.map(tg => tg.name)}}}>All</Link>
+                }
+            </div>
             <Slider
                 {...sliderSetting}
             >
