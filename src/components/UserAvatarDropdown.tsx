@@ -1,6 +1,6 @@
 'use client'
 
-import {LogOut } from "lucide-react"
+import {LogOut, Settings2 } from "lucide-react"
 import {
     Avatar,
     AvatarFallback,
@@ -18,7 +18,7 @@ import {
 import { convertNullToUndefined } from "@/lib/utils"
 import { signOut, useSession, } from "next-auth/react"
 import Link from "next/link"
-import { navigationMenuTriggerStyle } from "./ui/navigation-menu"
+import { ThemeToggle } from "./ThemeToggle"
 
 const UserAvatarDropdown =  () => {
     const {data:session} = useSession();
@@ -44,7 +44,13 @@ const UserAvatarDropdown =  () => {
 
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
-                    <Link href="/settings" >Settings</Link>
+                    <Link href="/settings" className="flex items-center gap-1">
+                        <span><Settings2 className="w-4 h-4"/></span>
+                        <span>Setting</span>
+                    </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                    <ThemeToggle/>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={() => void signOut()}>

@@ -14,7 +14,7 @@ const MobileNav = () => {
     const isActive = (url: string) => (pathname === url ? true : false)
     const {data:Session} = useSession();
     return (
-        <div className='fixed bottom-0 left-0 w-full p-2 bg-card/20 backdrop-blur-lg flex items-center justify-between lg:hidden'>
+        <div className='fixed bottom-0 left-0 w-full px-3 py-4 bg-card/20 backdrop-blur-lg flex items-center justify-between lg:hidden'>
             <Link
                 href={'/for-you'}
                 className={cn([

@@ -7,13 +7,14 @@ import { extractRouterConfig } from "uploadthing/server";
 import { ourFileRouter } from "@/app/api/uploadthing/core";
 import { TRPCReactProvider } from "@/trpc/react";
 import { Toaster } from "@/components/ui/toaster";
-import {Analytics as VercelAnalytics} from '@vercel/analytics/react'
+import { Analytics as VercelAnalytics } from '@vercel/analytics/react'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { type Metadata } from "next";
 import { Suspense } from "react";
 import Analytics from "@/components/utils/GoogleTagmanager";
 import { env } from "@/env.mjs";
+import { ThemeProvider } from "@/components/ThemeProvider";
 
 
 
@@ -25,7 +26,7 @@ export const metadata: Metadata = {
   icons: [
     { rel: "icon", url: "/favicon.ico" },
   ],
-  openGraph:{
+  openGraph: {
     type: "website",
     locale: "en_IN",
     url: env.SITE_URL,
@@ -49,13 +50,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={` ${GeistSans.className} overflow-x-hidden max-w-[1920px] mx-auto`}>
-        <Suspense><Analytics /></Suspense>
-        <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
-        <TRPCReactProvider headers={headers()}>{children}</TRPCReactProvider>
-        <Toaster />
-        <VercelAnalytics/>
+        <ThemeProvider
+        attribute="class"
+        defaultTheme="system"
+        enableSystem
+        disableTransitionOnChange
+        >
+          <Suspense><Analytics /></Suspense>
+          <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
+          <TRPCReactProvider headers={headers()}>{children}</TRPCReactProvider>
+          <Toaster />
+          <VercelAnalytics />
+        </ThemeProvider>
       </body>
     </html>
   );

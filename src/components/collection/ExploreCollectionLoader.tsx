@@ -12,6 +12,9 @@ import { nanoid } from 'nanoid'
 import { type CollectionOut } from '@/schema/collection-schema'
 import { useSearchParams } from 'next/navigation'
 import InfiniteScroll from 'react-infinite-scroll-component';
+import GridSection from '../grid/GridSection'
+import { InfinitItemListSchema } from '@/schema/item-schema'
+import InifiniteItemList from '../grid/InfiniteItemList'
 
 
 const ExploreCollectionLoader = ({
@@ -32,19 +35,25 @@ const ExploreCollectionLoader = ({
     const items = data?.pages.reduce((acc, page) => acc.concat(page.items), [] as CollectionOut[])
     return (
         <div>
-            <ItemGrid
-                className='items-center justify-center'
+            <InifiniteItemList
+                
                 loading={isLoading}
                 loader={<CollectionCard.Skeleton />}
                 dataLength={items?.length ?? 0}
                 fetchNextPage={fetchNextPage}
                 hasMore={hasNextPage}
                 refetch={refetch}
-                >
+            >
                 {
-                    data?.pages.map(page => page.items.map(item => <CollectionCard collection={item} key={nanoid()} />))
+                    data?.pages.map(page =>
+                        <GridSection key={nanoid()}>
+                            {
+                                page.items.map(item => (<CollectionCard key={nanoid()} collection={item} />))
+                            }
+                        </GridSection>
+                    )
                 }
-            </ItemGrid>
+            </InifiniteItemList>
 
         </div>
     )

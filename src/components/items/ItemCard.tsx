@@ -40,7 +40,7 @@ const ItemCard = ({
     const flags = item.tags.filter(tag => tag.isFlag);
 
     return (
-        <div className='max-w-full md:max-w-md rounded-xl border'>
+        <div className='max-w-full md:max-w-md rounded-xl border bg-card'>
             <div className='min-h-[80px] p-3 space-y-1'>
                 <CardTitle className='line-clamp-2'>{item.title}</CardTitle>
                 <div className='flex items-center text-muted-foreground text-xs space-x-1'>
