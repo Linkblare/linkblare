@@ -18,7 +18,7 @@ import {
 import { convertNullToUndefined } from "@/lib/utils"
 import { signOut, useSession, } from "next-auth/react"
 import Link from "next/link"
-import { ThemeToggle } from "./ThemeToggle"
+
 
 const UserAvatarDropdown =  () => {
     const {data:session} = useSession();
@@ -48,9 +48,6 @@ const UserAvatarDropdown =  () => {
                         <span><Settings2 className="w-4 h-4"/></span>
                         <span>Setting</span>
                     </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                    <ThemeToggle/>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={() => void signOut()}>

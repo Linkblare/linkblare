@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import { buttonVariants } from './ui/button'
 import { Github } from 'lucide-react'
+import { ThemeToggle } from './ThemeToggle'
 
 const PinnedWidget = () => {
     return (
@@ -13,6 +14,7 @@ const PinnedWidget = () => {
                 className={cn([buttonVariants({ variant: 'outline' })])}
                 href={'https://github.com/Linkblare/linkblare'}
             ><Github /></Link></div>
+            <ThemeToggle/>
         </div>
     )
 }
