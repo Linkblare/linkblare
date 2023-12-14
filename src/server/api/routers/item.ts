@@ -168,7 +168,7 @@ const ItemRouter = createTRPCRouter({
                 tags: (input.filter?.tags && input.filter.tags.length > 0) ? {some: {name: {in: input.filter.tags}}} : undefined
             },
             include: getItemIncludes(userId, 'single'),
-            orderBy: input.sort
+            orderBy: input.sort??{createdAt: 'desc'}
         }, input.pagination)
         return {
             ...res,
@@ -206,7 +206,7 @@ const ItemRouter = createTRPCRouter({
             include: getItemIncludes(userId, 'single'),
             take: currenctTake,
             cursor: cursor,
-            orderBy: input.sort
+            orderBy: input.sort??{createdAt: 'desc'}
         });
 
         if (res.length >= currenctTake) {

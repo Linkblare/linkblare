@@ -180,7 +180,7 @@ export const CollectionRouter = createTRPCRouter({
                 tags: (input.filter?.tags && input.filter.tags.length > 0) ? {some: {name: {in: input.filter.tags}}} : undefined
             },
             include: getCollectionIncludes(userId),
-            orderBy: input.sort
+            orderBy: input.sort??{createdAt: 'desc'}
         }, input.pagination)
         if(!res) throw new TRPCError({code: 'NOT_FOUND', message: 'Collection not found!'});
         return {
@@ -204,7 +204,7 @@ export const CollectionRouter = createTRPCRouter({
             include: getCollectionIncludes(userId),
             take: currenctTake,
             cursor: cursor,
-            orderBy: input.sort
+            orderBy: input.sort??{createdAt: 'desc'}
         });
 
         if (res.length >= currenctTake) {
@@ -246,7 +246,7 @@ export const CollectionRouter = createTRPCRouter({
             include: getCollectionIncludes(userId),
             take: currenctTake,
             cursor: cursor,
-            orderBy: input.sort
+            orderBy: input.sort??{createdAt: 'desc'}
         });
 
         if (res.length >= currenctTake) {
@@ -284,7 +284,7 @@ export const CollectionRouter = createTRPCRouter({
             },
             take: currenctTake,
             cursor: cursor,
-            orderBy: input.sort
+            orderBy: input.sort??{createdAt: 'desc'}
         });
 
         if (res.length >= currenctTake) {
