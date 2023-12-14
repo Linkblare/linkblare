@@ -87,24 +87,26 @@ model Tag {
 }
 
 model Collection {
-    id          Int          @id @default(autoincrement())
-    title       String
-    slug        String?
-    hash        String?
-    description String?
-    thumbnail   String?
-    tags        Tag[]
-    items       Item[]
-    parentId    Int?
-    parent      Collection?  @relation("parent_children", fields: [parentId], references: [id])
-    isFeatured  Boolean?     @default(false)
-    itemsImages Json[]       @default([])
-    include     String[]     @default([])
-    likes       User[]       @relation("user_collection_likes")
-    saves       User[]       @relation("user_collection_saves")
-    childrens   Collection[] @relation("parent_children")
-    createdAt   DateTime     @default(now())
-    updatedAt   DateTime     @updatedAt()
+    id           Int          @id @default(autoincrement())
+    title        String
+    slug         String?
+    hash         String?
+    description  String?
+    thumbnail    String?
+    tags         Tag[]
+    items        Item[]
+    parentId     Int?
+    parent       Collection?  @relation("parent_children", fields: [parentId], references: [id])
+    isFeatured   Boolean?     @default(false)
+    itemsImages  Json[]       @default([])
+    include      String[]     @default([])
+    likes        User[]       @relation("user_collection_likes")
+    saves        User[]       @relation("user_collection_saves")
+    childrens    Collection[] @relation("parent_children")
+    itemsUpdated DateTime?
+    isPublished  Boolean?     @default(false)
+    createdAt    DateTime     @default(now())
+    updatedAt    DateTime     @updatedAt()
 }
 
 model Item {

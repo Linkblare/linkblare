@@ -88,6 +88,18 @@ const ItemRouter = createTRPCRouter({
             },
             include: getItemIncludes(userId, 'single')
         });
+
+        // UPDATE 'itemsUpdated' to current date
+        await ctx.db.collection.update({
+            where: {id: input.collectionId},
+            data: {
+                itemsUpdated: new Date(Date.now())
+            }
+        })
+
+        //  SEND EMAIL TO THE ALL SUBSCRIBERS
+
+
         return singleItemResolver(res as any)
     }),
 
