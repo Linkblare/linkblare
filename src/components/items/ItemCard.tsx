@@ -91,7 +91,7 @@ const ItemCard = ({
                     </div>
                 </div>
                 <div className='flex items-center justify-between border-t '>
-                    <ActionButton entityId={item.id} action='item_like_toggle' defaultState={item.liked} />
+                    <ActionButton entityId={item.id} action='item_like_toggle' defaultState={item.liked} defaultCount={item._count.likes} />
 
                     {
                         item.type === 'link' && <Link href={item.content.url} className={buttonVariants({variant: 'outline', size: 'icon'})} ><ExternalLinkIcon className='w-5 h-5' /></Link>
