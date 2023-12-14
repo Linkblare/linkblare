@@ -244,8 +244,11 @@ export function md5Hash(text: string) {
   return Md5.hashStr(text)
 }
 
-export function appendQueryInSearchParams(searchString: string, query: { key: string, value: string }, toggleMode = false) {
+export function appendQueryInSearchParams(searchString: string, query: { key: string, value: string }, toggleMode = false, singleMode=false) {
   const params = new URLSearchParams(searchString);
+  if(singleMode){
+    params.delete(query.key)
+  }
   if (params.has(query.key, query.value)) {
     if (toggleMode) {
       params.delete(query.key, query.value)

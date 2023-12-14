@@ -1,14 +1,16 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { type Sort } from "@/schema/_helpers/WithSorting"
+import { type SortInput } from "@/types/SortInput";
 import { useSearchParams } from "next/navigation";
 
-type SortMap = Record<string, Sort>;
 
-const useSort = (values: SortMap) => {
+
+const useSort = (values: SortInput[], sortKey = 'sortBy') => {
     const searchParams = useSearchParams();
-    const activeKey = Object.keys(values).find(key => searchParams.has(key));
-    const activeSort: Sort|undefined|null = activeKey ? values[activeKey] : null;
+    const sortKeyValue = searchParams.get(sortKey);
+    if(sortKeyValue === null) return {activeSort: undefined};
+    const activeSort = values.find(v => v.key === sortKeyValue);
     return {activeSort}
 }   
 

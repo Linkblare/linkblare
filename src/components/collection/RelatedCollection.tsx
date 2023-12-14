@@ -8,6 +8,7 @@ import CollectionCard from './CollectionCard'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { buttonVariants } from '../ui/button'
+import { Separator } from '@/components/ui/separator'
 
 type RelatedCollectionProps = {
     collectionId: number,
@@ -81,6 +82,7 @@ const RelatedCollection = ({
                     </div>
                 ))}
             </Slider>
+            <Separator className='my-10' />
         </section>
     )
 }

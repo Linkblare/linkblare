@@ -13,6 +13,8 @@ import { Separator } from '@/components/ui/separator'
 import ReadMore from '@/components/ReadMore'
 import RelatedCollection from '@/components/collection/RelatedCollection'
 import ActionButton from '@/components/action/ActionButton'
+import SortArray from '@/components/SortArray'
+import { itemSortInputs } from '../itemSort'
 
 
 const ParamsSchema = z.object({
@@ -70,8 +72,12 @@ const ViewSingleCollectionPage = async ({
   }
 
   return (
-    <MainWrapper className='py-5'>
-      <div className='mt-5 mb-10'>
+    <MainWrapper className=''>
+      <div className="flex items-start gap-2 mt-2">
+        <SortArray inputs={itemSortInputs} />
+      </div>
+     
+      <div className='my-10'>
         <div className='flex items-end'>
           <div className="space-y-0.5 flex-1">
             <h2 className="text-2xl font-bold tracking-tight capitalize">{collection.title}</h2>
@@ -88,7 +94,6 @@ const ViewSingleCollectionPage = async ({
         <Separator />
       </div>
       <RelatedCollection collectionId={collection.id} />
-      <Separator className='my-10' />
       <ItemLoader collectionId={collection.id} include={collection.include} />
     </MainWrapper>
   )

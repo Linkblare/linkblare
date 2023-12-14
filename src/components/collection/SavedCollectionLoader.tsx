@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
@@ -10,9 +11,14 @@ import ItemGrid from '../grid/ItemGrid'
 import CollectionCard from './CollectionCard'
 import { nanoid } from 'nanoid'
 import { CollectionOut } from '@/schema/collection-schema'
+import useSort from '@/hooks/useSort'
+import { collectionSortMap } from '@/app/(home)/collectionSort'
 
 const SavedCollectionLoader = () => {
-    const {data, isLoading, hasNextPage, fetchNextPage, refetch} = api.user.savedCollection.useInfiniteQuery({}, {
+    const {activeSort} = useSort(collectionSortMap)
+    const {data, isLoading, hasNextPage, fetchNextPage, refetch} = api.user.savedCollection.useInfiniteQuery({
+        sort: activeSort?.sortValue as any,
+    }, {
         getNextPageParam: (page) => page.nextCursor
     })
   return (

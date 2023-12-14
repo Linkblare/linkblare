@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
@@ -15,6 +16,8 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import GridSection from '../grid/GridSection'
 import { InfinitItemListSchema } from '@/schema/item-schema'
 import InifiniteItemList from '../grid/InfiniteItemList'
+import useSort from '@/hooks/useSort'
+import { collectionSortMap } from '@/app/(home)/collectionSort'
 
 
 const ExploreCollectionLoader = ({
@@ -27,16 +30,21 @@ const ExploreCollectionLoader = ({
 }) => {
 
     const searchParams = useSearchParams();
+    const {activeSort} = useSort(collectionSortMap)
     // console.log(searchParams.getAll('tag'))
-    const { data, isLoading, hasNextPage, fetchNextPage, refetch } = api.collection.inifintList.useInfiniteQuery({ filter: { tags: searchParams.has('tag') ? searchParams.getAll('tag') : undefined } }, {
-        getNextPageParam: (page) => page.nextCursor,
-        initialData: initialData ? { pages: [initialData], pageParams: [undefined, initialData?.nextCursor] } : undefined,
-    })
+    const { data, isLoading, hasNextPage, fetchNextPage, refetch } = api.collection.inifintList.useInfiniteQuery({
+        filter: { tags: searchParams.has('tag') ? searchParams.getAll('tag') : undefined },
+        sort: activeSort?.sortValue as any
+    },
+        {
+            getNextPageParam: (page) => page.nextCursor,
+            initialData: initialData ? { pages: [initialData], pageParams: [undefined, initialData?.nextCursor] } : undefined,
+        })
     const items = data?.pages.reduce((acc, page) => acc.concat(page.items), [] as CollectionOut[])
     return (
         <div>
             <InifiniteItemList
-                
+
                 loading={isLoading}
                 loader={<CollectionCard.Skeleton />}
                 dataLength={items?.length ?? 0}
