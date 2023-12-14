@@ -3,7 +3,7 @@
 import React, { useEffect } from 'react'
 import { Button } from './ui/button'
 import { Heart, ThumbsUpIcon } from 'lucide-react'
-import { cn } from '@/lib/utils'
+import { cn, formatNumberInternationally } from '@/lib/utils'
 
 const LikeButton = ({
     onClick,
@@ -14,7 +14,7 @@ const LikeButton = ({
 }: {
     onClick?: (isLiked: boolean) => void,
     state?: boolean,
-    count?: number|string,
+    count?: number,
     className?: string,
     disabled?: boolean
 }) => {
@@ -25,6 +25,7 @@ const LikeButton = ({
             'w-5 h-5 ',
             {'text-red-700 fill-red-700': state}
         ])} />
+        <span className='ml-1'>{formatNumberInternationally(count??0)}</span>
     </Button>
   )
 }

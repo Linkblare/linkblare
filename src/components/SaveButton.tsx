@@ -3,7 +3,7 @@
 import React from 'react'
 import { Button } from './ui/button'
 import { Bookmark, BookmarkCheckIcon } from 'lucide-react'
-import { cn } from '@/lib/utils'
+import { cn, formatNumberInternationally } from '@/lib/utils'
 
 const SaveButton = ({
     onClick,
@@ -14,7 +14,7 @@ const SaveButton = ({
 }: {
     onClick?: (isLiked: boolean) => void,
     state?: boolean,
-    count?: number|string,
+    count?: number,
     className?: string,
     disabled?: boolean
 }) => {
@@ -31,6 +31,10 @@ const SaveButton = ({
             {'fill-primary text-primary-foreground': state}
         ])} />
        }
+       <span className={cn([
+        'ml-2',
+        {'text-primary-foreground': state}
+       ])}>{formatNumberInternationally(count??0)}</span>
     </Button>
   )
 }

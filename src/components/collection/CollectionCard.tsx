@@ -70,8 +70,8 @@ const CollectionCard = ({
         {'hidden': mode === 'sort'}
       ])}
       >
-        <ActionButton action={'collection_like_toggle'} entityId={collection.id} defaultState={collection.liked} />
-        <ActionButton action={'collection_save_toggle'} entityId={collection.id} defaultState={collection.saved} />
+        <ActionButton action={'collection_like_toggle'} entityId={collection.id} defaultState={collection.liked} defaultCount={collection._count.likes} />
+        <ActionButton action={'collection_save_toggle'} entityId={collection.id} defaultState={collection.saved} defaultCount={collection._count.saves} />
         <InfoDialog>
           <p>{collection.description}</p>
           <Separator />

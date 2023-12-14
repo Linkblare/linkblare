@@ -261,6 +261,24 @@ export function removeTrailingSlash(str: string) {
   return str.replace(/\/+$/, '');
 }
 
+export function isDateBeforeNow(startDate: Date, offset: number): boolean {
+  const targetDate = new Date(startDate.getTime() + offset * 24 * 60 * 60 * 1000); // Adding offset in milliseconds
+
+  return targetDate < new Date();
+}
+
+export function formatNumberInternationally(num: number): string {
+  const absNum = Math.abs(num);
+
+  if (absNum >= 1e6) {
+    return (absNum / 1e6).toFixed(1) + 'M';
+  } else if (absNum >= 1e3) {
+    return (absNum / 1e3).toFixed(1) + 'k';
+  }
+
+  return num.toString();
+}
+
 
 
 

@@ -9,19 +9,19 @@ import { signIn, useSession } from 'next-auth/react'
 
 
 type ActionButtonProps = {
-    viewCount?: boolean,
     children?: ReactNode,
     onAction?: (res: UserActionResult) => void,
     action: UserActions,
     entityId: number,
-    defaultState?: boolean
+    defaultState?: boolean,
+    defaultCount?: number
 }
 
 
 
 const ActionButton = ({
+    defaultCount,
     children,
-    viewCount,
     onAction,
     action,
     entityId,
@@ -53,11 +53,11 @@ const ActionButton = ({
     }
 
     if (action === 'collection_like_toggle' || action === 'item_like_toggle') {
-        return <LikeButton  onClick={() => toggle()} state={actionMutation.data?.state ?? defaultState} />
+        return <LikeButton  onClick={() => toggle()} state={actionMutation.data?.state ?? defaultState} count={actionMutation.data?.count??defaultCount??0} />
     }
 
     if (action === 'collection_save_toggle') {
-        return <SaveButton  onClick={() => toggle()} state={actionMutation.data?.state ?? defaultState} />
+        return <SaveButton  onClick={() => toggle()} state={actionMutation.data?.state ?? defaultState} count={actionMutation.data?.count??defaultCount??0} />
     }
     return (
         <>
