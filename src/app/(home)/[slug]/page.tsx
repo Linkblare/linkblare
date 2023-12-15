@@ -15,6 +15,7 @@ import RelatedCollection from '@/components/collection/RelatedCollection'
 import ActionButton from '@/components/action/ActionButton'
 import SortArray from '@/components/SortArray'
 import { itemSortInputs } from '../itemSort'
+import CollectionTagsCloud from '@/components/collection/CollectionTagsCloud'
 
 
 const ParamsSchema = z.object({
@@ -58,7 +59,8 @@ export async function generateMetadata(
 const ViewSingleCollectionPage = async ({
   params
 }: {
-  params: { slug: string }
+  params: { slug: string },
+  
 }) => {
   const validateParams = ParamsSchema.safeParse(params);
   if (!validateParams.success) {
@@ -78,7 +80,7 @@ const ViewSingleCollectionPage = async ({
       </div>
      
       <div className='my-10'>
-        <div className='flex items-end'>
+        <div className='flex items-end gap-2'>
           <div className="space-y-0.5 flex-1">
             <h2 className="text-2xl font-bold tracking-tight capitalize">{collection.title}</h2>
             <div className="text-muted-foreground max-w-3xl">
@@ -93,6 +95,9 @@ const ViewSingleCollectionPage = async ({
         </div>
         <Separator />
       </div>
+     
+        <CollectionTagsCloud collectionId={collection.id}  />
+      
       <RelatedCollection collectionId={collection.id} />
       <ItemLoader collectionId={collection.id} include={collection.include} />
     </MainWrapper>

@@ -16,7 +16,7 @@ const ItemLoader = ({
     include
 }: {
     collectionId?: number,
-    include?: string[]  // This param is for including extra items that is has this tags
+    include?: string[]  // This param is for including extra items with these tags
 }) => {
     const { data, isLoading, hasNextPage, fetchNextPage, refetch } = api.items.inifintList.useInfiniteQuery({ filter: { collectionId, tags: include, collectionInclude: true } }, {
         getNextPageParam: (page) => page.nextCursor

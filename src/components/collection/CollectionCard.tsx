@@ -3,12 +3,12 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable react/display-name */
-import { type CollectionItemImage, type CollectionOut } from '@/schema/collection-schema'
+import { type CollectionOut } from '@/schema/collection-schema'
 import React from 'react'
 import { Skeleton } from '../ui/skeleton'
 import Image from 'next/image'
 import { CardTitle } from '../ui/card'
-import { cn, dateFromNow } from '@/lib/utils'
+import { cn } from '@/lib/utils'
 import ActionButton from '../action/ActionButton'
 import InfoDialog from '../InfoDialog'
 import Link from 'next/link'
@@ -33,7 +33,7 @@ const CollectionCard = ({
 
   return (
     <div className='rounded-xl overflow-hidden bg-card max-w-full md:max-w-sm border '>
-      <div className='rounded-xl overflow-hidden aspect-[4/2.5]'>
+      <div className='rounded-xl overflow-hidden aspect-[4/2.5] relative'>
         {
           collection.itemsImages.length > 0 ?
             <ThumbnailGrid itemImages={collection.itemsImages} />
@@ -41,6 +41,7 @@ const CollectionCard = ({
               <Image className='w-full h-auto' fill objectFit='cover' sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw' src={collection.thumbnail ?? ''} alt='' />
             </div>
         }
+        <div className=' dark:block hidden absolute inset-0 bg-gradient-to-t from-background to-transparent'></div>
       </div>
 
       <div className='p-3 h-16 '>

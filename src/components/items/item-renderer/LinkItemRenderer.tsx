@@ -46,6 +46,7 @@ const LinkItemRenderer = ({
   return (
     <div className='w-full h-full relative'>
       <Image src={thumbnail ?? getPlaceholderImage({})} alt="" fill objectFit='cover' objectPosition='center' />
+      <div className=' dark:block hidden absolute inset-0 bg-gradient-to-t from-background to-transparent'></div>
     </div>
   )
 }
