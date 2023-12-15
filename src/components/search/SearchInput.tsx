@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 'use client'
 
 import { useDebounce } from '@uidotdev/usehooks';
@@ -6,8 +7,10 @@ import { Command, CommandGroup, CommandItem, CommandEmpty, CommandInput, Command
 import { Dialog, DialogTrigger, DialogContent } from '../ui/dialog';
 import { Button } from '../ui/button';
 import { api } from '@/trpc/react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
+import QueryTags from '../query-tag/QueryTags';
+import { Input } from '../ui/input';
+import { Search } from '../ui/search-input';
 
 
 const SearchInput = ({
@@ -17,45 +20,94 @@ const SearchInput = ({
     onChange?: (value: string) => void;
     value?: string;
 }) => {
-    const [search, setSearch] = useState<string>();
+    const searchParams = useSearchParams();
+    const [open, setOpen] = useState<boolean>(false || searchParams.get('search') !== null)
+    const [search, setSearch] = useState<string>(searchParams.get('search') ?? '');
     const debounceSearch = useDebounce(search, 500);
-    const { data } = api.collection.inifintSearch.useInfiniteQuery({ search: debounceSearch });
+    const { data, isLoading } = api.search.getSearch.useQuery({
+        search: debounceSearch,
+    });
     const router = useRouter()
     return (
         <>
-            <Dialog>
+            <Dialog open={open} onOpenChange={setOpen}>
                 <DialogTrigger asChild>
                     <Button variant={'outline'}>
                         <span className='hidden lg:block'>Search Collection, items or tag</span>
                         <span className=' lg:hidden'>Search...</span>
-                        </Button>
+                    </Button>
                 </DialogTrigger>
 
-                <DialogContent>
-                    <div className='max-w-2xl max-h-96'>
-                        <Command>
-                            <CommandInput
-                                placeholder="Search..."
-                                value={search}
-                                onValueChange={(e) => setSearch(e)}
-                            />
+                <DialogContent className='overflow-hidden'>
+                    <div className='max-w-2xl max-h-96 mt-5 '>
 
-                            <CommandList>
-                                <CommandEmpty>No Collection, items or tags found</CommandEmpty>
-                                <CommandGroup heading="Collections">
-                                    {
-                                        data?.pages.map(page => page.items.map(collection => (
-                                            <CommandItem
-                                                key={collection.id}
-                                                value={collection.slug??''}
-                                            >
-                                                <Link href={`/${collection.slug}`} className='w-full'>{collection.title}</Link>
-                                            </CommandItem>
-                                        )))
+                        <Search
+                            placeholder='Search...'
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
+                            prefix='search'
+                        />
+
+
+                        <div className='space-y-2 mt-4'>
+                            <p className='text-xs' > Collection</p>
+                            <div className='overflow-y-auto max-h-40 space-y-1'>
+                                {
+                                    data?.collections.map(collection => (
+                                        <div
+                                            className='w-full px-2 py-1 hover:border transition-all duration-200 cursor-pointer hover:bg-card rounded-md text-sm'
+                                            key={collection.id}
+                                            onClick={() => {
+                                                router.push(`/${collection.slug}`)
+                                                setOpen(false)
+                                            }}
+                                        >
+                                            {collection.title}
+                                        </div>
+                                    ))
+                                }
+                            </div>
+                        </div>
+
+                        <div className='space-y-2 mt-4'>
+                            <p className='text-xs' >Items</p>
+                            <div className='overflow-y-auto max-h-40 space-y-1'>
+                                {
+                                    data?.items.map(item => (
+                                        <div
+                                            className='w-full px-2 py-1 hover:border transition-all duration-200 cursor-pointer hover:bg-card rounded-md text-sm'
+                                            key={item.id}
+                                            onClick={() => {
+                                                router.push(`/items/${item.slug}`)
+                                                setOpen(false)
+                                            }}
+                                        >
+                                            {item.title}
+                                        </div>
+                                    ))
+                                }
+                            </div>
+                        </div>
+
+                        <div className='space-y-2 mt-4'>
+                            <p className='text-xs'>Tags</p>
+                            <QueryTags
+                                className='justify-center max-h-56 overflow-y-auto mt-4 bg-card'
+                                queryKey='tag'
+                                boxMode="container"
+                                queryInputs={data?.tags.map(it => ({
+                                    value: it.name,
+                                    lable: it.name,
+                                    toggleMode: true,
+                                    singleMode: true,
+                                    onClick: () => {
+                                        setOpen(false)
                                     }
-                                </CommandGroup>
-                            </CommandList>
-                        </Command>
+                                })) ?? []}
+                                loading={isLoading}
+                            />
+                        </div>
+
                     </div>
                 </DialogContent>
             </Dialog>
@@ -63,4 +115,4 @@ const SearchInput = ({
     )
 }
 
-export default SearchInput
+export default SearchInput;
