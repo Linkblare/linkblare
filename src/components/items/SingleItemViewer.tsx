@@ -36,7 +36,17 @@ const SingleItemViewer = ({
                 <div className='flex items-center'>
                     <CardTitle className='flex-grow'>{item.title}</CardTitle>
                     {
-                        item.type === 'link' && <Link className={cn([buttonVariants({ variant: 'outline', size: 'icon' })])} href={item.content.url} ><ExternalLinkIcon className='w-4 h-4' /></Link>
+                        item.type === 'link'
+                        &&
+                        <Link
+                            className={cn([buttonVariants({ variant: 'outline', size: 'icon' })])}
+                            href={item.content.url}
+                            target='_blank'
+                            rel='noopener noreferrer'
+                            title={item.content.url}
+                        >
+                            <ExternalLinkIcon className='w-4 h-4'
+                            /></Link>
                     }
                 </div>
 

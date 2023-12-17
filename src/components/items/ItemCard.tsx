@@ -94,7 +94,7 @@ const ItemCard = ({
                     <ActionButton entityId={item.id} action='item_like_toggle' defaultState={item.liked} defaultCount={item._count.likes} />
 
                     {
-                        item.type === 'link' && <Link href={item.content.url} className={buttonVariants({variant: 'outline', size: 'icon'})} ><ExternalLinkIcon className='w-5 h-5' /></Link>
+                        item.type === 'link' && <Link href={item.content.url} className={buttonVariants({variant: 'outline', size: 'icon'})} target='_blank' rel={'no-follow'} ><ExternalLinkIcon className='w-5 h-5' /></Link>
                     }
 
                     <InfoDialog>
