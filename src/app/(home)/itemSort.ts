@@ -13,7 +13,7 @@ export const itemSortInputs: SortInput[] = [
 
     {
         lable: 'Most Liked',
-        key: 'saved',
+        key: 'most_liked',
         sortValue: {
             'likes': {
                 _count: 'desc'

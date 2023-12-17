@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
@@ -9,7 +10,9 @@ import React from 'react'
 import ItemGrid from '../grid/ItemGrid'
 import ItemCard from './ItemCard'
 import { nanoid } from 'nanoid'
-import { ItemOut } from '@/schema/item-schema'
+import { type ItemOut } from '@/schema/item-schema'
+import useSort from '@/hooks/useSort'
+import { itemSortInputs } from '@/app/(home)/itemSort'
 
 const ItemLoader = ({
     collectionId,
@@ -18,7 +21,11 @@ const ItemLoader = ({
     collectionId?: number,
     include?: string[]  // This param is for including extra items with these tags
 }) => {
-    const { data, isLoading, hasNextPage, fetchNextPage, refetch } = api.items.inifintList.useInfiniteQuery({ filter: { collectionId, tags: include, collectionInclude: true } }, {
+    const {activeSort} = useSort(itemSortInputs);
+    const { data, isLoading, hasNextPage, fetchNextPage, refetch } = api.items.inifintList.useInfiniteQuery({ 
+        filter: { collectionId, tags: include, collectionInclude: true } ,
+        sort: activeSort?.sortValue as any
+    }, {
         getNextPageParam: (page) => page.nextCursor
     })
     return (

@@ -14,6 +14,7 @@ const QueryTag = ({
     toggleMode = true,
     singleMode = false,
     lable,
+    path,
     onClick
 }: {
     queryKey: string,
@@ -22,6 +23,7 @@ const QueryTag = ({
     defaultActive?: boolean,
     toggleMode?: boolean,
     singleMode?: boolean,
+    path?: string,
     onClick?: () => void
 }) => {
     const searchParams = useSearchParams();
@@ -29,7 +31,7 @@ const QueryTag = ({
     return (
         <Link
             key={nanoid()}
-            href={`${pathname}?${appendQueryInSearchParams(searchParams.toString(), { key: queryKey, value }, toggleMode, singleMode)}`}
+            href={`${path??pathname}?${appendQueryInSearchParams(searchParams.toString(), { key: queryKey, value }, toggleMode, singleMode)}`}
             replace={true}
             onClick={onClick}
         >

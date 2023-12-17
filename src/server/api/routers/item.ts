@@ -30,7 +30,7 @@ export const itemOutResolver = <C = any>(item: ListItemResponse) => {
     const res: ItemOut<C> = {
         ...item,
         content: item.content as C,
-        liked:  Boolean(item.likes && item.likes.length > 0)
+        liked: Boolean(item.likes && item.likes.length > 0)
     }
     return res;
 }
@@ -44,11 +44,11 @@ export const singleItemResolver = <C = any>(item: SingleItemResponse) => {
     return res;
 }
 
-export const getItemIncludes = (userId?: string, type: 'single'|'list' = 'list') => {
+export const getItemIncludes = (userId?: string, type: 'single' | 'list' = 'list') => {
     const includes: Prisma.ItemInclude = {
         likes: userId ? {
-            where: {id: userId},
-            select: {id: true}
+            where: { id: userId },
+            select: { id: true }
         } : undefined,
         _count: {
             select: {
@@ -57,7 +57,7 @@ export const getItemIncludes = (userId?: string, type: 'single'|'list' = 'list')
         }
     };
 
-    if(type === 'single'){
+    if (type === 'single') {
         includes.Collection = true;
         includes.tags = true;
     }
@@ -91,7 +91,7 @@ const ItemRouter = createTRPCRouter({
 
         // UPDATE 'itemsUpdated' to current date
         await ctx.db.collection.update({
-            where: {id: input.collectionId},
+            where: { id: input.collectionId },
             data: {
                 itemsUpdated: new Date(Date.now())
             }
@@ -103,26 +103,26 @@ const ItemRouter = createTRPCRouter({
         return singleItemResolver(res as any)
     }),
 
-    update: protectedProcedure.input(UpdateItemSchema).mutation(async ({ctx, input}) => {
-        const {tags,id, ...rest} = input;
+    update: protectedProcedure.input(UpdateItemSchema).mutation(async ({ ctx, input }) => {
+        const { tags, id, ...rest } = input;
         const userId = ctx.session.user.id;
 
         const alreadyExists = await ctx.db.item.findFirst({
-            where: {id},
-            include: {tags: true}
+            where: { id },
+            include: { tags: true }
         });
 
-        if(!alreadyExists) throw new TRPCError({code: 'NOT_FOUND', message: 'Item not found!'});
+        if (!alreadyExists) throw new TRPCError({ code: 'NOT_FOUND', message: 'Item not found!' });
 
         const tagsForConnnect = tags.filter(tag => !alreadyExists.tags.find(tg => tg.name === tag));
         const tagsForDisconnect = alreadyExists.tags.filter(tag => !tags.find(tg => tg === tag.name));
 
         const res = await ctx.db.item.update({
-            where: {id},
+            where: { id },
             data: {
                 tags: {
-                    connectOrCreate: tagsForConnnect.map(tag => ({where: {name: tag}, create: {name: tag}})),
-                    disconnect: tagsForDisconnect.map(tag => ({name: tag.name}))
+                    connectOrCreate: tagsForConnnect.map(tag => ({ where: { name: tag }, create: { name: tag } })),
+                    disconnect: tagsForDisconnect.map(tag => ({ name: tag.name }))
                 },
                 content: rest.content!,
                 ...rest,
@@ -135,40 +135,40 @@ const ItemRouter = createTRPCRouter({
         return singleItemResolver(res as any)
     }),
 
-    delete: protectedProcedure.input(DeleteItemSchema).mutation(async ({ctx, input}) => {
-        return await ctx.db.item.delete({where:  {id: input.id}})
+    delete: protectedProcedure.input(DeleteItemSchema).mutation(async ({ ctx, input }) => {
+        return await ctx.db.item.delete({ where: { id: input.id } })
     }),
 
-    getById: publicProcedure.input(GetItemByIdSchema).query(async ({ctx, input}) => {
+    getById: publicProcedure.input(GetItemByIdSchema).query(async ({ ctx, input }) => {
         const userId = ctx.session?.user.id;
         const res = await ctx.db.item.findFirst({
-            where: {id: input.id},
+            where: { id: input.id },
             include: getItemIncludes(userId, 'single')
         });
-        if(!res) throw new TRPCError({code: 'NOT_FOUND', message: 'Collection not found!'});
-        return singleItemResolver(res as any)
-    }),
-    
-    getBySlug: publicProcedure.input(GetItemBySlugSchema).query(async ({ctx, input}) => {
-        const userId = ctx.session?.user.id;
-        const res = await ctx.db.item.findFirst({
-            where: {slug: input.slug},
-            include: getItemIncludes(userId, 'single')
-        });
-        if(!res) throw new TRPCError({code: 'NOT_FOUND', message: 'Collection not found!'});
+        if (!res) throw new TRPCError({ code: 'NOT_FOUND', message: 'Collection not found!' });
         return singleItemResolver(res as any)
     }),
 
-    list: publicProcedure.input(PaginatedItemListSchema).query(async ({ctx, input}) => {
+    getBySlug: publicProcedure.input(GetItemBySlugSchema).query(async ({ ctx, input }) => {
         const userId = ctx.session?.user.id;
-        const res = await paginate<SingleItemResponse, Prisma.ItemFindManyArgs>(ctx.db.item,  {
+        const res = await ctx.db.item.findFirst({
+            where: { slug: input.slug },
+            include: getItemIncludes(userId, 'single')
+        });
+        if (!res) throw new TRPCError({ code: 'NOT_FOUND', message: 'Collection not found!' });
+        return singleItemResolver(res as any)
+    }),
+
+    list: publicProcedure.input(PaginatedItemListSchema).query(async ({ ctx, input }) => {
+        const userId = ctx.session?.user.id;
+        const res = await paginate<SingleItemResponse, Prisma.ItemFindManyArgs>(ctx.db.item, {
             where: {
                 collectionId: input.filter?.collectionId,
-                title: (input.search) ? {contains: input.search, mode: 'insensitive'} : undefined,
-                tags: (input.filter?.tags && input.filter.tags.length > 0) ? {some: {name: {in: input.filter.tags}}} : undefined
+                title: (input.search) ? { contains: input.search, mode: 'insensitive' } : undefined,
+                tags: (input.filter?.tags && input.filter.tags.length > 0) ? { some: { name: { in: input.filter.tags } } } : undefined
             },
             include: getItemIncludes(userId, 'single'),
-            orderBy: input.sort??{createdAt: 'desc'}
+            orderBy: input.sort ?? { createdAt: 'desc' }
         }, input.pagination)
         return {
             ...res,
@@ -176,18 +176,18 @@ const ItemRouter = createTRPCRouter({
         }
     }),
 
-    inifintList: publicProcedure.input(InfinitItemListSchema).query(async ({ctx, input}) => {
-        const {take, cursor, ...rest} = input
+    inifintList: publicProcedure.input(InfinitItemListSchema).query(async ({ ctx, input }) => {
+        const { take, cursor, ...rest } = input
         const userId = ctx.session?.user.id;
         const currenctTake = input.take ? input.take + 1 : config.limit + 1;
-        let nextCursor: {id: number} | undefined = undefined;
+        let nextCursor: { id: number } | undefined = undefined;
         const whereCond: Prisma.ItemWhereInput = {
-            title: (input.search) ? {contains: input.search, mode: 'insensitive'} : undefined,
-            tags: (input.filter?.tags && input.filter.tags.length > 0) ? {some: {name: {in: input.filter.tags}}} : undefined
+            title: (input.search) ? { contains: input.search, mode: 'insensitive' } : undefined,
+            tags: (input.filter?.tags && input.filter.tags.length > 0) ? { some: { name: { in: input.filter.tags } } } : undefined
         }
-        if(input.filter?.collectionId){
+        if (input.filter?.collectionId) {
             whereCond.collectionId = input.filter.collectionId;
-            if(input.filter.collectionInclude){
+            if (input.filter.collectionInclude) {
                 whereCond.tags = undefined;
                 whereCond.collectionId = undefined;
                 whereCond.OR = [
@@ -195,45 +195,45 @@ const ItemRouter = createTRPCRouter({
                         collectionId: input.filter.collectionId,
                     },
                     {
-                        tags: (input.filter?.tags && input.filter.tags.length > 0) ? {some: {name: {in: input.filter.tags}}} : undefined
+                        tags: (input.filter?.tags && input.filter.tags.length > 0) ? { some: { name: { in: input.filter.tags } } } : undefined
                     }
                 ]
             }
         }
-        
+
         const res = await ctx.db.item.findMany({
             where: whereCond,
             include: getItemIncludes(userId, 'single'),
             take: currenctTake,
             cursor: cursor,
-            orderBy: input.sort??{createdAt: 'desc'}
+            orderBy: input.sort ?? { createdAt: 'desc' }
         });
 
         if (res.length >= currenctTake) {
             const lastResult = res.pop();
             if (lastResult) {
-                nextCursor = {id: lastResult.id}
+                nextCursor = { id: lastResult.id }
             }
         }
         return {
             items: res.map(r => singleItemResolver(r as any)),
             nextCursor
         }
-    }), 
+    }),
 
-    relatedItems: publicProcedure.input(GetItemByIdSchema).query(async ({ctx, input}) => {
+    relatedItems: publicProcedure.input(GetItemByIdSchema).query(async ({ ctx, input }) => {
         const userId = ctx.session?.user.id;
-        const targetItem = await ctx.db.item.findFirst({where: {id: input.id}, include: {tags: true}});
-        if(!targetItem) throw new TRPCError({code: 'NOT_FOUND', message: 'Item not found!'});
+        const targetItem = await ctx.db.item.findFirst({ where: { id: input.id }, include: { tags: true } });
+        if (!targetItem) throw new TRPCError({ code: 'NOT_FOUND', message: 'Item not found!' });
         const res = await ctx.db.item.findMany({
             where: {
-                id: {not: input.id},
+                id: { not: input.id },
                 OR: [
                     {
                         collectionId: targetItem.collectionId,
                     },
                     {
-                        tags: {some: {name: {in: targetItem.tags.map(tg => tg.name)}}}
+                        tags: { some: { name: { in: targetItem.tags.map(tg => tg.name) } } }
                     }
                 ]
             },
@@ -249,7 +249,7 @@ const ItemRouter = createTRPCRouter({
             items: res.map(r => itemOutResolver(r as any)),
         }
     })
-    
+
 })
 
 
