@@ -18,6 +18,7 @@ import { InfinitItemListSchema } from '@/schema/item-schema'
 import InifiniteItemList from '../grid/InfiniteItemList'
 import useSort from '@/hooks/useSort'
 import { collectionSortMap } from '@/app/(home)/collectionSort'
+import { useCollectionSort } from '@/hooks/useCollectionSort'
 
 
 const ExploreCollectionLoader = ({
@@ -30,7 +31,7 @@ const ExploreCollectionLoader = ({
 }) => {
 
     const searchParams = useSearchParams();
-    const {activeSort} = useSort(collectionSortMap)
+    const {activeSort} = useCollectionSort()
     // console.log(searchParams.getAll('tag'))
     const { data, isLoading, hasNextPage, fetchNextPage, refetch } = api.collection.inifintList.useInfiniteQuery({
         filter: { tags: searchParams.has('tag') ? searchParams.getAll('tag') : undefined },

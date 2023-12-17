@@ -11,8 +11,7 @@ import ItemGrid from '../grid/ItemGrid'
 import ItemCard from './ItemCard'
 import { nanoid } from 'nanoid'
 import { type ItemOut } from '@/schema/item-schema'
-import useSort from '@/hooks/useSort'
-import { itemSortInputs } from '@/app/(home)/itemSort'
+import { useItemSort } from '@/hooks/useItemSort'
 
 const ItemLoader = ({
     collectionId,
@@ -21,7 +20,7 @@ const ItemLoader = ({
     collectionId?: number,
     include?: string[]  // This param is for including extra items with these tags
 }) => {
-    const {activeSort} = useSort(itemSortInputs);
+    const {activeSort} = useItemSort();
     const { data, isLoading, hasNextPage, fetchNextPage, refetch } = api.items.inifintList.useInfiniteQuery({ 
         filter: { collectionId, tags: include, collectionInclude: true } ,
         sort: activeSort?.sortValue as any

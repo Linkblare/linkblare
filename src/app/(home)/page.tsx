@@ -6,8 +6,8 @@ import MainWrapper from "@/components/MainWrapper";
 import ExploreCollectionLoader from "@/components/collection/ExploreCollectionLoader";
 import FeaturedCollections from "@/components/collection/FeaturedCollections";
 import { api } from "@/trpc/server";
-import { collectionSortMap } from "./collectionSort";
 import SortArray from "@/components/SortArray";
+import { collectionSortMap } from "@/hooks/useCollectionSort";
 
 export default async function Home({
   searchParams

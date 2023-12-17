@@ -11,11 +11,10 @@ import ItemGrid from '../grid/ItemGrid'
 import CollectionCard from './CollectionCard'
 import { nanoid } from 'nanoid'
 import { CollectionOut } from '@/schema/collection-schema'
-import useSort from '@/hooks/useSort'
-import { collectionSortMap } from '@/app/(home)/collectionSort'
+import { useCollectionSort } from '@/hooks/useCollectionSort'
 
 const SavedCollectionLoader = () => {
-    const {activeSort} = useSort(collectionSortMap)
+    const {activeSort} = useCollectionSort();
     const {data, isLoading, hasNextPage, fetchNextPage, refetch} = api.user.savedCollection.useInfiniteQuery({
         sort: activeSort?.sortValue as any,
     }, {

@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { type Sort } from "@/schema/_helpers/WithSorting"
 import { type SortInput } from "@/types/SortInput";
 import { useSearchParams } from "next/navigation";
 
