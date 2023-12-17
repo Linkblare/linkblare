@@ -28,7 +28,8 @@ export const SearchRouter = createTRPCRouter({
         const collection = await ctx.db.collection.findMany({
             where: {
                 title: {
-                    contains: input.search
+                    contains: input.search,
+                    mode: "insensitive"
                 }
             },
             select: {
@@ -40,7 +41,8 @@ export const SearchRouter = createTRPCRouter({
         const tag = await ctx.db.tag.findMany({
             where: {
                 name: {
-                    contains: input.search
+                    contains: input.search,
+                    mode: "insensitive"
                 }
             },
             select: {
@@ -52,7 +54,8 @@ export const SearchRouter = createTRPCRouter({
         const item = await ctx.db.item.findMany({
             where: {
                 title: {
-                    contains: input.search
+                    contains: input.search,
+                    mode: "insensitive"
                 }
             },
             select: {
