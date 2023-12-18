@@ -60,7 +60,7 @@ const ViewSingleCollectionPage = async ({
   params
 }: {
   params: { slug: string },
-  
+
 }) => {
   const validateParams = ParamsSchema.safeParse(params);
   if (!validateParams.success) {
@@ -78,7 +78,7 @@ const ViewSingleCollectionPage = async ({
       <div className="flex items-start gap-2 mt-2">
         <SortArray inputs={itemSortInputs} />
       </div>
-     
+
       <div className='my-10'>
         <div className='flex items-end gap-2'>
           <div className="space-y-0.5 flex-1">
@@ -95,9 +95,9 @@ const ViewSingleCollectionPage = async ({
         </div>
         <Separator />
       </div>
-     
-        <CollectionTagsCloud collectionId={collection.id}  />
-      
+
+      <CollectionTagsCloud collectionId={collection.id} />
+
       <RelatedCollection collectionId={collection.id} />
       <ItemLoader collectionId={collection.id} include={collection.include} />
     </MainWrapper>

@@ -21,14 +21,14 @@ const SidebarLink = ({
     }
     return (
         <Link href={link} className={cn([
-            'text-base text-gray-400 font-normal rounded-lg flex items-center p-2 hover:bg-gray-800 group',
-            { 'bg-gray-800': checkActive() }
+            'text-base hover:text-secondary-foreground font-normal rounded-lg flex items-center p-2 hover:bg-secondary group',
+            { 'bg-secondary': checkActive() }
         ])}>
             {
                 icon
                 &&
                 React.cloneElement(icon, {
-                    className: cn(['w-6 h-6 text-gray-500 group-hover:text-gray-900 transition duration-75', icon.props?.className])
+                    className: cn(['w-6 h-6 text-secondary group-hover:text-primary transition duration-75',{ 'text-primary': checkActive() }, icon.props?.className])
                 })
             }
             <span className="ml-3">{children}</span>

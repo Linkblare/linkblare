@@ -37,7 +37,7 @@ const AdminSidebar = () => {
     return (
         <>
             <aside id="sidebar" className="fixed hidden z-40  h-full top-0 left-0 lg:flex flex-shrink-0 flex-col w-64 transition-width duration-75" aria-label="Sidebar">
-                <div className="relative flex-1 flex flex-col min-h-0 border-r border-gray-200 bg-black pt-0">
+                <div className="relative flex-1 flex flex-col min-h-0 border-r  pt-0">
                     <div className="p-4">
                         <Link href={'/'}><Logo /></Link>
                     </div>

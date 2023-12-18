@@ -12,6 +12,7 @@ import MutateCollectionDialog from './MutateCollectionDialog'
 import Link from 'next/link'
 import { api } from '@/trpc/react'
 import Loading from '../Loading'
+import MoveItemsToCollection from '../items/MoveItemsToCollection'
 
 type CollectionViewerSheetProps = {
     trigger: ReactNode,
@@ -57,6 +58,14 @@ const CollectionViewerSheet = ({
                         <Link href={{ pathname: `/admin/items/mutate`, query: { collectionId: coll?.id } }}>
                             <Button variant={'secondary'} size={'icon'}><ListPlus /></Button>
                         </Link>
+
+                        {
+                            coll?.id &&
+                            <MoveItemsToCollection
+                                toCollectionId={coll.id}
+                            />
+
+                        }
                     </div>
                 </Card>
             </SheetContent>

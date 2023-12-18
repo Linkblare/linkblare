@@ -4,7 +4,7 @@ import {
     flexRender,
     getCoreRowModel,
     useReactTable,
-    RowSelectionState,
+    type RowSelectionState,
   } from "@tanstack/react-table"
   
   import {
@@ -17,11 +17,12 @@ import {
   } from "@/components/ui/table"
   
   import { type PaginationMeta } from "@/types/PaginationMeta"
-  import React, { useState } from "react"
+  import React, { useEffect, useState } from "react"
   import TablePagination from "@/components/TablePagination"
   import { type PaginateOptions } from "prisma-pagination"
   import { Button } from "@/components/ui/button"
   import Loading from "@/components/Loading"
+import { useCopyMoveContext } from "@/context/CopyMoveContext"
   
   interface ContactQueryTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -29,7 +30,9 @@ import {
     paginationData?: PaginationMeta,
     onPaginationChange?: (value?: PaginateOptions) => void,
     onDeleteMany?: (selectedData: TData[]) => Promise<void>,
-    dataLoading?: boolean
+    dataLoading?: boolean,
+    onCopy?: () => void,
+    onMove?: () => void
   }
   
   function DataTable<TData, TValue>({
@@ -43,6 +46,7 @@ import {
   }: ContactQueryTableProps<TData, TValue>) {
     const [selectedRows, setSlectedRows] = useState<RowSelectionState>({});
     const [loading, setLoading] = useState<boolean>(false)
+    const {moveItems, setMoveItems, action, setAction} = useCopyMoveContext();
     const table = useReactTable({
       data,
       columns,
@@ -62,6 +66,23 @@ import {
       setLoading(false)
       table.resetRowSelection(false);
     }
+
+    const handleCopy = (data: TData[]) => {
+      setMoveItems(data);
+      setAction('copy');
+    }
+
+    const handleMove = (data: TData[]) => {
+      setMoveItems(data);
+      setAction('move');
+    }
+
+    useEffect(() => {
+      if (moveItems.length <= 0) {
+        setSlectedRows({});
+        table.resetRowSelection(false);
+      }
+    }, [moveItems])
   
     return (
       <div>
@@ -74,7 +95,11 @@ import {
             {
               table.getFilteredSelectedRowModel().rows.length > 0
               &&
-              <Button disabled={loading} onClick={() => void deleteMany()} size={'sm'} variant={'destructive'}>Delete</Button>
+              <div className="flex gap-2">
+                <Button disabled={loading} onClick={() => void deleteMany()} size={'sm'} variant={'destructive'}>Delete</Button>
+                <Button disabled={loading ?? moveItems.length <= 0} onClick={() =>  handleCopy( table.getFilteredSelectedRowModel().rows.map(t => t.original))} variant={'secondary'} size={'sm'} >Copy</Button>
+                <Button disabled={loading ?? moveItems.length <= 0} onClick={() => handleMove(table.getFilteredSelectedRowModel().rows.map(t => t.original))} variant={'secondary'} size={'sm'} >Move</Button>
+              </div>
             }
           </div>
           <Table>

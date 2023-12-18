@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
@@ -6,7 +7,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-import { CreateItemSchema, type SingleItemOut, type ItemOut, UpdateItemSchema, DeleteItemSchema, GetItemByIdSchema, PaginatedItemListSchema, InfinitItemListSchema, type ItemTypes, GetItemBySlugSchema } from "@/schema/item-schema";
+import { CreateItemSchema, type SingleItemOut, type ItemOut, UpdateItemSchema, DeleteItemSchema, GetItemByIdSchema, PaginatedItemListSchema, InfinitItemListSchema, type ItemTypes, GetItemBySlugSchema, MoveItemFromCollectionSchema, CopyItemFromCollectionSchema } from "@/schema/item-schema";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 import { type Prisma, type Collection, type Item, type Tag } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
@@ -248,9 +249,73 @@ const ItemRouter = createTRPCRouter({
         return {
             items: res.map(r => itemOutResolver(r as any)),
         }
-    })
+    }),
 
+    moveFromCollection: protectedProcedure.input(MoveItemFromCollectionSchema).mutation(async ({ ctx, input }) =>{
+        const res = await ctx.db.item.updateMany({
+            where: { id: { in: input.itemIds } },
+            data: {
+                collectionId: input.toCollectionId,
+                updatedAt: new Date()
+            }
+        });
+        await ctx.db.collection.update({
+            where: { id: input.toCollectionId },
+            data: {
+                itemsUpdated: new Date(Date.now())
+            }
+        })
+
+        return res;
+    }),
+
+    copyFromCollection: protectedProcedure.input(CopyItemFromCollectionSchema).mutation(async ({ ctx, input }) =>{
+        const itemForCopy = await ctx.db.item.findMany({
+            where: { id: { in: input.itemIds } },
+            include: { tags: true }
+        });
+        const res = await ctx.db.item.createMany({
+            data: itemForCopy.map(({tags,id, ...item}) => ({
+               ...item,
+                content: item.content as any,
+                createdAt: new Date(),
+                updatedAt: new Date(),
+                collectionId: input.toCollection,
+            }))
+        });
+
+        const newItems = await ctx.db.item.findMany({
+            where: {
+                title: { in: itemForCopy.map(i => i.title) },
+                collectionId: input.toCollection
+             },
+        });
+
+        newItems.forEach(async (item) =>{
+            const tags = itemForCopy.find(i => i.title === item.title)?.tags;
+            await ctx.db.item.update({
+                where: { id: item.id },
+                data: {
+                    tags:{
+                        connect: tags?.map(t => ({ id: t.id }))
+                    }
+                }
+            })
+        })
+
+    
+        await ctx.db.collection.update({
+            where: { id: input.toCollection },
+            data: {
+                itemsUpdated: new Date(Date.now())
+            }
+        })
+
+        return res;
+    })
 })
+
+
 
 
 export default ItemRouter;

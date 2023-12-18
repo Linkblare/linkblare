@@ -22,6 +22,7 @@ import { TRPCError } from '@trpc/server';
 import { md5Hash, paginate } from '@/lib/utils';
 import config from '@/server/config';
 import { env } from '@/env.mjs';
+import { z } from 'zod';
 
 type CollectionListResponse = Collection & {
     likes: {id: string}[],
@@ -319,6 +320,8 @@ export const CollectionRouter = createTRPCRouter({
         return {
             items: res.map(r => collectionListResolver(r)),
         }
-    })
+    }),
+
+    
 
 })

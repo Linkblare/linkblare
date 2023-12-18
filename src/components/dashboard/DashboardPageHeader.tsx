@@ -15,7 +15,7 @@ const DashboardPageHeader = ({
   return (
     <div 
     className={cn([
-      'flex items-center p-5 bg-slate-50 rounded-lg my-5 border ',
+      'flex items-center p-5 bg-card rounded-lg my-5 border ',
       className
     ])} > 
       <div className='shrink-0 text-3xl font-bold flex-grow-0'>

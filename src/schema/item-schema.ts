@@ -114,6 +114,23 @@ export const IsLinkItemExistsSchema = z.object({
     url: z.string(),
     collectionId: z.number().optional()
 })
+
+export const MoveItemFromCollectionSchema =z.object({
+    fromCollectionId: z.number(),
+    toCollectionId: z.number(),
+    itemIds: z.array(z.number())
+});
+export type MoveItemFromCollectionInput = z.TypeOf<typeof MoveItemFromCollectionSchema>;
+
+export const CopyItemFromCollectionSchema = z.object({
+    fromCollection: z.number(),
+    toCollection: z.number(),
+    itemIds: z.array(z.number())
+})
+
+export type CopyItemFromCollectionInput = z.TypeOf<typeof CopyItemFromCollectionSchema>;
+
+
 export type ItemOut<T = any> = Omit<Item, 'content'> & {
     content: T
     liked: boolean

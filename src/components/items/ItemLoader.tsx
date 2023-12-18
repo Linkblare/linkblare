@@ -12,17 +12,18 @@ import ItemCard from './ItemCard'
 import { nanoid } from 'nanoid'
 import { type ItemOut } from '@/schema/item-schema'
 import { useItemSort } from '@/hooks/useItemSort'
+import { useSearchParams } from 'next/navigation'
 
 const ItemLoader = ({
     collectionId,
-    include
 }: {
     collectionId?: number,
     include?: string[]  // This param is for including extra items with these tags
 }) => {
     const {activeSort} = useItemSort();
+    const searchParams = useSearchParams()
     const { data, isLoading, hasNextPage, fetchNextPage, refetch } = api.items.inifintList.useInfiniteQuery({ 
-        filter: { collectionId, tags: include, collectionInclude: true } ,
+        filter: { collectionId, tags: searchParams.getAll('tag') } ,
         sort: activeSort?.sortValue as any
     }, {
         getNextPageParam: (page) => page.nextCursor
