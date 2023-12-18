@@ -6,7 +6,7 @@ export const collectionSortMap: SortInput[] = [
         lable: 'Updated',
         key: 'updated',
         sortValue: {
-            'itemsUpdated': 'desc'
+            'itemsUpdated': 'asc'
         }
     },
 
