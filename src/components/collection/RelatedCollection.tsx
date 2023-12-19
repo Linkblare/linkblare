@@ -59,7 +59,7 @@ const RelatedCollection = ({
     }
 
     return (
-        <section className=' space-y-5'>
+        <section className=' space-y-5 max-w-[1200px] mx-auto'>
             <div className='flex items-center justify-between'>
                 <h2 className='text-2xl font-bold max-w-[60%]'>Related Collections</h2>
                 {
