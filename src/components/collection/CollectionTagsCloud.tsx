@@ -4,10 +4,8 @@
 import { api } from '@/trpc/react';
 import React from 'react'
 import QueryTags from '../query-tag/QueryTags';
-import InifiniteItemList from '../grid/InfiniteItemList';
 import { nanoid } from 'nanoid';
-import { Skeleton } from '../ui/skeleton';
-import { TagOut } from '@/schema/tag-schema';
+import { type TagOut } from '@/schema/tag-schema';
 import { Button } from '../ui/button';
 import { cn } from '@/lib/utils';
 
@@ -16,7 +14,7 @@ const CollectionTagsCloud = ({
 }: {
   collectionId: number;
 }) => {
-  const { data, isLoading, fetchNextPage, hasNextPage, refetch } = api.tags.infintList.useInfiniteQuery({ targetCollection: collectionId, sort: { name: 'asc' }, take: 10 }, {
+  const { data, isLoading, fetchNextPage, hasNextPage } = api.tags.infintList.useInfiniteQuery({ targetCollection: collectionId, sort: { name: 'asc' }, take: 50 }, {
     getNextPageParam: (lastPage) => lastPage.nextCursor
   });
   const items = data?.pages.reduce((acc, page) => acc.concat(page.items), [] as TagOut[])
@@ -32,6 +30,7 @@ const CollectionTagsCloud = ({
           className='justify-center max-h-48 overflow-y-auto scrollbar-thin scrollbar-thumb-primary'
           queryKey='tag'
           boxMode="container"
+          removable
           queryInputs={items?.map(it => ({
             value: it.name,
             lable: it.name,
