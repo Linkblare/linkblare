@@ -14,7 +14,7 @@ const CollectionTagsCloud = ({
 }: {
   collectionId: number;
 }) => {
-  const { data, isLoading, fetchNextPage, hasNextPage } = api.tags.infintList.useInfiniteQuery({ targetCollection: collectionId, sort: { name: 'asc' }, take: 10 }, {
+  const { data, isLoading, fetchNextPage, hasNextPage } = api.tags.infintList.useInfiniteQuery({ targetCollection: collectionId, sort: { name: 'asc' }, take: 100 }, {
     getNextPageParam: (lastPage) => lastPage.nextCursor
   });
   const items = data?.pages.reduce((acc, page) => acc.concat(page.items), [] as TagOut[])
@@ -27,7 +27,7 @@ const CollectionTagsCloud = ({
       
         <QueryTags
           key={nanoid()}
-          className='justify-center max-h-48 overflow-y-auto scrollbar-thin scrollbar-thumb-primary'
+          className='justify-center max-h-80 overflow-y-auto scrollbar-thin scrollbar-thumb-primary'
           queryKey='tag'
           boxMode="container"
           removable
