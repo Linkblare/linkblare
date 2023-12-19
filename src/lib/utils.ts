@@ -12,6 +12,7 @@ import relativeTime from 'dayjs/plugin/relativeTime'
 import { nanoid } from "nanoid";
 import slugify from "slugify";
 import { Md5 } from 'ts-md5'
+import { env } from "@/env.mjs";
 
 dayjs.extend(relativeTime);
 
@@ -283,10 +284,9 @@ export function formatNumberInternationally(num: number): string {
 }
 
 
-
-
-
-
+export function getDefaultThumnail(title: string){
+  return env.SITE_URL + '/api/og/'+title;
+}
 
 
 
