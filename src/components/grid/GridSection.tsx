@@ -15,7 +15,7 @@ const GridSection = React.forwardRef<HTMLDivElement, GridSectionProps>(({
   return (
     <div
       className={cn([
-        'grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 items-center justify-center',
+        'grid grid-cols-1 md:grid-cols-3 gap-5 items-center justify-center max-w-[1200px] mx-auto',
         props.className
       ])}
       ref={ref}

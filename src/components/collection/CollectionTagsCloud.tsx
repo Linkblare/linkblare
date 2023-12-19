@@ -14,13 +14,13 @@ const CollectionTagsCloud = ({
 }: {
   collectionId: number;
 }) => {
-  const { data, isLoading, fetchNextPage, hasNextPage } = api.tags.infintList.useInfiniteQuery({ targetCollection: collectionId, sort: { name: 'asc' }, take: 50 }, {
+  const { data, isLoading, fetchNextPage, hasNextPage } = api.tags.infintList.useInfiniteQuery({ targetCollection: collectionId, sort: { name: 'asc' }, take: 10 }, {
     getNextPageParam: (lastPage) => lastPage.nextCursor
   });
   const items = data?.pages.reduce((acc, page) => acc.concat(page.items), [] as TagOut[])
   return (
     <div className={cn([
-      'rounded-2xl border max-w-3xl mx-auto mb-10 relative bg-card ',
+      'rounded-2xl border max-w-[1200px] mx-auto mb-10 relative bg-card ',
       {'pb-14': hasNextPage}
     ])}>
 
@@ -43,8 +43,8 @@ const CollectionTagsCloud = ({
       
 
       {
-        hasNextPage && <div className='absolute bottom-0 left-0 w-full flex items-center justify-center'>
-        <Button disabled={isLoading} onClick={() => void fetchNextPage()}>Load More</Button>
+        hasNextPage && <div className='absolute bottom-0 left-0 w-full flex items-center justify-center pb-2'>
+        <Button size={'sm'}  disabled={isLoading} onClick={() => void fetchNextPage()}>More</Button>
       </div>
       }
 

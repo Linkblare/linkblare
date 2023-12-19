@@ -41,9 +41,9 @@ const ItemCard = ({
 
     return (
         <div className='max-w-full md:max-w-md rounded-xl border bg-card'>
-            <div className='min-h-[80px] p-3 space-y-1'>
-                <CardTitle className='line-clamp-2'>{item.title}</CardTitle>
-                <div className='flex items-center text-muted-foreground text-xs space-x-1'>
+            <div className='h-[80px] p-3 space-y-1'>
+                <CardTitle className='line-clamp-2 capitalize'>{item.title}</CardTitle>
+                {/* <div className='flex items-center text-muted-foreground text-xs space-x-1'>
                     <span className='text-muted-foreground'>{dateFromNow(item.createdAt)}</span>
                     <span>|</span>
                     {
@@ -64,7 +64,7 @@ const ItemCard = ({
                                     <File className='w-3 h-3 text-muted-foreground' />
                                 </div>
                     }
-                </div>
+                </div> */}
             </div>
 
             <Link href={`/items/${item.slug}`} className='aspect-square relative block' >
@@ -94,7 +94,7 @@ const ItemCard = ({
                     <ActionButton entityId={item.id} action='item_like_toggle' defaultState={item.liked} defaultCount={item._count.likes} />
 
                     {
-                        item.type === 'link' && <Link href={item.content.url} className={buttonVariants({variant: 'outline', size: 'icon'})} target='_blank' rel={'no-follow'} ><ExternalLinkIcon className='w-5 h-5' /></Link>
+                        item.type === 'link' && <Link href={item.content.url} className={buttonVariants({ variant: 'ghost', size: 'icon' })} target='_blank' rel={'no-follow'} ><ExternalLinkIcon className='w-5 h-5' /></Link>
                     }
 
                     <InfoDialog>
