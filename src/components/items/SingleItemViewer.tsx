@@ -32,22 +32,11 @@ const SingleItemViewer = ({
                                 : <Image src={item.thumbnail ?? ''} fill={true} objectFit="cover" alt={item.title} />
                 }
             </div>
+
             <div className=' md:col-start-4 md:col-end-6 p-5 relative pb-20'>
                 <div className='flex items-center'>
                     <CardTitle className='flex-grow'>{item.title}</CardTitle>
-                    {
-                        item.type === 'link'
-                        &&
-                        <Link
-                            className={cn([buttonVariants({ variant: 'outline', size: 'icon' })])}
-                            href={item.content.url}
-                            target='_blank'
-                            rel='noopener noreferrer'
-                            title={item.content.url}
-                        >
-                            <ExternalLinkIcon className='w-4 h-4'
-                            /></Link>
-                    }
+                    
                 </div>
 
                 <div className='pt-5'>
@@ -57,6 +46,20 @@ const SingleItemViewer = ({
 
                 <div className='absolute bottom-0  left-0 w-full flex items-center justify-between px-5 bg-muted'>
                     <ActionButton action='item_like_toggle' entityId={item.id} />
+
+                    {
+                        item.type === 'link'
+                        &&
+                        <Link
+                            className={cn([buttonVariants({ variant: 'ghost', size: 'icon' })])}
+                            href={item.content.url}
+                            target='_blank'
+                            rel='noopener noreferrer'
+                            title={item.content.url}
+                        >
+                            <ExternalLinkIcon className='w-4 h-4'
+                            /></Link>
+                    }
                 </div>
             </div>
         </div>

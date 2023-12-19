@@ -3,7 +3,7 @@
 'use client'
 import { api } from '@/trpc/react'
 import React from 'react'
-import Slider, { Settings } from 'react-slick'
+import Slider, { type Settings } from 'react-slick'
 import ItemCard from './ItemCard'
 
 const sliderSetting: Settings = {
@@ -11,7 +11,7 @@ const sliderSetting: Settings = {
     dots: false,
     infinite: false,
     speed: 500,
-    slidesToShow: 4,
+    slidesToShow: 3,
     slidesToScroll: 1,
     initialSlide: 0,
     responsive: [
