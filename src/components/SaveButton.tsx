@@ -10,13 +10,15 @@ const SaveButton = ({
     state = false,
     count,
     className,
-    disabled = false
+    disabled = false,
+    showCount
 }: {
     onClick?: (isLiked: boolean) => void,
     state?: boolean,
     count?: number,
     className?: string,
-    disabled?: boolean
+    disabled?: boolean,
+    showCount?: boolean
 }) => {
   return (
     <Button disabled={disabled} variant={'ghost'} size={'icon'} className={className} onClick={() => onClick?.(state)}>
@@ -31,10 +33,12 @@ const SaveButton = ({
             {'fill-primary text-primary-foreground': state}
         ])} />
        }
-       <span className={cn([
-        'ml-2',
-        {'text-primary-foreground': state}
-       ])}>{formatNumberInternationally(count??0)}</span>
+       {
+        showCount && <span className={cn([
+          'ml-2',
+          {'text-primary-foreground': state}
+         ])}>{formatNumberInternationally(count??0)}</span>
+       }
     </Button>
   )
 }

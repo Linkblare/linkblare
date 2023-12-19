@@ -14,7 +14,8 @@ type ActionButtonProps = {
     action: UserActions,
     entityId: number,
     defaultState?: boolean,
-    defaultCount?: number
+    defaultCount?: number,
+    showCount?: boolean
 }
 
 
@@ -25,7 +26,8 @@ const ActionButton = ({
     onAction,
     action,
     entityId,
-    defaultState
+    defaultState,
+    showCount
 }: ActionButtonProps) => {
     const actionMutation = api.user.action.useMutation();
     const savedCtx = api.useUtils().user.savedCollection;
@@ -53,11 +55,11 @@ const ActionButton = ({
     }
 
     if (action === 'collection_like_toggle' || action === 'item_like_toggle') {
-        return <LikeButton  onClick={() => toggle()} state={actionMutation.data?.state ?? defaultState} count={actionMutation.data?.count??defaultCount??0} />
+        return <LikeButton showCount={showCount}  onClick={() => toggle()} state={actionMutation.data?.state ?? defaultState} count={actionMutation.data?.count??defaultCount??0} />
     }
 
     if (action === 'collection_save_toggle') {
-        return <SaveButton  onClick={() => toggle()} state={actionMutation.data?.state ?? defaultState} count={actionMutation.data?.count??defaultCount??0} />
+        return <SaveButton showCount={showCount}  onClick={() => toggle()} state={actionMutation.data?.state ?? defaultState} count={actionMutation.data?.count??defaultCount??0} />
     }
     return (
         <>
