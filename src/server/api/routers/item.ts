@@ -11,8 +11,9 @@ import { CreateItemSchema, type SingleItemOut, type ItemOut, UpdateItemSchema, D
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 import { type Prisma, type Collection, type Item, type Tag } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
-import { md5Hash, paginate } from "@/lib/utils";
+import { getGoUrl, md5Hash, paginate } from "@/lib/utils";
 import config from "@/server/config";
+import { env } from "@/env.mjs";
 
 type ListItemResponse = Omit<Item, 'type'> & {
     type: ItemTypes,
@@ -29,18 +30,20 @@ type SingleItemResponse = ListItemResponse & {
 }
 
 export const itemOutResolver = <C = any>(item: ListItemResponse) => {
+    const content = item.type === 'link' ? {...item.content as any, url: getGoUrl(item.slug??'')} : item.content as C
     const res: ItemOut<C> = {
         ...item,
-        content: item.content as C,
+        content ,
         liked: Boolean(item.likes && item.likes.length > 0)
     }
     return res;
 }
 
 export const singleItemResolver = <C = any>(item: SingleItemResponse) => {
+    const content = item.type === 'link' ? {...item.content as any, url: getGoUrl(item.slug??'')} : item.content as C
     const res: SingleItemOut<C> = {
         ...item,
-        content: item.content as C,
+        content,
         liked: Boolean(item.likes && item.likes.length > 0)
     }
     return res;

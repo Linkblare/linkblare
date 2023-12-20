@@ -288,6 +288,10 @@ export function getDefaultThumnail(title: string){
   return env.NEXT_PUBLIC_SITE_URL + '/api/og/'+title;
 }
 
+export function getGoUrl(slug: string) {
+  return `${env.NEXT_PUBLIC_SITE_URL}/go/${slug}`
+}
+
 
 
 
