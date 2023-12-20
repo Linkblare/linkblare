@@ -11,7 +11,6 @@ import { type Metadata, type ResolvingMetadata } from 'next';
 import { SingleItemOut } from '@/schema/item-schema';
 import RelatedCollection from '@/components/collection/RelatedCollection';
 import RelatedItems from '@/components/items/RelatedItems';
-import { Separator } from '@/components/ui/separator';
 
 
 type Props = {

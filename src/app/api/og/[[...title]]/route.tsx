@@ -60,7 +60,7 @@ export async function GET(req: Request, { params }: { params: { title?: string }
             height: '600px'
           }}>
   
-            <img src={`${env.SITE_URL}/og-logo.png`} width={500} height={500} alt="logo" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            <img src={`${env.NEXT_PUBLIC_SITE_URL}/og-logo.png`} width={500} height={500} alt="logo" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
           </div>
   
           <h1 style={{

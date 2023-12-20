@@ -285,7 +285,7 @@ export function formatNumberInternationally(num: number): string {
 
 
 export function getDefaultThumnail(title: string){
-  return env.SITE_URL + '/api/og/'+title;
+  return env.NEXT_PUBLIC_SITE_URL + '/api/og/'+title;
 }
 
 
