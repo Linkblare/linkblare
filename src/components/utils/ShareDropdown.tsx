@@ -33,6 +33,8 @@ const ShareDropdown = ({
                         quote={title}
                         hashtag={tags.map(tg => `#${tg}`).join(' ')}
                         className='flex'
+                        windowWidth={500}
+                        windowHeight={309}
                     >
                         <span className='flex items-center justify-center gap-2'>
                             <span><FacebookIcon className='w-4 h-4' /></span>
@@ -46,6 +48,8 @@ const ShareDropdown = ({
                         title={title}
                         hashtags={tags}
                         className='flex'
+                        windowWidth={500}
+                        windowHeight={309}
                     >
                         <span className='flex items-center justify-center gap-2'>
                             <span><TwitterIcon className='w-4 h-4' /></span>
