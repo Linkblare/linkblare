@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import { DropdownMenu, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuContent } from '../ui/dropdown-menu'
 import { Button } from '../ui/button'
