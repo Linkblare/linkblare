@@ -24,10 +24,9 @@ const CollectionTagsCloud = ({
       {'pb-14': hasNextPage}
     ])}>
 
-      
         <QueryTags
           key={nanoid()}
-          className='justify-center max-h-80 overflow-y-auto scrollbar-thin scrollbar-thumb-primary'
+          className='justify-center max-h-56 overflow-y-auto scrollbar-thin scrollbar-thumb-primary'
           queryKey='tag'
           boxMode="container"
           removable
@@ -39,14 +38,11 @@ const CollectionTagsCloud = ({
 
           })) ?? []}
           loading={isLoading}
+          hasNext={hasNextPage}
+          fetchNext={fetchNextPage}
         />
       
-
-      {
-        hasNextPage && <div className='absolute bottom-0 left-0 w-full flex items-center justify-center pb-2'>
-        <Button size={'sm'}  disabled={isLoading} onClick={() => void fetchNextPage()}>More</Button>
-      </div>
-      }
+      
 
     </div>
   )

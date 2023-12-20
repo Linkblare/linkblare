@@ -17,7 +17,9 @@ const QueryTags = ({
     removable,
     closeButtonOptions,
     loading,
-    rowModeOnMobile
+    rowModeOnMobile,
+    hasNext,
+    fetchNext
 }: {
     queryKey: string,
     queryInputs: {
@@ -35,7 +37,9 @@ const QueryTags = ({
     closeButtonOptions?: {
         className?: string
     },
-    rowModeOnMobile?: boolean
+    rowModeOnMobile?: boolean,
+    hasNext?: boolean,
+    fetchNext?: () => void
 }) => {
     const searchParams = useSearchParams();
     const pathname = usePathname();
@@ -86,6 +90,10 @@ const QueryTags = ({
 
             {
                 queryInputs.map(input => <QueryTag key={nanoid()} queryKey={queryKey} {...input} />)
+            }
+
+            {
+                hasNext ?? <Button className='capitalize' size={'sm'} onClick={fetchNext}>More</Button>
             }
 
         </div>

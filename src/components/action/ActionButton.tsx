@@ -27,7 +27,7 @@ const ActionButton = ({
     action,
     entityId,
     defaultState,
-    showCount
+    showCount=true
 }: ActionButtonProps) => {
     const actionMutation = api.user.action.useMutation();
     const savedCtx = api.useUtils().user.savedCollection;

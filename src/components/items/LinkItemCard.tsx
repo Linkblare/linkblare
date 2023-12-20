@@ -2,7 +2,9 @@ import { ItemOut, LinkContent } from '@/schema/item-schema'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
-import { CardTitle } from '../ui/card'
+import { CardDescription, CardTitle } from '../ui/card'
+import ActionButton from '../action/ActionButton'
+import ShareDropdown from '../utils/ShareDropdown'
 
 const LinkItemCard = ({
     item
@@ -18,7 +20,19 @@ const LinkItemCard = ({
             <div className='p-4'>
                 <Link className='block' href={`/item/${item.slug}`}>
                     <CardTitle>{item.title}</CardTitle>
+                    <CardDescription className='mt-2 text-sm line-clamp-2'>{item.description}</CardDescription>
                 </Link>
+            </div>
+
+            <div className='flex items-center justify-between px-4 py-2'>
+                <ActionButton entityId={item.id} action={'item_like_toggle'} showCount={true} defaultCount={item._count.likes} />
+                <ShareDropdown
+                    title={item.title}
+                    url={`/item/${item.slug}`}
+                    image={item.thumbnail ?? ''}
+                    description={item.description ?? ''}
+                    tags={[...item.tags.map(tag => `#${tag.name}`), '#linkblare']}
+                />
             </div>
         </div>
     )

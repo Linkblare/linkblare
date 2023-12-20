@@ -18,6 +18,7 @@ import dynamic from 'next/dynamic'
 import { nanoid } from 'nanoid'
 import Flag from '../ui/flag'
 import { Button, buttonVariants } from '../ui/button'
+import LinkItemCard from './LinkItemCard'
 
 
 const LinkItemRenderer = dynamic(() => import('./item-renderer/LinkItemRenderer'), {
@@ -38,6 +39,12 @@ const ItemCard = ({
 }) => {
 
     const flags = item.tags.filter(tag => tag.isFlag);
+
+
+
+    if(item.type === 'link'){
+        return <LinkItemCard  item={item}/>
+    }
 
     return (
         <div className='max-w-full md:max-w-md rounded-xl border bg-card'>
@@ -71,8 +78,8 @@ const ItemCard = ({
                 {
                     item.type === 'image_slide' ?
                         <ImageSlideItemRender thumbnail={item.thumbnail} content={item.content as ImageSlideContent} />
-                        : item.type === 'link' ?
-                            <LinkItemRenderer thumbnail={item.thumbnail} content={item.content as LinkContent} />
+                        // : item.type === 'link' ?
+                        //     <LinkItemRenderer thumbnail={item.thumbnail} content={item.content as LinkContent} />
                             : item.type === 'pdf' ?
                                 <PdfItemRenderer thumbnail={item.thumbnail} content={item.content as PdfContent} />
                                 : <Image src={item.thumbnail ?? ''} fill={true} objectFit="cover" alt={item.title} />
@@ -93,9 +100,9 @@ const ItemCard = ({
                 <div className='flex items-center justify-between border-t '>
                     <ActionButton entityId={item.id} action='item_like_toggle' defaultState={item.liked} defaultCount={item._count.likes} />
 
-                    {
+                    {/* {
                         item.type === 'link' && <Link href={item.content.url} className={buttonVariants({ variant: 'ghost', size: 'icon' })} target='_blank' rel={'no-follow'} ><ExternalLinkIcon className='w-5 h-5' /></Link>
-                    }
+                    } */}
 
                     <InfoDialog>
                         {item.description}

@@ -35,7 +35,7 @@ const SaveButton = ({
        }
        {
         showCount && <span className={cn([
-          'ml-2',
+          'ml-2 font-thin text-xs',
           {'text-primary-foreground': state}
          ])}>{formatNumberInternationally(count??0)}</span>
        }

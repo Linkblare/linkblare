@@ -29,7 +29,7 @@ const LikeButton = ({
             {'text-red-700 fill-red-700': state}
         ])} />
         {
-          showCount && <span className='ml-1'>{formatNumberInternationally(count??0)}</span>
+          showCount && <span className='ml-1 text-xs font-thin'>{formatNumberInternationally(count??0)}</span>
         }
     </Button>
   )

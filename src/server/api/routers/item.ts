@@ -16,6 +16,7 @@ import config from "@/server/config";
 
 type ListItemResponse = Omit<Item, 'type'> & {
     type: ItemTypes,
+    tags: Tag[],
     likes: { id: string }[],
     _count: {
         likes: number

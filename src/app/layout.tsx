@@ -51,7 +51,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={` ${GeistSans.className} overflow-x-hidden max-w-[1920px] mx-auto`}>
+      <body className={` ${GeistSans.className} overflow-x-hidden max-w-[1920px] mx-auto `}>
         <ThemeProvider
         attribute="class"
         defaultTheme="system"

@@ -132,7 +132,9 @@ export type CopyItemFromCollectionInput = z.TypeOf<typeof CopyItemFromCollection
 
 
 export type ItemOut<T = any> = Omit<Item, 'content'> & {
-    content: T
+    type: ItemTypes,
+    content: T,
+    tags: Tag[],
     liked: boolean
     _count: {
         likes: number,

@@ -92,6 +92,7 @@ model Collection {
     slug         String?
     hash         String?
     description  String?
+    shortDesc    String?
     thumbnail    String?
     tags         Tag[]
     items        Item[]
@@ -115,6 +116,7 @@ model Item {
     slug         String?
     hash         String?
     description  String?
+    shortDesc    String?
     thumbnail    String?
     content      Json
     type         String
