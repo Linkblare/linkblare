@@ -1,10 +1,33 @@
+
+
 import { api } from '@/trpc/server'
 import React from 'react'
 import FeaturedCollectionCard from './FeaturedCollectionCard';
 import { Separator } from '../ui/separator';
+import { type Settings } from 'react-slick'
+import Slider from '../Slider';
 
 const FeaturedCollections = async () => {
     const featuredCollections = await api.collection.inifintList.query({ filter: { featured: true } });
+    const sliderSetting: Settings = {
+        dots: true,
+        infinite: false,
+        speed: 500,
+        initialSlide: 0,
+        slidesToShow: 2,
+        slidesToScroll: 1,
+        responsive: [
+            
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                }
+            }
+        ],
+        swipeToSlide: true
+    }
 
     if (featuredCollections.items.length <= 0) {
         return <div></div>
@@ -15,14 +38,16 @@ const FeaturedCollections = async () => {
             <div>
                 <h2 className='text-xl md:text-4xl font-bold'>Fetured Collections</h2>
             </div>
-            <div className=' mt-5 grid grid-cols-1 md:grid-cols-2 gap-5 items-center justify-items-center justify-center'>
+            <div className=' mt-5 '>
+                <Slider settings={sliderSetting}>
                 {
                     featuredCollections.items.map(it => (
-                        <div key={it.id} className='w-full h-full'>
+                        <div key={it.id} className='w-full h-full pr-5'>
                             <FeaturedCollectionCard collection={it} />
                         </div>
                     ))
                 }
+                </Slider>
             </div>
 
             <Separator className='mt-10' />

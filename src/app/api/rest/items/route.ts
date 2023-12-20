@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
-import { CreateItemSchema } from '@/schema/item-schema';
+import { BulkUpddateItemSchema, CreateItemSchema } from '@/schema/item-schema';
 import config from '@/server/config';
 import {db} from '@/server/db'
 import { isAuthorized } from '../_utils/isAuthorized';
@@ -96,5 +96,42 @@ export async function POST(req: Request){
     } catch (error) {
         console.error(error)
         return new Response(JSON.stringify({error: 'Internal Server Error'}), {status: 500})
+    }
+}
+
+
+
+// UPDATE MANY COLLECTIONS IN BULK
+export async function PATCH(
+    req: Request,
+) {
+
+    isAuthorized(req);
+
+    const body = await req.json();
+    const validate = BulkUpddateItemSchema.safeParse(body)
+    if (!validate.success)
+        return new Response(JSON.stringify(validate.error.issues), { status: 400 });
+
+    const { items } = validate.data;
+    try {
+        
+        const result = await db.$transaction(items.map(item => {
+            const {tags, id, ...rest} = item
+            return db.item.update({
+                where: {
+                    id
+                },
+                data: {
+                    ...rest
+                }
+            })
+        }))
+
+        return new Response(JSON.stringify(result), { status: 200 });
+
+    } catch (error) {
+        console.error(error)
+        return new Response(JSON.stringify({ error: 'Internal Server Error' }), { status: 500 })
     }
 }

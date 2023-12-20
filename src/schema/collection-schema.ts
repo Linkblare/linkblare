@@ -31,6 +31,11 @@ export const UpdateCollectionSchema = z.object({
 
 export type UpdateCollectionInput = z.TypeOf<typeof UpdateCollectionSchema>;
 
+export const UpdateManyCollectionSchema = z.object({
+    collections: z.array(UpdateCollectionSchema)
+})
+export type UpdateManyCollectionInput = z.TypeOf<typeof UpdateCollectionSchema>;
+
 export const GetCollectionByIdSchema = z.object({
     id: z.number()
 })

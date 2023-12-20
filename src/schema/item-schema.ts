@@ -73,6 +73,11 @@ export const UpdateItemSchema = z.object({
 
 export type UpdateItemInput = z.TypeOf<typeof UpdateItemSchema>;
 
+export const BulkUpddateItemSchema = z.object({
+    items: z.array(UpdateItemSchema)
+})
+export type BulkUpddateItemInput = z.TypeOf<typeof BulkUpddateItemSchema>
+
 export const GetItemByIdSchema = z.object({
     id: z.number()
 })
