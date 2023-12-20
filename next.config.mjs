@@ -45,6 +45,11 @@ const config = {
         hostname: "localhost",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "linkblare.interlef.com",
+        pathname: "/**",
+      },
     ],
   },
   pageExtensions: ['ts', 'tsx'],
