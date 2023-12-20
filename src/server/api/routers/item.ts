@@ -7,13 +7,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-import { CreateItemSchema, type SingleItemOut, type ItemOut, UpdateItemSchema, DeleteItemSchema, GetItemByIdSchema, PaginatedItemListSchema, InfinitItemListSchema, type ItemTypes, GetItemBySlugSchema, MoveItemFromCollectionSchema, CopyItemFromCollectionSchema } from "@/schema/item-schema";
+import { CreateItemSchema, type SingleItemOut, type ItemOut, UpdateItemSchema, DeleteItemSchema, GetItemByIdSchema, PaginatedItemListSchema, InfinitItemListSchema, type ItemTypes, GetItemBySlugSchema, MoveItemFromCollectionSchema, CopyItemFromCollectionSchema, LinkContent } from "@/schema/item-schema";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 import { type Prisma, type Collection, type Item, type Tag } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
 import { getGoUrl, md5Hash, paginate } from "@/lib/utils";
 import config from "@/server/config";
 import { env } from "@/env.mjs";
+import { z } from "zod";
 
 type ListItemResponse = Omit<Item, 'type'> & {
     type: ItemTypes,
@@ -316,6 +317,30 @@ const ItemRouter = createTRPCRouter({
         })
 
         return res;
+    }),
+
+
+    getLinkItemUrlBySlug: publicProcedure.input(z.object({slug: z.string()})).query(async ({ ctx, input }) => {
+        const item = await ctx.db.item.findFirst({
+            where: {
+                slug: input.slug,
+                type: 'link'
+            },
+            select: {
+                content: true
+            }
+        })
+
+        if(!item){
+            return {
+                url: null
+            }
+        }
+        const content = item.content as LinkContent;
+        return {
+            url: content.url
+        }
+
     })
 })
 

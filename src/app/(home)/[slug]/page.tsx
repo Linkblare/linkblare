@@ -18,6 +18,7 @@ import { itemSortInputs } from '../itemSort'
 import CollectionTagsCloud from '@/components/collection/CollectionTagsCloud'
 
 
+
 const ParamsSchema = z.object({
   slug: z.string()
 })
@@ -91,6 +92,7 @@ const ViewSingleCollectionPage = async ({
           <div className='flex flex-col md:flex-row items-center gap-2'>
             <ActionButton action={'collection_like_toggle'} entityId={collection.id} defaultState={collection.liked} defaultCount={collection._count.likes} />
             <ActionButton action={'collection_save_toggle'} entityId={collection.id} defaultState={collection.saved} defaultCount={collection._count.saves} />
+            
           </div>
         </div>
         <Separator />

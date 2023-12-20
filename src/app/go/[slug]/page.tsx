@@ -13,12 +13,12 @@ const RedirectPage = async ({
   }) => {
 
     const slug = params.slug;
-    const item = await api.items.getBySlug.query({ slug });
+    const {url} = await api.items.getLinkItemUrlBySlug.query({ slug });
 
-    if(!item || item.type !== "link"){
+    if(!url || url === ""){
         notFound();
     }
-    const { url } = item.content as any;
+  
     redirect(url as string)
   }
   
