@@ -12,6 +12,8 @@ import { cn } from '@/lib/utils'
 import { buttonVariants } from '../ui/button'
 import { ExternalLinkIcon } from 'lucide-react'
 import ActionButton from '../action/ActionButton'
+import ShareDropdown from '../utils/ShareDropdown'
+import { env } from '@/env.mjs'
 
 
 const SingleItemViewer = ({
@@ -36,7 +38,7 @@ const SingleItemViewer = ({
             <div className=' md:col-start-4 md:col-end-6 p-5 relative pb-20'>
                 <div className='flex items-center'>
                     <CardTitle className='flex-grow'>{item.title}</CardTitle>
-                    
+
                 </div>
 
                 <div className='pt-5'>
@@ -44,7 +46,7 @@ const SingleItemViewer = ({
                 </div>
 
 
-                <div className='absolute bottom-0  left-0 w-full flex items-center justify-between px-5 bg-muted'>
+                <div className='absolute bottom-0  left-0 w-full flex items-center justify-end px-5 gap-5 bg-muted'>
                     <ActionButton action='item_like_toggle' entityId={item.id} />
 
                     {
@@ -60,6 +62,14 @@ const SingleItemViewer = ({
                             <ExternalLinkIcon className='w-4 h-4'
                             /></Link>
                     }
+
+                    <ShareDropdown
+                        title={item.title}
+                        url={`${env.NEXT_PUBLIC_SITE_URL}/items/${item.slug}`}
+                        image={item.thumbnail ?? ''}
+                        description={item.description ?? ''}
+                        tags={[...item.tags.map(tag => tag.name), 'linkblare']}
+                    />
                 </div>
             </div>
         </div>

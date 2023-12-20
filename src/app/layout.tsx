@@ -20,7 +20,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 
 
 export const metadata: Metadata = {
-  metadataBase: new URL(env.SITE_URL),
+  metadataBase: new URL(env.NEXT_PUBLIC_SITE_URL),
   title: "Linkblare: The Ultimate Resource Hub for Developers | Discover the Tools You Need",
   description: "Struggling to find the best developer resources? Linkblare is your one-stop solution! Explore curated collections of websites, tools, and tutorials tailored to your specific needs. Dive into AI, machine learning, web development, and more. Set your preferences and discover relevant information quickly and efficiently. Empower your development journey with Linkblare.",
   icons: [
@@ -29,12 +29,12 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_IN",
-    url: env.SITE_URL,
+    url: env.NEXT_PUBLIC_SITE_URL,
     siteName: "LinkBlare",
     description: "Struggling to find the best developer resources? Linkblare is your one-stop solution! Explore curated collections of websites, tools, and tutorials tailored to your specific needs. Dive into AI, machine learning, web development, and more. Set your preferences and discover relevant information quickly and efficiently. Empower your development journey with Linkblare.",
     images: [
       {
-        url: `${env.SITE_URL}/api/og/Linkblare: The Ultimate Resource Hub for Developers | Discover the Tools You Need`,
+        url: `${env.NEXT_PUBLIC_SITE_URL}/api/og/Linkblare: The Ultimate Resource Hub for Developers | Discover the Tools You Need`,
         width: 1200,
         height: 630,
         alt: "LinkBlare",

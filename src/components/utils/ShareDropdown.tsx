@@ -2,8 +2,7 @@ import React from 'react'
 import { DropdownMenu, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuContent } from '../ui/dropdown-menu'
 import { Button } from '../ui/button'
 import { Share2Icon } from 'lucide-react'
-import { FacebookShareButton, FacebookIcon, TwitterShareButton, TwitterIcon, WhatsappShareButton, WhatsappIcon, LinkedinShareButton, LinkedinIcon} from 'next-share'
-import { env } from '@/env.mjs'
+import { FacebookShareButton, FacebookIcon, TwitterShareButton, TwitterIcon, WhatsappShareButton, WhatsappIcon, LinkedinShareButton, LinkedinIcon } from 'next-share'
 import { getDefaultThumnail } from '@/lib/utils'
 
 const ShareDropdown = ({
@@ -30,13 +29,13 @@ const ShareDropdown = ({
                     <FacebookShareButton
                         url={url}
                         quote={title}
-                        hashtag={tags.join(',')}
+                        hashtag={tags.map(tg => `#${tg}`).join(' ')}
                         className='flex'
-                    > 
-                    <span className='flex items-center justify-center gap-2'>
-                        <span><FacebookIcon className='w-4 h-4'/></span>
-                        <span>Facebook</span>
-                    </span>
+                    >
+                        <span className='flex items-center justify-center gap-2'>
+                            <span><FacebookIcon className='w-4 h-4' /></span>
+                            <span>Facebook</span>
+                        </span>
                     </FacebookShareButton>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
@@ -45,11 +44,11 @@ const ShareDropdown = ({
                         title={title}
                         hashtags={tags}
                         className='flex'
-                    > 
-                    <span className='flex items-center justify-center gap-2'>
-                        <span><TwitterIcon className='w-4 h-4'/></span>
-                        <span>X</span>
-                    </span>
+                    >
+                        <span className='flex items-center justify-center gap-2'>
+                            <span><TwitterIcon className='w-4 h-4' /></span>
+                            <span>X</span>
+                        </span>
                     </TwitterShareButton>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
@@ -57,11 +56,11 @@ const ShareDropdown = ({
                         url={url}
                         title={title}
                         className='flex'
-                    > 
-                    <span className='flex items-center justify-center gap-2'>
-                        <span><LinkedinIcon className='w-4 h-4'/></span>
-                        <span>Linkedin</span>
-                    </span>
+                    >
+                        <span className='flex items-center justify-center gap-2'>
+                            <span><LinkedinIcon className='w-4 h-4' /></span>
+                            <span>Linkedin</span>
+                        </span>
                     </LinkedinShareButton>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
@@ -70,11 +69,11 @@ const ShareDropdown = ({
                         title={title}
                         separator={'\n'}
                         className='flex'
-                    > 
-                    <span className='flex items-center justify-center gap-2'>
-                        <span><WhatsappIcon className='w-4 h-4'/></span>
-                        <span>Whatsapp</span>
-                    </span>
+                    >
+                        <span className='flex items-center justify-center gap-2'>
+                            <span><WhatsappIcon className='w-4 h-4' /></span>
+                            <span>Whatsapp</span>
+                        </span>
                     </WhatsappShareButton>
                 </DropdownMenuItem>
             </DropdownMenuContent>

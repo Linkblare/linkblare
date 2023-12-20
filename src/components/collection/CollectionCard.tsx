@@ -16,6 +16,8 @@ import { Separator } from '../ui/separator'
 import { nanoid } from 'nanoid'
 import Flag from '../ui/flag'
 import ThumbnailGrid from './ThumbnialGrid'
+import ShareDropdown from '../utils/ShareDropdown'
+import { env } from '@/env.mjs'
 
 type CollectionCardProps = {
   collection: CollectionOut,
@@ -49,7 +51,7 @@ const CollectionCard = ({
         <div
           className={cn([
             'text-muted-foreground text-xs flex items-center gap-2 flex-wrap pt-1',
-            {'hidden': mode === 'sort'}
+            { 'hidden': mode === 'sort' }
           ])}
         >
           {/* <span>{dateFromNow(collection.createdAt)}</span>
@@ -65,15 +67,15 @@ const CollectionCard = ({
 
       </div>
 
-      <div 
-      className={cn([
-        'flex items-center justify-between py-1 px-2',
-        {'hidden': mode === 'sort'}
-      ])}
+      <div
+        className={cn([
+          'flex items-center justify-between py-1 px-2',
+          { 'hidden': mode === 'sort' }
+        ])}
       >
-        <ActionButton action={'collection_like_toggle'} entityId={collection.id} defaultState={collection.liked} defaultCount={collection._count.likes} showCount  />
+        <ActionButton action={'collection_like_toggle'} entityId={collection.id} defaultState={collection.liked} defaultCount={collection._count.likes} showCount />
         <ActionButton action={'collection_save_toggle'} entityId={collection.id} defaultState={collection.saved} defaultCount={collection._count.saves} showCount />
-        <InfoDialog>
+        {/* <InfoDialog>
           <p>{collection.description}</p>
           <Separator />
           <div className='flex gap-3 flex-wrap'>
@@ -81,7 +83,14 @@ const CollectionCard = ({
               collection.tags.map(tag => <span key={nanoid()}>#{tag.name}</span>)
             }
           </div>
-        </InfoDialog>
+        </InfoDialog> */}
+        <ShareDropdown
+          title={collection.title}
+          url={`${env.NEXT_PUBLIC_SITE_URL}/${collection.slug}`}
+          image={collection.thumbnail ?? ''}
+          description={collection.description ?? ''}
+          tags={[...collection.tags.map(tag => tag.name), 'linkblare_collection']}
+        />
       </div>
     </div>
   )

@@ -5,6 +5,7 @@ import React from 'react'
 import { CardDescription, CardTitle } from '../ui/card'
 import ActionButton from '../action/ActionButton'
 import ShareDropdown from '../utils/ShareDropdown'
+import { env } from '@/env.mjs'
 
 const LinkItemCard = ({
     item
@@ -18,9 +19,9 @@ const LinkItemCard = ({
             </div>
 
             <div className='p-4'>
-                <Link className='block' href={`/item/${item.slug}`}>
+                <Link className='block' href={`/items/${item.slug}`}>
                     <CardTitle>{item.title}</CardTitle>
-                    <CardDescription className='mt-2 text-sm line-clamp-2'>{item.description}</CardDescription>
+                    <CardDescription className='mt-2 text-sm line-clamp-2'>{item.shortDesc??''}</CardDescription>
                 </Link>
             </div>
 
@@ -28,10 +29,10 @@ const LinkItemCard = ({
                 <ActionButton entityId={item.id} action={'item_like_toggle'} showCount={true} defaultCount={item._count.likes} />
                 <ShareDropdown
                     title={item.title}
-                    url={`/item/${item.slug}`}
+                    url={`${env.NEXT_PUBLIC_SITE_URL}/items/${item.slug}`}
                     image={item.thumbnail ?? ''}
                     description={item.description ?? ''}
-                    tags={[...item.tags.map(tag => `#${tag.name}`), '#linkblare']}
+                    tags={[...item.tags.map(tag => tag.name), 'linkblare']}
                 />
             </div>
         </div>
