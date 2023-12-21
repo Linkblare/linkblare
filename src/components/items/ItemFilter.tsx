@@ -21,10 +21,10 @@ const ItemFilter = ({
             <div className='space-y-2'>
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                        <Button className='w-full lg:w-80 lg:max-w-xs' variant={'secondary'}>Choose Category</Button>
+                        <Button className='w-full lg:w-80 ' variant={'secondary'}>Choose Category</Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className='bg-card/30 backdrop-blur'>
-                        <div className='w-80 max-w-md'>
+                        <div className=' w-[85vw] md:w-80 lg:w-80 max-w-md'>
                         <QueryTags
                             className='justify-start max-h-56 p-3 overflow-y-auto scrollbar-thin scrollbar-thumb-primary'
                             queryKey='tag'
@@ -47,7 +47,7 @@ const ItemFilter = ({
                         <Button className='w-full lg:w-80 lg:max-w-xs' variant={'secondary'}>Tags</Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className='bg-card/30 backdrop-blur'>
-                        <div className='w-80 max-w-xs'>
+                        <div className=' w-[85vw] md:w-80 lg:w-80 max-w-md'>
                         <CollectionTagsCloud collectionId={collectionId} />
                         </div>
                     </DropdownMenuContent>
@@ -59,7 +59,7 @@ const ItemFilter = ({
                         <Button className='w-full lg:w-80 lg:max-w-xs' variant={'secondary'}>Sort By</Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className='bg-card/30 backdrop-blur'>
-                        <div className='w-80 max-w-xs '>
+                        <div className='w-[85vw] md:w-80 lg:w-80 max-w-md '>
                         <SortArray inputs={itemSortInputs} className='flex-wrap'/>
                         </div>
                     </DropdownMenuContent>
