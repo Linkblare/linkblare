@@ -80,6 +80,7 @@ model Tag {
     id               Int          @id @default(autoincrement())
     name             String       @unique
     isFlag           Boolean      @default(false)
+    isCategory       Boolean      @default(false)
     color            String?
     items            Item[]
     collections      Collection[]

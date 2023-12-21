@@ -23,8 +23,10 @@ const tagResolver = (res: TagResponse, currentUserId?: string) => {
         id: res.id,
         name: res.name,
         isFlag: res.isFlag,
+        isCategory: res.isCategory,
         color: res.color,
         isPreferred: currentUserId ? Boolean(res.preferredByUsers?.find(user => user.id === currentUserId)) : false,
+
     }
 }
 
@@ -83,6 +85,7 @@ const TagRouter = createTRPCRouter({
             data: res.data.map(r => tagResolver(r, userId))
         };
     }),
+
     infintList: publicProcedure.input(InfinitTagListSchema).query(async ({ ctx, input }) => {
         const { take, cursor, ...rest } = input
         const userId = ctx.session?.user.id;
@@ -110,6 +113,10 @@ const TagRouter = createTRPCRouter({
                     }
                 }
             ]
+        }
+
+        if(input.isCategory){
+            whereCond.isCategory = input.isCategory
         }
 
 

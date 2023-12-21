@@ -9,6 +9,7 @@ import { Checkbox } from '../ui/checkbox';
 import { type TagOut } from '@/schema/tag-schema';
 import TagFlagUpdate from './TagFlagUpdate';
 import DataTable from '../DataTable';
+import TagCategoryUpdate from './TagCategoryUpdate';
 
 const columns: ColumnDef<TagOut>[] = [
     {
@@ -44,22 +45,13 @@ const columns: ColumnDef<TagOut>[] = [
             return <TagFlagUpdate data={row.original} />
         }
     },
-
     {
-        header: 'Action',
-        // cell({ row }) {
-        //     return <div className='flex items-center gap-2'>
-        //         <Link href={`/admin/items/mutate/${row.original.id}`}>
-        //             <Button size={'icon'}><Edit/></Button>
-        //         </Link>
-
-        //         <DeleteItemButton
-        //             itemId={row.original.id}
-        //         />
-
-        //     </div>
-        // }
-    }
+        accessorKey: 'isCategory',
+        header: 'Use as Category',
+        cell({ row }) {
+            return <TagCategoryUpdate data={row.original} />
+        }
+    },
 ]
 
 const TagsTable = () => {
@@ -70,6 +62,10 @@ const TagsTable = () => {
 
     return (
         <DataTable
+            onSearch={s => {
+                console.log({search: s});
+                setSearch(s);
+            }}
             columns={columns}
             dataLoading={isLoading}
             data={data?.data ?? []}

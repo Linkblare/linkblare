@@ -16,6 +16,7 @@ const LinkItemCard = ({
         <div className='bg-card border rounded-2xl overflow-hidden'>
             <div className='rounded-2xl overflow-hidden aspect-[16/9] relative'>
                 <Image src={item.thumbnail ?? ''} alt={item.title} layout='fill' objectFit='cover' sizes='100vw' />
+                <div className=' dark:block hidden absolute inset-0 bg-gradient-to-t from-background to-transparent'></div>
             </div>
 
             <div className='p-4'>

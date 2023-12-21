@@ -93,7 +93,7 @@ const QueryTags = ({
             }
 
             {
-                hasNext ?? <Button className='capitalize' size={'sm'} onClick={fetchNext}>More</Button>
+                hasNext && <Button className='capitalize' size={'sm'} onClick={fetchNext}>More</Button>
             }
 
         </div>

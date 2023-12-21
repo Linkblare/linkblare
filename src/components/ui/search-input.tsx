@@ -1,12 +1,27 @@
-import React from "react";
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useCallback } from "react";
 import { Input, InputProps } from "./input";
 import { cn } from "@/lib/utils";
 import { SearchIcon } from "lucide-react";
+import debounce from "lodash/debounce";
 
-export type SearchProps = React.InputHTMLAttributes<HTMLInputElement>;
+export type SearchProps = {
+  delay?: number;
+  onSearch?: (value: string) => void
+} & InputProps;
 
-const Search = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, ...props }, ref) => {
+
+const Search = React.forwardRef<HTMLInputElement, SearchProps>(
+  ({ className, onSearch, delay = 500, ...props }, ref) => {
+
+    const debouncedHandleSearch = useCallback(debounce((query: string) => {
+      onSearch?.(query);
+    }, delay), []);
+
+
+
     return (
       <div
         className={cn(
@@ -17,6 +32,11 @@ const Search = React.forwardRef<HTMLInputElement, InputProps>(
         <SearchIcon className="h-[16px] w-[16px]" />
         <input
           {...props}
+          onChange={e => {
+            props.onChange?.(e);
+            debouncedHandleSearch(e.currentTarget.value);
+
+          }}
           type="search"
           ref={ref}
           className="w-full bg-card p-2 placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"

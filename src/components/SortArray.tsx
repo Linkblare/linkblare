@@ -1,6 +1,6 @@
 'use client'
 
-import { appendQueryInSearchParams } from '@/lib/utils'
+import { appendQueryInSearchParams, cn } from '@/lib/utils'
 import { type SortInput } from '@/types/SortInput'
 import { nanoid } from 'nanoid'
 import Link from 'next/link'
@@ -9,15 +9,20 @@ import React from 'react'
 import { Button } from './ui/button'
 
 const SortArray = ({
-    inputs
+    inputs,
+    className
 }: {
-    inputs: SortInput[]
+    inputs: SortInput[],
+    className?: string
 }) => {
     const searchParams = useSearchParams();
     const pathname = usePathname()
     
     return (
-        <div className='flex items-center gap-2 py-1'>
+        <div className={cn([
+            'flex items-center gap-2 py-1',
+            className
+        ])}>
             {
                 inputs.map(input => (
                     <Link

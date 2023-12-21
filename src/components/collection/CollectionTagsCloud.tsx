@@ -10,9 +10,11 @@ import { Button } from '../ui/button';
 import { cn } from '@/lib/utils';
 
 const CollectionTagsCloud = ({
-  collectionId
+  collectionId,
+  className
 }: {
   collectionId: number;
+  className?: string
 }) => {
   const { data, isLoading, fetchNextPage, hasNextPage } = api.tags.infintList.useInfiniteQuery({ targetCollection: collectionId, sort: { name: 'asc' }, take: 100 }, {
     getNextPageParam: (lastPage) => lastPage.nextCursor
@@ -20,13 +22,13 @@ const CollectionTagsCloud = ({
   const items = data?.pages.reduce((acc, page) => acc.concat(page.items), [] as TagOut[])
   return (
     <div className={cn([
-      'rounded-2xl border max-w-[1200px] mx-auto mb-10 relative bg-card ',
-      {'pb-14': hasNextPage}
+      '',
+      className
     ])}>
 
         <QueryTags
           key={nanoid()}
-          className='justify-center max-h-56 overflow-y-auto scrollbar-thin scrollbar-thumb-primary'
+          className='justify-center max-h-80 overflow-y-auto scrollbar-thin scrollbar-thumb-primary'
           queryKey='tag'
           boxMode="container"
           removable
@@ -35,7 +37,6 @@ const CollectionTagsCloud = ({
             lable: it.name,
             toggleMode: true,
             singleMode: false,
-
           })) ?? []}
           loading={isLoading}
           hasNext={hasNextPage}

@@ -15,7 +15,7 @@ import RelatedCollection from '@/components/collection/RelatedCollection'
 import ActionButton from '@/components/action/ActionButton'
 import SortArray from '@/components/SortArray'
 import { itemSortInputs } from '../itemSort'
-import CollectionTagsCloud from '@/components/collection/CollectionTagsCloud'
+import ItemFilter from '@/components/items/ItemFilter'
 
 
 
@@ -69,6 +69,7 @@ const ViewSingleCollectionPage = async ({
   }
 
   const collection = await api.collection.getBySlug.query({ slug: params.slug })
+  const categoryTags = await api.tags.infintList.query({ isCategory: true, targetCollection: collection.id, take: 100 })
 
   if (!collection) {
     return notFound();
@@ -76,9 +77,6 @@ const ViewSingleCollectionPage = async ({
 
   return (
     <MainWrapper className=''>
-      <div className="flex items-start gap-2 mt-2">
-        <SortArray inputs={itemSortInputs} />
-      </div>
 
       <div className='my-10'>
         <div className='flex items-end gap-2'>
@@ -92,15 +90,23 @@ const ViewSingleCollectionPage = async ({
           <div className='flex flex-col md:flex-row items-center gap-2'>
             <ActionButton action={'collection_like_toggle'} entityId={collection.id} defaultState={collection.liked} defaultCount={collection._count.likes} />
             <ActionButton action={'collection_save_toggle'} entityId={collection.id} defaultState={collection.saved} defaultCount={collection._count.saves} />
-            
+
           </div>
         </div>
         <Separator />
       </div>
 
-      <CollectionTagsCloud collectionId={collection.id} />
+      {/* <CollectionTagsCloud collectionId={collection.id} /> */}
+      <div className='w-full md:max-w-xs lg:max-w-none lg:w-min mx-auto sticky top-5 left-0 z-20'>
+        <ItemFilter
+          categoryTags={categoryTags.items.map(tg => ({ value: tg.name.toLowerCase(), lable: tg.name }))}
+          collectionId={collection.id}
+          className='bg-card/30 backdrop-blur-md'
+        />
+      </div>
 
       <RelatedCollection collectionId={collection.id} />
+      <div className='py-5'></div>
       <ItemLoader collectionId={collection.id} include={collection.include} />
     </MainWrapper>
   )
