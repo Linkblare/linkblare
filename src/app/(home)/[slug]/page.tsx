@@ -105,8 +105,10 @@ const ViewSingleCollectionPage = async ({
         />
       </div>
 
+      <div className='py-10'>
       <RelatedCollection collectionId={collection.id} />
-      <div className='py-5'></div>
+      </div>
+      
       <ItemLoader collectionId={collection.id} include={collection.include} />
     </MainWrapper>
   )
