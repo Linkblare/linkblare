@@ -17,11 +17,11 @@ const ItemFilter = ({
     collectionId: number
 }) => {
     return (
-        <div className={cn(['rounded-2xl border p-3 flex  gap-3 lg:items-center lg:gap-5 flex-col lg:flex-row', className])}>
-            <div className='space-y-2'>
+        <div className={cn(['rounded-2xl border p-3 grid grid-cols-3  gap-3 lg:items-center lg:gap-5 max-w-[1200px] mx-auto items-center justify-items-center', className])}>
+            <div className='space-y-2 w-full'>
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                        <Button className='w-full lg:w-80 ' variant={'secondary'}>Choose Category</Button>
+                        <Button className='w-full ' variant={'secondary'}>Category</Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className='bg-card/30 backdrop-blur'>
                         <div className=' w-[85vw] md:w-80 lg:w-80 max-w-md'>
@@ -41,10 +41,10 @@ const ItemFilter = ({
                     </DropdownMenuContent>
                 </DropdownMenu>
             </div>
-            <div className='space-y-2'>
+            <div className='space-y-2 w-full'>
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                        <Button className='w-full lg:w-80 lg:max-w-xs' variant={'secondary'}>Tags</Button>
+                        <Button className='w-full' variant={'secondary'}>Tags</Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className='bg-card/30 backdrop-blur'>
                         <div className=' w-[85vw] md:w-80 lg:w-80 max-w-md'>
@@ -53,10 +53,10 @@ const ItemFilter = ({
                     </DropdownMenuContent>
                 </DropdownMenu>
             </div>
-            <div className='space-y-2 flex-1'>
+            <div className='space-y-2 flex-1 w-full'>
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                        <Button className='w-full lg:w-80 lg:max-w-xs' variant={'secondary'}>Sort By</Button>
+                        <Button className='w-full' variant={'secondary'}>Sort By</Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className='bg-card/30 backdrop-blur'>
                         <div className='w-[85vw] md:w-80 lg:w-80 max-w-md '>

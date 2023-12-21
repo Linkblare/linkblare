@@ -69,7 +69,7 @@ const ViewSingleCollectionPage = async ({
   }
 
   const collection = await api.collection.getBySlug.query({ slug: params.slug })
-  const categoryTags = await api.tags.infintList.query({ isCategory: true, targetCollection: collection.id, take: 100 })
+  const categoryTags = await api.tags.infintList.query({ isCategory: true, targetCollection: collection.id, take: 100, sort: {name: 'desc'} })
 
   if (!collection) {
     return notFound();
@@ -97,7 +97,7 @@ const ViewSingleCollectionPage = async ({
       </div>
 
       {/* <CollectionTagsCloud collectionId={collection.id} /> */}
-      <div className='w-full md:max-w-xs lg:max-w-none lg:w-min mx-auto sticky top-5 left-0 z-20'>
+      <div className='w-full mx-auto sticky top-5 left-0 z-20'>
         <ItemFilter
           categoryTags={categoryTags.items.map(tg => ({ value: tg.name.toLowerCase(), lable: tg.name }))}
           collectionId={collection.id}
