@@ -23,10 +23,9 @@ import { type PaginateOptions } from "prisma-pagination"
 import { Button } from "@/components/ui/button"
 import Loading from "@/components/Loading"
 import { useCopyMoveContext } from "@/context/CopyMoveContext"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuRadioItem, DropdownMenuTrigger } from "./ui/dropdown-menu"
-import { Copy, Move, Scissors, Trash2 } from "lucide-react"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu"
+import { Copy, Scissors, Trash2 } from "lucide-react"
 import { Search } from "./ui/search-input"
-import { useDebounce } from "@uidotdev/usehooks"
 
 interface ContactQueryTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]

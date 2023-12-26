@@ -245,9 +245,9 @@ export function md5Hash(text: string) {
   return Md5.hashStr(text)
 }
 
-export function appendQueryInSearchParams(searchString: string, query: { key: string, value: string }, toggleMode = false, singleMode=false) {
+export function appendQueryInSearchParams(searchString: string, query: { key: string, value: string }, toggleMode = false, singleMode = false) {
   const params = new URLSearchParams(searchString);
-  if(singleMode){
+  if (singleMode) {
     params.delete(query.key)
   }
   if (params.has(query.key, query.value)) {
@@ -284,12 +284,41 @@ export function formatNumberInternationally(num: number): string {
 }
 
 
-export function getDefaultThumnail(title: string){
-  return env.NEXT_PUBLIC_SITE_URL + '/api/og/'+title;
+export function getDefaultThumnail(title: string) {
+  return env.NEXT_PUBLIC_SITE_URL + '/api/og/' + title;
 }
 
 export function getGoUrl(slug: string) {
   return `${env.NEXT_PUBLIC_SITE_URL}/go/${slug}`
+}
+
+
+
+export async function parseJsonFile(file: File) {
+  try {
+    // Check if the file type is JSON
+    if (file.type !== 'application/json') {
+      return null;
+    }
+
+
+    // Read the file content
+    const fileContent = await file.text();
+
+    // Parse the content as JSON to validate if it's a valid JSON data
+    return JSON.parse(fileContent);
+
+  } catch (error) {
+    // If parsing fails, it's not valid JSON
+    console.error(error)
+    return null;
+  }
+}
+
+
+// a function that takes url and return google favicon api url
+export function getGoogleFaviconUrl(url: string) {
+  return `https://www.google.com/s2/favicons?sz=64&domain_url=${url}`
 }
 
 

@@ -53,6 +53,7 @@ export const CreateItemSchema = z.object({
     slug: z.string(),
     hash: z.string().optional(),
     description: z.string().optional(),
+    shortDesc: z.string().optional(),
     thumbnail: z.string().optional(),
     type: ItemTypesEnumSchema,
     content: z.any(),

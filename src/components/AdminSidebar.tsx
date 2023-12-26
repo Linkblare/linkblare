@@ -3,6 +3,7 @@ import Link from "next/link";
 import Logo from "./Logo";
 import SidebarLink from "./SidebarLink";
 import { nanoid } from 'nanoid'
+import { ListBulletIcon } from "@radix-ui/react-icons";
 
 const links = [
     {
@@ -24,6 +25,11 @@ const links = [
         lable: 'Tags',
         link: '/admin/tags',
         icon: <TagsIcon />
+    },
+    {
+        lable: 'Item Bullet',
+        link: '/admin/bullet/item',
+        icon: <ListBulletIcon />
     },
     {
         lable: 'Settings',
