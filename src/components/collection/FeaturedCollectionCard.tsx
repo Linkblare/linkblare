@@ -34,7 +34,7 @@ const FeaturedCollectionCard = ({
                     <CardTitle>{collection.title}</CardTitle>
                     <CardDescription className='hidden sm:block max-w-md'>{collection.description}</CardDescription>
 
-                    <div className='absolute bottom-2 right-2 w-full flex justify-between items-center px-4'>
+                    <div className='absolute bottom-2 right-2 w-full flex justify-between items-center px-4 bg-card/30 backdrop-blur-sm border-t pt-2 rounded-xl '>
                         <ActionButton action={'collection_like_toggle'} entityId={collection.id} defaultState={collection.liked} defaultCount={collection._count.likes} showCount />
                         <ActionButton action={'collection_save_toggle'} entityId={collection.id} defaultState={collection.saved} defaultCount={collection._count.saves} showCount />
                         <ShareDropdown

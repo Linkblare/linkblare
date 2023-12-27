@@ -41,12 +41,18 @@ const SingleItemViewer = ({
 
                 </div>
 
+                {
+                    item.shortDesc &&
+                    <div className='pt-2'>
+                        <CardDescription className='text-xs'>{item.description}</CardDescription>
+                    </div>
+                }
                 <div className='pt-5'>
                     <CardDescription>{item.description}</CardDescription>
                 </div>
 
 
-                <div className='absolute bottom-0  left-0 w-full flex items-center justify-end px-5 gap-5 bg-muted'>
+                <div className='absolute bottom-0  left-0 w-full flex items-center justify-end px-5 gap-5 backdrop-blur border-t  bg-card/30 rounded-xl py-1'>
                     <ActionButton action='item_like_toggle' entityId={item.id} />
 
                     {
