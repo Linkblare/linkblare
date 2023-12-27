@@ -44,7 +44,7 @@ const SingleItemViewer = ({
                 {
                     item.shortDesc &&
                     <div className='pt-2'>
-                        <CardDescription className='text-xs'>{item.description}</CardDescription>
+                        <CardDescription className='text-xs'>{item.shortDesc}</CardDescription>
                     </div>
                 }
                 <div className='pt-5'>
