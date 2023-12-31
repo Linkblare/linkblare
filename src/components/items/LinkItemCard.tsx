@@ -6,6 +6,8 @@ import { CardDescription, CardTitle } from '../ui/card'
 import ActionButton from '../action/ActionButton'
 import ShareDropdown from '../utils/ShareDropdown'
 import { env } from '@/env.mjs'
+import Tag from '../tags/Tag'
+import { nanoid } from 'nanoid'
 
 const LinkItemCard = ({
     item
@@ -19,11 +21,25 @@ const LinkItemCard = ({
                 <div className=' dark:block hidden absolute inset-0 bg-gradient-to-t from-background to-transparent'></div>
             </div>
 
-            <div className='p-4'>
-                <Link className='block' href={`/items/${item.slug}`}>
-                    <CardTitle>{item.title}</CardTitle>
-                    <CardDescription className='mt-2 text-sm line-clamp-2'>{item.shortDesc??''}</CardDescription>
-                </Link>
+            <div className='p-4 flex items-center gap-2'>
+                <div className='flex-1'>
+                    <Link className='block' href={`/items/${item.slug}`}>
+                        <CardTitle>{item.title}</CardTitle>
+                        <CardDescription className='mt-2 text-sm line-clamp-2'>{item.shortDesc ?? ''}</CardDescription>
+                    </Link>
+                </div>
+
+                <div>
+                    {
+                        item.tags.map(tg => {
+                            if (tg.isFlag) {
+                                return (
+                                    <Tag key={nanoid()} data={{ ...tg, isPreferred: false }} />
+                                )
+                            }
+                        })
+                    }
+                </div>
             </div>
 
             <div className='flex items-center justify-between px-4 py-2'>

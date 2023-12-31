@@ -7,6 +7,7 @@ import { type UserActionResult } from '@/schema/user-schema'
 import { api } from '@/trpc/react'
 import { Tag } from '@prisma/client'
 import React from 'react'
+import { useToast } from '../ui/use-toast'
 
 const Tag = ({
     data,
@@ -16,11 +17,21 @@ const Tag = ({
     onToggleSelect?: (result: UserActionResult) => void
 }) => {
     const preferredMutation = api.user.action.useMutation();
+    const {toast} = useToast();
 
     const toggle = async () => {
         try {
             const res = await preferredMutation.mutateAsync({action: 'toggle_preferred_tag', entityId: data.id});
             onToggleSelect?.(res)
+            if(res.state){
+                toast({
+                    title: `${data.name} is now your preferred tag`
+                })
+            }else{
+                toast({
+                    title: `${data.name} is no longer your preferred tag`
+                })
+            }
         } catch (error) {
             console.error(error)
         }
