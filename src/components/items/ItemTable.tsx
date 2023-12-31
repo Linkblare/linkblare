@@ -98,7 +98,8 @@ const ItemTable = ({
     collectionId?: number
 }) => {
     const [pagination, setPagination] = useState<PaginateOptions>()
-    const { data, isLoading } = api.items.list.useQuery({ pagination, filter: {collectionId} })
+    const [search, setSearch] = useState<string>()
+    const { data, isLoading } = api.items.list.useQuery({ pagination, filter: {collectionId}, search })
     return (
         <DataTable
             columns={columns}
@@ -106,6 +107,7 @@ const ItemTable = ({
             data={data?.data ?? []}
             paginationData={data?.meta}
             onPaginationChange={data => setPagination(data)}
+            onSearch={setSearch}
         />
     )
 }

@@ -2,15 +2,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
-import { CollectionOut } from '@/schema/collection-schema'
-import { ColumnDef } from '@tanstack/react-table'
+import { type CollectionOut } from '@/schema/collection-schema'
+import { type ColumnDef } from '@tanstack/react-table'
 import React, { useState } from 'react'
 import { Checkbox } from '../ui/checkbox'
 import Link from 'next/link'
 import DataTable from '../DataTable'
 import { api } from '@/trpc/react'
-import { PaginationMeta } from '@/types/PaginationMeta'
-import { PaginateOptions } from 'prisma-pagination'
+import { type PaginateOptions } from 'prisma-pagination'
 import { Button } from '../ui/button'
 import { Edit3Icon } from 'lucide-react'
 import MutateCollectionDialog from './MutateCollectionDialog'
@@ -105,7 +104,8 @@ const columns: ColumnDef<CollectionOut>[] = [
 
 const CollectionTable = () => {
     const [pagination, setPagination] = useState<PaginateOptions>()
-    const { data, isLoading } = api.collection.list.useQuery({ pagination })
+    const [search, setSearch] = useState<string>()
+    const { data, isLoading } = api.collection.list.useQuery({ pagination, search })
     return (
         <DataTable
             columns={columns}
@@ -113,6 +113,7 @@ const CollectionTable = () => {
             data={data?.data ?? []}
             paginationData={data?.meta}
             onPaginationChange={data => setPagination(data)}
+            onSearch={setSearch}
         />
     )
 }
