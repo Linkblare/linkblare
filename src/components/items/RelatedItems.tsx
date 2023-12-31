@@ -5,6 +5,8 @@ import { api } from '@/trpc/react'
 import React from 'react'
 import Slider, { type Settings } from 'react-slick'
 import ItemCard from './ItemCard'
+import { Carousel, CarouselContent, CarouselItem } from '../ui/carousel'
+import { nanoid } from 'nanoid'
 
 const sliderSetting: Settings = {
 
@@ -55,32 +57,35 @@ type RelatedItemsProps = {
 const RelatedItems = ({
     itemId
 }: RelatedItemsProps) => {
-    const { data, isLoading } =  api.items.relatedItems.useQuery({ id: itemId })
+    const { data, isLoading } = api.items.relatedItems.useQuery({ id: itemId })
 
     if (data?.items.length === 0) {
         return <div></div>
     }
 
     return (
-        <section className='max-w-[1200px] w-full mx-auto space-y-5'> 
+        <section className='max-w-[1200px] w-full mx-auto space-y-5 px-4'>
             <h2 className='text-2xl font-bold'>Related Items</h2>
-            <Slider
-                {...sliderSetting}
-                className='w-full h-full'
-            >
-                {
-                    !data && isLoading && Array(4).fill(0).map((_, i) =>
-                        <div key={i} className='w-full h-full '>
-                            <ItemCard.Skeleton />
-                        </div>
-                    )
-                }
-                {data?.items.map((item) => (
-                    <div key={item.id} className='px-2'>
-                        <ItemCard item={item as any} />
-                    </div>
-                ))}
-            </Slider>
+            <Carousel>
+                <CarouselContent>
+                    {
+                        !data && isLoading && Array(4).fill(0).map((_, i) =>
+                            <CarouselItem className='sm:basis-1/2  lg:basis-1/3' key={nanoid()}>
+                                <div key={i} className='w-full h-full '>
+                                    <ItemCard.Skeleton />
+                                </div>
+                            </CarouselItem>
+                        )
+                    }
+                    {data?.items.map((item) => (
+                        <CarouselItem className='sm:basis-1/2 lg:basis-1/3' key={nanoid()}>
+                            <div className='px-2'>
+                                <ItemCard item={item as any} />
+                            </div>
+                        </CarouselItem>
+                    ))}
+                </CarouselContent>
+            </Carousel>
         </section>
     )
 }

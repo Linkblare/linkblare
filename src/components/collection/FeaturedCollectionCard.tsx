@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 'use client'
 
 import React from 'react'
@@ -9,6 +10,8 @@ import { useRouter } from 'next/navigation'
 import ShareDropdown from '../utils/ShareDropdown'
 import { env } from '@/env.mjs'
 import ActionButton from '../action/ActionButton'
+import { Skeleton } from '../ui/skeleton'
+import InfoDialog from '../InfoDialog'
 
 const FeaturedCollectionCard = ({
     collection
@@ -30,12 +33,12 @@ const FeaturedCollectionCard = ({
                     }
                 </div>
 
-                <div className='px-4 pt-2 sm:p-5 space-y-3 relative pb-12'>
+                <div className='px-4 pt-2 sm:p-5 space-y-3 relative pb-14'>
                     <CardTitle>{collection.title}</CardTitle>
-                    <CardDescription className='hidden sm:block max-w-md'>{collection.description}</CardDescription>
+                    {/* <CardDescription className='hidden sm:block max-w-md'>{collection.description}</CardDescription> */}
 
-                    <div className='absolute bottom-2 right-2 w-full flex justify-between items-center px-4 bg-card/30 backdrop-blur-sm border-t pt-2 rounded-xl '>
-                        <ActionButton action={'collection_like_toggle'} entityId={collection.id} defaultState={collection.liked} defaultCount={collection._count.likes} showCount />
+                    <div className='absolute bottom-2 right-2 w-full flex justify-between items-center px-4 bg-card/30 backdrop-blur-sm  '>
+                        {/* <ActionButton action={'collection_like_toggle'} entityId={collection.id} defaultState={collection.liked} defaultCount={collection._count.likes} showCount /> */}
                         <ActionButton action={'collection_save_toggle'} entityId={collection.id} defaultState={collection.saved} defaultCount={collection._count.saves} showCount />
                         <ShareDropdown
                             title={collection.title}
@@ -50,5 +53,26 @@ const FeaturedCollectionCard = ({
         </div>
     )
 }
+
+
+FeaturedCollectionCard.Skeleton = () => {
+    return (
+      <div className='max-w-full md:max-w-xs'>
+        <Skeleton className='aspect-[1.4/.8] '></Skeleton>
+        <div className='py-2 space-y-1'>
+          <Skeleton className='w-full h-[20px]' />
+          <Skeleton className='w-1/2 h-[20px]' />
+        </div>
+  
+        <div className='flex items-center justify-between'>
+          <Skeleton className='w-[50px] h-[30px]' />
+          <Skeleton className='w-[50px] h-[30px]' />
+          <Skeleton className='w-[50px] h-[30px]' />
+        </div>
+      </div>
+    )
+  }
+
+
 
 export default FeaturedCollectionCard
