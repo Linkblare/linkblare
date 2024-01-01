@@ -322,5 +322,16 @@ export function getGoogleFaviconUrl(url: string) {
 }
 
 
+export function isRecentlyUpdate(targtedDate: Date, offset: number){
+  const now = new Date();
+    const updatedAt = new Date(targtedDate);
+
+    const diff = now.getTime() - updatedAt.getTime();
+    const diffDays = Math.ceil(diff / (1000 * 3600 * 24));
+
+    return diffDays < offset
+}
+
+
 
 

@@ -25,7 +25,11 @@ const ItemFilter = ({
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className='bg-card/30 backdrop-blur'>
                         <div className=' w-[85vw] md:w-80 lg:w-80 max-w-md'>
-                        <QueryTags
+                        {
+                            categoryTags.length <= 0 ?
+                            <p className='text-center text-sm'>No Categories Found</p>
+                            : 
+                            <QueryTags
                             className='justify-start max-h-56 p-3 overflow-y-auto scrollbar-thin scrollbar-thumb-primary'
                             queryKey='tag'
                             boxMode="container"
@@ -37,6 +41,7 @@ const ItemFilter = ({
                                 singleMode: false,
                             })) ?? []}
                         />
+                        }
                         </div>
                     </DropdownMenuContent>
                 </DropdownMenu>

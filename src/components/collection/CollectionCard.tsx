@@ -4,15 +4,13 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable react/display-name */
 import { type CollectionOut } from '@/schema/collection-schema'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Skeleton } from '../ui/skeleton'
 import Image from 'next/image'
 import { CardTitle } from '../ui/card'
-import { cn } from '@/lib/utils'
+import { cn, isRecentlyUpdate } from '@/lib/utils'
 import ActionButton from '../action/ActionButton'
-import InfoDialog from '../InfoDialog'
 import Link from 'next/link'
-import { Separator } from '../ui/separator'
 import { nanoid } from 'nanoid'
 import Flag from '../ui/flag'
 import ThumbnailGrid from './ThumbnialGrid'
@@ -30,11 +28,29 @@ const CollectionCard = ({
   collection,
   mode = 'full'
 }: CollectionCardProps) => {
-
+  const [isNewOrUpdated, setIsNewOrUpdated] = React.useState<'new'|'updated'|'none'>('none')
   const flags = collection.tags.filter(tag => tag.isFlag);
 
+
+  useEffect(() => {
+    const isNew = isRecentlyUpdate(collection.createdAt, 3)
+    const isUpdated = isRecentlyUpdate(collection.updatedAt, 3)
+
+    if (isNew && isUpdated) {
+      setIsNewOrUpdated('updated')
+    } else if (isNew) {
+      setIsNewOrUpdated('new')
+    }else if (isUpdated) {
+      setIsNewOrUpdated('updated')
+    } else {
+      setIsNewOrUpdated('none')
+    }
+    
+  }, [collection])
+  
+
   return (
-    <div className='rounded-xl overflow-hidden bg-card max-w-full md:max-w-sm border '>
+    <div className='rounded-xl overflow-hidden bg-card max-w-full md:max-w-sm border relative '>
       <div className='rounded-xl overflow-hidden aspect-[4/2.5] relative'>
         {
           collection.itemsImages.length > 0 ?
@@ -92,6 +108,15 @@ const CollectionCard = ({
           tags={[...collection.tags.map(tag => tag.name), 'linkblare_collection']}
         />
       </div>
+
+      {
+        isNewOrUpdated !== 'none' && 
+        <span className='absolute top-0 right-0 bg-accent text-accent-foreground p-2 text-xs rounded-bl-xl '>
+         {
+           isNewOrUpdated === 'new' ? 'New' : 'Updated'
+         }
+        </span>
+      }
     </div>
   )
 }
