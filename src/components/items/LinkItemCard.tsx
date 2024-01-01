@@ -21,7 +21,7 @@ const LinkItemCard = ({
                 <div className=' dark:block hidden absolute inset-0 bg-gradient-to-t from-background to-transparent'></div>
             </div>
 
-            <div className='p-4 flex items-center gap-2'>
+            <div className='p-4 pb-0 flex gap-2 flex-col'>
                 <div className='flex-1'>
                     <Link className='block' href={`/items/${item.slug}`}>
                         <CardTitle>{item.title}</CardTitle>
@@ -29,12 +29,14 @@ const LinkItemCard = ({
                     </Link>
                 </div>
 
-                <div>
+                <div className=''>
                     {
                         item.tags.map(tg => {
                             if (tg.isFlag) {
                                 return (
-                                    <Tag key={nanoid()} data={{ ...tg, isPreferred: false }} />
+                                    <span key={nanoid()} className='rounded-full border bg-card text-card-foreground text-xs px-2 py-1 mr-1'>
+                                        {tg.name}
+                                    </span>
                                 )
                             }
                         })

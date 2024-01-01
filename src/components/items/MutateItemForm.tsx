@@ -123,6 +123,18 @@ const MutateItemForm = ({
                     )}
                 />
                 <FormField
+                    name="shortDesc"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Short Description</FormLabel>
+                            <FormControl>
+                                <Input placeholder='Item short Description' {...field} />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+                <FormField
                     name="description"
                     render={({ field }) => (
                         <FormItem>
