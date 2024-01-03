@@ -1,53 +1,13 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 import { api } from '@/trpc/react'
 import React from 'react'
-import Slider, { type Settings } from 'react-slick'
 import ItemCard from './ItemCard'
 import { Carousel, CarouselContent, CarouselItem } from '../ui/carousel'
 import { nanoid } from 'nanoid'
-
-const sliderSetting: Settings = {
-
-    dots: false,
-    infinite: false,
-    speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    initialSlide: 0,
-    responsive: [
-        {
-            breakpoint: 1024,
-            settings: {
-                slidesToShow: 3,
-                slidesToScroll: 1,
-            }
-        },
-        {
-            breakpoint: 768,
-            settings: {
-                slidesToShow: 2,
-                slidesToScroll: 1,
-            }
-        },
-        {
-            breakpoint: 480,
-            settings: {
-                slidesToShow: 1,
-                slidesToScroll: 1,
-            }
-        }
-    ],
-    swipeToSlide: true,
-    draggable: true,
-    touchMove: true,
-    centerMode: false
-    //         touchThreshold={100}
-    // swipe={true}
-    //         swipeToSlide={true}
-    //         draggable={true}
-}
+import Autoplay from "embla-carousel-autoplay"
 
 
 type RelatedItemsProps = {
@@ -66,7 +26,16 @@ const RelatedItems = ({
     return (
         <section className='max-w-[1200px] w-full mx-auto space-y-5 px-4'>
             <h2 className='text-2xl font-bold'>Related Items</h2>
-            <Carousel>
+            <Carousel 
+            opts={{
+                loop: true,
+            }}
+            plugins={[
+                Autoplay({
+                    delay: 2000
+                })
+            ]}
+            >
                 <CarouselContent>
                     {
                         !data && isLoading && Array(4).fill(0).map((_, i) =>

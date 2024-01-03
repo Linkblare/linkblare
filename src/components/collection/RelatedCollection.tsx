@@ -9,6 +9,7 @@ import Link from 'next/link'
 import { buttonVariants } from '../ui/button'
 import { Separator } from '@/components/ui/separator'
 import { Carousel, CarouselContent, CarouselItem } from '../ui/carousel'
+import Autoplay from "embla-carousel-autoplay"
 
 type RelatedCollectionProps = {
     collectionId: number,
@@ -35,7 +36,16 @@ const RelatedCollection = ({
                     collection && <Link className={buttonVariants({ variant: 'outline' })} href={{ pathname: '/', query: { tag: collection.tags.map(tg => tg.name) } }}>All</Link>
                 }
             </div>
-            <Carousel>
+            <Carousel
+            opts={{
+                loop: true,
+            }}
+            plugins={[
+                Autoplay({
+                    delay: 2000
+                })
+            ]}
+            >
                 <CarouselContent>
                     {
                         !data && isLoading && Array(4).fill(0).map((_, i) =>

@@ -6,6 +6,7 @@ import { Separator } from '../ui/separator';
 import { Carousel, CarouselContent, CarouselItem } from '../ui/carousel';
 import { nanoid } from 'nanoid';
 import { api } from '@/trpc/react';
+import Autoplay from "embla-carousel-autoplay"
 
 const FeaturedCollections = () => {
     const { data: featuredCollections, isLoading } = api.collection.inifintList.useQuery({ filter: { featured: true } });
@@ -22,7 +23,16 @@ const FeaturedCollections = () => {
             <div className=' mt-5 '>
             
 
-                <Carousel>
+                <Carousel
+                opts={{
+                    loop: true,
+                }}
+                plugins={[
+                    Autoplay({
+                        delay: 2000
+                    })
+                ]}
+                >
                     <CarouselContent>
                         {
                             !featuredCollections && isLoading && Array(4).fill(0).map((_, i) =>
