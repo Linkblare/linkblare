@@ -16,6 +16,7 @@ import MutateCollectionDialog from './MutateCollectionDialog'
 import DeleteCollection from './DeleteCollection'
 import CollectionViewerSheet from './CollectionViewerSheet'
 import ToggleFeatured from './ToggleFeatured'
+import TogglePublished from './TogglePublished'
 
 
 const columns: ColumnDef<CollectionOut>[] = [
@@ -82,6 +83,13 @@ const columns: ColumnDef<CollectionOut>[] = [
         header: 'Featured',
         cell({ row }) {
             return <ToggleFeatured collection={row.original} />
+        }
+    },
+    {
+        accessorKey: 'isPublished',
+        header: 'Published',
+        cell({ row }) {
+            return <TogglePublished collection={row.original} />
         }
     },
     {

@@ -16,6 +16,7 @@ export const CreateCollectionSchema = z.object({
     tags: z.array(z.string()).default([]),
     include: z.array(z.string()).default([]),
     isFeatured: z.boolean().default(false),
+    isPublished: z.boolean().default(false)
 })
 
 export type CreateCollectionInput = z.TypeOf<typeof CreateCollectionSchema>;

@@ -201,6 +201,7 @@ export const CollectionRouter = createTRPCRouter({
                 title: (input.search) ? {contains: input.search, mode: 'insensitive'} : undefined,
                 tags: (input.filter?.tags && input.filter.tags.length > 0) ? {some: {name: {in: input.filter.tags}}} : undefined,
                 isFeatured: input.filter?.featured,
+                isPublished: true
             },
             include: getCollectionIncludes(userId),
             take: currenctTake,
@@ -243,6 +244,7 @@ export const CollectionRouter = createTRPCRouter({
             where: {
                 title: (input.search) ? {contains: input.search, mode: 'insensitive'} : undefined,
                 tags:  {some: {name: {in: tags}}},
+                isPublished: true,
             },
             include: getCollectionIncludes(userId),
             take: currenctTake,
@@ -272,6 +274,7 @@ export const CollectionRouter = createTRPCRouter({
         const res = await ctx.db.collection.findMany({
             where: {
                 title: (input.search) ? {contains: input.search, mode: 'insensitive'} : undefined,
+                isPublished: true,
             },
             select: {
                 id: true,
@@ -309,7 +312,8 @@ export const CollectionRouter = createTRPCRouter({
         const res = await ctx.db.collection.findMany({
             where: {
                 id: {not: collectionId},
-                tags: {some: {name: {in: targetCollection.tags.map(tg => tg.name)}}}
+                tags: {some: {name: {in: targetCollection.tags.map(tg => tg.name)}}},
+                isPublished: true
             },
             include: getCollectionIncludes(userId),
             orderBy: {
