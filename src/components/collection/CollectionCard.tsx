@@ -34,7 +34,7 @@ const CollectionCard = ({
 
   useEffect(() => {
     const isNew = isRecentlyUpdate(collection.createdAt, 3)
-    const isUpdated = isRecentlyUpdate(collection.updatedAt, 3)
+    const isUpdated = collection.itemsUpdated && isRecentlyUpdate(collection.itemsUpdated, 3)
 
     if (isNew && isUpdated) {
       setIsNewOrUpdated('updated')
