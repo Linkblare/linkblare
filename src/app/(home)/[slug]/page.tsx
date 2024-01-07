@@ -97,7 +97,7 @@ const ViewSingleCollectionPage = async ({
       </div>
 
       {/* <CollectionTagsCloud collectionId={collection.id} /> */}
-      <div className='w-full mx-auto sticky top-5 left-0 z-20'>
+      <div className='w-full mx-auto sticky top-1 left-0 z-20'>
         <ItemFilter
           categoryTags={categoryTags.items.map(tg => ({ value: tg.name.toLowerCase(), lable: tg.name }))}
           collectionId={collection.id}

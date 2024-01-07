@@ -17,7 +17,7 @@ const ItemFilter = ({
     collectionId: number
 }) => {
     return (
-        <div className={cn(['rounded-2xl border p-3 grid grid-cols-3  gap-3 lg:items-center lg:gap-5 max-w-[1200px] mx-auto items-center justify-items-center', className])}>
+        <div className={cn(['rounded-2xl border p-2 grid grid-cols-3  gap-3 lg:items-center lg:gap-5 max-w-[1200px] mx-auto items-center justify-items-center', className])}>
             <div className='space-y-2 w-full'>
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
