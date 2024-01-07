@@ -2,23 +2,24 @@
 'use client'
 
 import { useDebounce } from '@uidotdev/usehooks';
-import React, { useState } from 'react'
+import React, { ReactNode, useState } from 'react'
 import { Command, CommandGroup, CommandItem, CommandEmpty, CommandInput, CommandList } from '../ui/command';
 import { Dialog, DialogTrigger, DialogContent } from '../ui/dialog';
 import { Button } from '../ui/button';
 import { api } from '@/trpc/react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import QueryTags from '../query-tag/QueryTags';
-import { Input } from '../ui/input';
 import { Search } from '../ui/search-input';
 
 
 const SearchInput = ({
     onChange,
-    value
+    value,
+    triggre
 }: {
     onChange?: (value: string) => void;
     value?: string;
+    triggre?: ReactNode
 }) => {
     const searchParams = useSearchParams();
     const [open, setOpen] = useState<boolean>(false || searchParams.get('search') !== null)
@@ -32,10 +33,13 @@ const SearchInput = ({
         <>
             <Dialog open={open} onOpenChange={setOpen}>
                 <DialogTrigger asChild>
-                    <Button variant={'outline'}>
-                        <span className='hidden lg:block'>Search Collection, items or tag</span>
-                        <span className=' lg:hidden'>Search...</span>
-                    </Button>
+                    {
+                        triggre ??
+                            <Button variant={'outline'}>
+                                <span className='hidden lg:block'>Search Collection, items or tag</span>
+                                <span className=' lg:hidden'>Search...</span>
+                            </Button>
+                    }
                 </DialogTrigger>
 
                 <DialogContent className='overflow-hidden'>

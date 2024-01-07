@@ -10,10 +10,12 @@ import { useSession } from 'next-auth/react'
 import { NavigationMenu, NavigationMenuItem, NavigationMenuList, navigationMenuTriggerStyle } from './ui/navigation-menu'
 import { cn } from '@/lib/utils'
 import { nanoid } from 'nanoid'
-import config from '@/server/config'
-import { buttonVariants } from './ui/button'
-import { GithubIcon } from 'lucide-react'
 import SearchInput from './search/SearchInput'
+import { buttonVariants } from './ui/button'
+import { Github } from 'lucide-react'
+import BmcButton from './BmcButton'
+import { ThemeToggle } from './ThemeToggle'
+
 
 const menus = [
     {
@@ -36,7 +38,7 @@ const menus = [
 
 const DefaultNav = () => {
     const pathName = usePathname();
-    const {data:session} = useSession();
+    const { data: session } = useSession();
 
     return (
         <nav className='w-full py-2 px-5 flex items-center justify-between bg-card border-b'>
@@ -52,7 +54,7 @@ const DefaultNav = () => {
                                         <Link className={cn([
                                             navigationMenuTriggerStyle(),
                                             'text-muted-foreground',
-                                            {'text-primary': pathName === menu.href}
+                                            { 'text-primary': pathName === menu.href }
                                         ])} href={menu.href}>{menu.lable}</Link>
                                     </NavigationMenuItem>
                                 ))
@@ -62,9 +64,17 @@ const DefaultNav = () => {
                 </div>
             </div>
             <div className='flex items-center gap-3'>
-                <SearchInput/>
+                <div className='hidden lg:block'>
+                    <SearchInput />
+                </div>
+                    {/* <Link
+                        className={cn([buttonVariants({ variant: 'outline' })])}
+                        href={'https://github.com/Linkblare/linkblare'}
+                    ><Github /></Link>
+                    <BmcButton size='sm' /> */}
+                    <ThemeToggle/>
                 {
-                    !session ?  <LoginButton/> : <div className='hidden lg:block'><UserAvatarDropdown/></div>
+                    !session ? <LoginButton /> : <div className='hidden lg:block'><UserAvatarDropdown /></div>
                 }
             </div>
         </nav>

@@ -12,7 +12,7 @@ const BmcButton = ({
     return (
         <Link
             href={'https://www.buymeacoffee.com/linkblareweb'}
-            className='block rounded overflow-hidden'
+            className='block rounded overflow-hidden w-[47px]'
         >
             {/* <Image
                 src={bmcButton}

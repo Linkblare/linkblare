@@ -3,19 +3,20 @@
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
 import React from 'react'
-import { buttonVariants } from './ui/button'
-import { Bookmark, CompassIcon, HomeIcon } from 'lucide-react'
+import { Button, buttonVariants } from './ui/button'
+import { Bookmark, CompassIcon, SearchIcon } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 import UserAvatarDropdown from './UserAvatarDropdown'
 import { useSession } from 'next-auth/react'
+import SearchInput from './search/SearchInput'
 
 const MobileNav = () => {
     const pathname = usePathname();
     const isActive = (url: string) => (pathname === url ? true : false)
-    const {data:Session} = useSession();
+    const { data: Session } = useSession();
     return (
-        <div className='fixed bottom-0 left-0 w-full px-3 py-4 bg-card/20 backdrop-blur-lg flex items-center justify-between lg:hidden'>
-            <Link
+        <div className='fixed bottom-0 left-0 w-full px-3 py-1 bg-card/20 backdrop-blur-lg flex items-center justify-between lg:hidden'>
+            {/* <Link
                 href={'/for-you'}
                 className={cn([
                     buttonVariants({
@@ -24,7 +25,7 @@ const MobileNav = () => {
                 ])}
             >
                 <HomeIcon />
-            </Link>
+            </Link> */}
             <Link
                 href={'/'}
                 className={cn([
@@ -35,6 +36,9 @@ const MobileNav = () => {
             >
                 <CompassIcon />
             </Link>
+            <SearchInput
+                triggre={<Button variant={'ghost'}><SearchIcon /></Button>}
+            />
             <Link
                 href={'/saved'}
                 className={cn([
@@ -46,8 +50,8 @@ const MobileNav = () => {
                 <Bookmark />
             </Link>
             <div className={cn([
-                {'hidden': !Session}
-            ])}><UserAvatarDropdown/></div>
+                { 'hidden': !Session }
+            ])}><UserAvatarDropdown /></div>
         </div>
     )
 }

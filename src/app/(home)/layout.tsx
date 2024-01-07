@@ -1,7 +1,6 @@
 import DefaultNav from '@/components/DefaultNav';
 import Footer from '@/components/Footer';
 import MobileNav from '@/components/MobileNav';
-import PinnedWidget from '@/components/PinnedWidget';
 import React, { type PropsWithChildren } from 'react'
 
 const Layout = ({children}: PropsWithChildren) => {
@@ -12,8 +11,8 @@ const Layout = ({children}: PropsWithChildren) => {
         {children}
     </main>
     <MobileNav/>
-    <PinnedWidget/>
-    {/* <Footer/> */}
+    {/* <PinnedWidget/> */}
+    <Footer/>
     </>
   )
 }
