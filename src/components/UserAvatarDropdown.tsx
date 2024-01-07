@@ -26,7 +26,7 @@ const UserAvatarDropdown =  () => {
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-                    <Avatar className="cursor-pointer shadow ring-2 w-8 h-8 hover:ring-4 transition-all   ring-green-700">
+                    <Avatar className="cursor-pointer shadow ring-2 w-6 h-6 lg:w-8 lg:h-8 hover:ring-4 transition-all   ring-green-700">
                         <AvatarImage src={convertNullToUndefined(session?.user.image) as string}></AvatarImage>
                         <AvatarFallback >{convertNullToUndefined(session?.user.name?.charAt(0))}</AvatarFallback>
                     </Avatar>

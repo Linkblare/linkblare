@@ -11,9 +11,6 @@ import { NavigationMenu, NavigationMenuItem, NavigationMenuList, navigationMenuT
 import { cn } from '@/lib/utils'
 import { nanoid } from 'nanoid'
 import SearchInput from './search/SearchInput'
-import { buttonVariants } from './ui/button'
-import { Github } from 'lucide-react'
-import BmcButton from './BmcButton'
 import { ThemeToggle } from './ThemeToggle'
 
 
