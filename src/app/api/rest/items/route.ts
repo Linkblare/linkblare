@@ -92,6 +92,14 @@ export async function POST(req: Request){
             tags: true
         }
     })
+     await db.collection.update({
+        where: {
+            id: collectionId
+        },
+        data: {
+            itemsUpdated: new Date()
+        }
+    })
         return new Response(JSON.stringify({success: true}), {status: 200})
     } catch (error) {
         console.error(error)
